@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1066789221211",
+    "firebase_url": "https://neighborly-a250f.firebaseio.com",
+    "project_id": "neighborly-a250f",
+    "storage_bucket": "neighborly-a250f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066789221211:android:1127ca65b78c1444d7a07e",
+        "android_client_info": {
+          "package_name": "com.example.neighborly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1066789221211-n9uileurni75nf3hoa16hp4pkuvgmt21.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPTY8dbSRWXhqMTpPwYaYrPsSo2FUAxQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1066789221211-n9uileurni75nf3hoa16hp4pkuvgmt21.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
