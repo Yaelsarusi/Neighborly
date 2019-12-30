@@ -32,34 +32,40 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        btnSignOut = (Button)findViewById(R.id.btnSignOut);
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AuthUI.getInstance()
-                        .signOut(LoginActivity.this)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                btnSignOut.setEnabled(false);
-                                showSignInOptions();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
         // Choose authentication providers
         providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build(),
                 new AuthUI.IdpConfig.FacebookBuilder().build());
 
-        showSignInOptions();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            // already signed in
+            btnSignOut = (Button) findViewById(R.id.btnSignOut);
+            btnSignOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AuthUI.getInstance()
+                            .signOut(LoginActivity.this)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    btnSignOut.setEnabled(false);
+                                    showSignInOptions();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(LoginActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+
+        } else {
+            // not signed in
+            showSignInOptions();
+        }
     }
 
     private void showSignInOptions() {
@@ -85,6 +91,13 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "" + user.getEmail(), Toast.LENGTH_SHORT).show();
                 // Set Button signout
                 btnSignOut.setEnabled(true);
+
+                // todo check for sign up vs sign in
+                if (true) {
+                    startActivity(new Intent(this, JoinBuildingActivity.class));
+                } else {
+                    startActivity(new Intent(this, MainActivity.class));
+                }
             } else {
                 Toast.makeText(this, "" + response.getError().getMessage(), Toast.LENGTH_SHORT).show();
             }
