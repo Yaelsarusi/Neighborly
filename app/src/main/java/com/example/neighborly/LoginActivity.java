@@ -40,6 +40,9 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
+
+            startActivity(new Intent(this, MainActivity.class));
+
             // already signed in
             btnSignOut = (Button) findViewById(R.id.btnSignOut);
             btnSignOut.setOnClickListener(new View.OnClickListener() {
