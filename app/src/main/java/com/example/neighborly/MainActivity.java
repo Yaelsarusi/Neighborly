@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                     selected = new FeedFragment();
                     break;
                 case R.id.nev_profile:
-                    selected = new PrifileFragment();
+                    selected = new ProfileFragment();
                     break;
                 case R.id.nev_neighbors:
                     selected = new NeighboursFragment();
