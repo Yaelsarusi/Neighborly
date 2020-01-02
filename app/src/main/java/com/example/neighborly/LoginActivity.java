@@ -15,6 +15,7 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -26,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     List<AuthUI.IdpConfig> providers;
     Button btnSignOut;
+    private boolean isNewUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +94,11 @@ public class LoginActivity extends AppCompatActivity {
                 // Set Button signout
                 btnSignOut.setEnabled(true);
 
-                // todo check for sign up vs sign in
-                if (true) {
+                if (response != null) {
+                    isNewUser = response.isNewUser();
+                }
+
+                if (isNewUser) {
                     startActivity(new Intent(this, JoinBuildingActivity.class));
                 } else {
                     startActivity(new Intent(this, MainActivity.class));

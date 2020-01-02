@@ -35,7 +35,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_join_building);
         myDialog = new Dialog(this);
 
-        buildingImage = (CircleImageView) findViewById(R.id.buildingImage);
+        buildingImage = (CircleImageView) findViewById(R.id.addItemImage);
         buildingImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,17 +48,19 @@ public class JoinBuildingActivity extends AppCompatActivity {
             }
         });
 
-        btnDone = (Button) findViewById(R.id.buttonDone);
+        btnDone = (Button) findViewById(R.id.buttonAdd);
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //todo add firebase logic
                 // check for existing building
-                String address = ((EditText) findViewById(R.id.editTextAddress)).getText().toString();
+                String address = ((EditText) findViewById(R.id.editTextStreetAddress)).getText().toString()
+                        + ((EditText) findViewById(R.id.editTextCity)).getText().toString();
                 if (address.isEmpty()) {
                     //add new building and share options
                     ShowPopup();
                 } else {
+                    Toast.makeText(JoinBuildingActivity.this, "added to building", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(JoinBuildingActivity.this, MainActivity.class));
                 }
 
@@ -74,6 +76,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
                 newImageUri = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), newImageUri);
+                    buildingImage.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -86,7 +89,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
         Button btnFollow;
         myDialog.setContentView(R.layout.activity_add_building_popup);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-        btnFollow = (Button) myDialog.findViewById(R.id.btnfollow);
+        btnFollow = (Button) myDialog.findViewById(R.id.btnContinue);
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
