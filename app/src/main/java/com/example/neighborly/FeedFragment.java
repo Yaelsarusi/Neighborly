@@ -25,10 +25,9 @@ public class FeedFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        Button searchButton = getView().findViewById(R.id.SearchButton);
-
-        return inflater.inflate(R.layout.fragment_feed, container, false);
+        View view = inflater.inflate(R.layout.fragment_feed, container, false);
+        Button searchButton = view.findViewById(R.id.searchButton);
+        return view;
     }
 
     protected void createPopup(ArrayList<Item> itemList) {

@@ -17,7 +17,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <Button
-        android:id="@+id/SearchButton"
+        android:id="@+id/searchButton"
         android:layout_width="78dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/SearchText"
