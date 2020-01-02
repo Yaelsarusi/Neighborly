@@ -40,7 +40,11 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            // already signed in
+
+            // already signed in, go to main activity
+            startActivity(new Intent(this, MainActivity.class));
+
+            // Alternatively, fordebuggingg, allow to disconnect
             btnSignOut = (Button) findViewById(R.id.btnSignOut);
             btnSignOut.setOnClickListener(new View.OnClickListener() {
                 @Override

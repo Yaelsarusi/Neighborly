@@ -3,6 +3,11 @@
 
     <string name="facebook_application_id" translatable="false">1439707639526875</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb1439707639526875</string>
+    <string name="privateChatsTitle">Private Chats</string>
+    <string name="UserNeedsTitle">Things you need</string>
+    <string name="SearchText">What do you need?</string>
+    <string name="Search">Search</string>
+    <string name="NeighbourRequestsTitle">Help out your neighbours</string>
     <string name="profile">Profile</string>
     <string name="neighbors">Neighbors</string>
     <string name="feed">Feed</string>
