@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
+    <EditText
+        android:id="@+id/SearchText"
+        style="@style/Widget.AppCompat.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="feed"
-        android:layout_centerInParent="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="26dp"
+        android:inputType="textShortMessage"
+        android:selectAllOnFocus="true"
+        android:hint="@string/SearchText"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/SearchText"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="12dp"
+        android:layout_toEndOf="@+id/SearchText"
+        android:text="@string/Search"
+        android:textSize="12sp" />
+
+
 </RelativeLayout>
