@@ -53,9 +53,9 @@ public class JoinBuildingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //todo add firebase logic
-                // check for existing building
                 String address = ((EditText) findViewById(R.id.editTextStreetAddress)).getText().toString()
                         + ((EditText) findViewById(R.id.editTextCity)).getText().toString();
+                // check for existing building
                 if (address.isEmpty()) {
                     //add new building and share options
                     ShowPopup();

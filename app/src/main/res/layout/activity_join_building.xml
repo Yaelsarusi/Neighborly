@@ -14,12 +14,10 @@
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.122" />
+        app:layout_constraintVertical_bias="0.13" />
 
     <EditText
         android:id="@+id/editTextStreetAddress"
@@ -27,10 +25,9 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPostalAddress"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
         app:layout_constraintStart_toEndOf="@+id/textViewStreetAddress"
         app:layout_constraintStart_toStartOf="@+id/editTextCity"
-        app:layout_constraintTop_toBottomOf="@+id/addItemImage" />
+        app:layout_constraintTop_toTopOf="@+id/textViewStreetAddress" />
 
     <EditText
         android:id="@+id/editTextCity"
@@ -40,7 +37,6 @@
         android:inputType="textPostalAddress"
         app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toEndOf="@+id/textViewCity"
         app:layout_constraintTop_toBottomOf="@+id/editTextStreetAddress" />
 
@@ -49,24 +45,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Street Address"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.129"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCity"
+        app:layout_constraintEnd_toStartOf="@+id/editTextStreetAddress"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextStreetAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/addItemImage" />
 
     <TextView
         android:id="@+id/textViewCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="City"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewStreetAddress"
-        app:layout_constraintTop_toBottomOf="@+id/textViewStreetAddress"
-        app:layout_constraintVertical_bias="0.2" />
-
-    <!--    todo city drop down list  -->
-    <!-- todo street -->
-    <!--    todo number -->
+        app:layout_constraintTop_toTopOf="@+id/editTextCity" />
 
     <Button
         android:id="@+id/buttonAdd"

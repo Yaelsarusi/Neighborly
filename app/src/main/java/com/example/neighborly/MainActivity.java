@@ -28,7 +28,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 1;
-    List<AuthUI.IdpConfig> providers;
+    private List<AuthUI.IdpConfig> providers;
+    private boolean isNewUser;
     Button btnSignOut;
 
     @Override
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             Fragment selected = null;
 
-            switch (menuItem.getItemId()){
+            switch (menuItem.getItemId()) {
                 case R.id.nev_feed:
                     btnSignOut.setVisibility(View.INVISIBLE);
                     selected = new FeedFragment();
@@ -108,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nev_neighbors:
                     btnSignOut.setVisibility(View.INVISIBLE);
                     selected = new NeighboursFragment();
+                    break;
+                default:
+                    selected = new FeedFragment();
                     break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -125,12 +129,15 @@ public class MainActivity extends AppCompatActivity {
                 // Get User
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 // Show Email on toast
-                Toast.makeText(this, "" + user.getEmail(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "" + (user != null ? user.getEmail() : ""), Toast.LENGTH_SHORT).show();
                 // Set Button signout
                 btnSignOut.setEnabled(true);
 
-                // todo check for sign up vs sign in
-                if (true) {
+                if (response != null) {
+                    isNewUser = response.isNewUser();
+                }
+
+                if (isNewUser) {
                     startActivity(new Intent(this, JoinBuildingActivity.class));
                 } else {
                     startActivity(new Intent(this, MainActivity.class));
@@ -140,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
 
 }
