@@ -8,9 +8,8 @@ public class Item {
     private String description;
     private String imagePathInStore;
 
-    public Item(){
-
-    }
+    // This constructor is needed for Firebase
+    public Item(){}
 
     public Item(String ownerId, String name){
         this.ownerId = ownerId;

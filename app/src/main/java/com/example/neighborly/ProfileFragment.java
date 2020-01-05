@@ -50,7 +50,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        loadProfileImage();
+        //loadProfileImage();
 
         return profileView;
     }
