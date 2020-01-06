@@ -1,12 +1,10 @@
 package com.example.neighborly;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -23,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     List<AuthUI.IdpConfig> providers;
     Button btnSignOut;
+    private boolean isNewUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +69,11 @@ public class LoginActivity extends AppCompatActivity {
                 // Set Button signout
                 btnSignOut.setEnabled(true);
 
-                // todo check for sign up vs sign in
-                if (true) {
+                if (response != null) {
+                    isNewUser = response.isNewUser();
+                }
+
+                if (isNewUser) {
                     startActivity(new Intent(this, JoinBuildingActivity.class));
                 } else {
                     startActivity(new Intent(this, MainActivity.class));
@@ -81,5 +83,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-
 }

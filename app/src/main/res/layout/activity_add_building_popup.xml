@@ -47,12 +47,12 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnfollow"
+        android:id="@+id/btnContinue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
-        android:text="Done"
+        android:text="Add and continue"
         android:textColor="@color/white" />
 
 </LinearLayout>

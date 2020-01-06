@@ -17,4 +17,6 @@
     <string name="title_notifications">Notifications</string>
     <string name="where_do_i_belong">Where Do I Belong?</string>
     <string name="description">Description</string>
+    <string name="item_name">Item Name</string>
+    <string name="add">Add</string>
 </resources>
