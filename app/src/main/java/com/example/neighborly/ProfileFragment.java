@@ -66,7 +66,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void loadProfileDetails(DataSnapshot dataSnapshot) {
-        User user = dataSnapshot.getValue(User.class);
+        UserModel user = dataSnapshot.getValue(UserModel.class);
 
         TextView userName = profileView.findViewById(R.id.userName);
         TextView userDescription = profileView.findViewById(R.id.userDescription);

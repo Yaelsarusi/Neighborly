@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if (resultCode == RESULT_OK) {
-                // Get User
+                // Get UserModel
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 // Show Email on toast
                 Toast.makeText(this, "" + (user != null ? user.getEmail() : ""), Toast.LENGTH_SHORT).show();
