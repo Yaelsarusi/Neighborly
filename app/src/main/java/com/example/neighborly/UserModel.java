@@ -8,10 +8,10 @@ public class UserModel {
     private String userPresentedName;
     private String address;
     private String description;
-    private List<Item> userItems;
+    private List<ItemModel> userItemModels;
 
     public UserModel() {
-        userItems = new ArrayList<>();
+        userItemModels = new ArrayList<>();
     }
 
     public UserModel(String id, String name, String address) {
@@ -32,8 +32,8 @@ public class UserModel {
         return description;
     }
 
-    public List<Item> getUserItems() {
-        return userItems;
+    public List<ItemModel> getUserItemModels() {
+        return userItemModels;
     }
 
     public void setUserPresentedName(String userPresentedName) {

@@ -2,20 +2,18 @@ package com.example.neighborly;
 
 import android.graphics.Bitmap;
 
-import com.google.firebase.auth.FirebaseUser;
-
-public class Item {
+public class ItemModel {
 
     private Bitmap image;
     private String name;
     private String owner;
     private String description;
 
-    public Item()
+    public ItemModel()
     {
     }
 
-    public Item(Bitmap image, String name, String owner, String description) {
+    public ItemModel(Bitmap image, String name, String owner, String description) {
         this.image = image;
         this.name = name;
         this.owner = owner;

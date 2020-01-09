@@ -1,8 +1,6 @@
 package com.example.neighborly;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +9,14 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
-public class ItemAdapter extends PagerAdapter {
-
+public class ItemCardAdapter extends PagerAdapter {
     private int LOOPS_COUNT;
-    private List<Item> models;
+    private List<ItemModel> models;
     private Context context;
 
-    public ItemAdapter(List<Item> models, Context context, boolean infinite) {
+    public ItemCardAdapter(List<ItemModel> models, Context context, boolean infinite) {
         this.models = models;
         this.context = context;
         this.LOOPS_COUNT = infinite? 1000 : 1;
@@ -53,12 +48,13 @@ public class ItemAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         int new_position = position % models.size();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.card_item, container, false);
+        View view = layoutInflater.inflate(R.layout.requests_card_item, container, false);
 
         ImageView imageView;
 
         imageView = view.findViewById(R.id.image);
         imageView.setImageBitmap(models.get(new_position).getImage());
+
         container.addView(view, 0);
         return view;
     }
