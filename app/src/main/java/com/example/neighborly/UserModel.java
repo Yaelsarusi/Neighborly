@@ -48,6 +48,10 @@ public class UserModel {
         this.description = description;
     }
 
+    public void addItemToList(ItemModel item) {
+        userItemModels.add(item);
+    }
+
     public String getId() {
         return id;
     }

@@ -12,10 +12,10 @@ import java.util.List;
 
 public class PrivateChatAdapter extends PagerAdapter {
     private int LOOPS_COUNT;
-    private List<Request> models;  // Todo - This needs to be the object of the private conversation, in this context. Temporaraly made this into the Requests object, but needs to be discussed.
+    private List<RequestModel> models;  // Todo - This needs to be the object of the private conversation, in this context. Temporaraly made this into the Requests object, but needs to be discussed.
     private Context context;
 
-    public PrivateChatAdapter(List<Request> models, Context context, boolean infinite) {
+    public PrivateChatAdapter(List<RequestModel> models, Context context, boolean infinite) {
         this.models = models;
         this.context = context;
         this.LOOPS_COUNT = infinite? 1000 : 1;

@@ -13,10 +13,10 @@ import java.util.List;
 
 public class RequestsCardAdapter extends PagerAdapter {
     private int LOOPS_COUNT;
-    private List<Request> models;
+    private List<RequestModel> models;
     private Context context;
 
-    public RequestsCardAdapter(List<Request> models, Context context, boolean infinite) {
+    public RequestsCardAdapter(List<RequestModel> models, Context context, boolean infinite) {
         this.models = models;
         this.context = context;
         this.LOOPS_COUNT = infinite? 1000 : 1;

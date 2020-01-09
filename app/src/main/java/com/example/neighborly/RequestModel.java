@@ -2,7 +2,7 @@ package com.example.neighborly;
 
 import java.io.Serializable;
 
-public class Request implements Serializable {
+public class RequestModel implements Serializable {
 
 
     // Todo: implement this

@@ -1,31 +1,29 @@
 package com.example.neighborly;
 
-import android.graphics.Bitmap;
-
 public class ItemModel {
 
-    private Bitmap image;
+    // firebase does not handle uri, we hold a string instead
+    private String imageUriString;
     private String name;
     private String owner;
     private String description;
 
-    public ItemModel()
-    {
+    public ItemModel() {
     }
 
-    public ItemModel(Bitmap image, String name, String owner, String description) {
-        this.image = image;
+    public ItemModel(String imageUriString, String name, String owner, String description) {
+        this.imageUriString = imageUriString;
         this.name = name;
         this.owner = owner;
         this.description = description;
     }
 
-    public Bitmap getImage() {
-        return image;
+    public String getImageUriString() {
+        return this.imageUriString;
     }
 
-    public void setImage(Bitmap image) {
-        this.image = image;
+    public void setImageUriString(String imageUriString) {
+        this.imageUriString = imageUriString;
     }
 
     public String getName() {

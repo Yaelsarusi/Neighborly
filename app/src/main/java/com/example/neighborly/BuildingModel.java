@@ -9,7 +9,6 @@ class BuildingModel {
     private List<String> userIdList;
 
     public BuildingModel() {
-
     }
 
     public BuildingModel(String address, String userId) {
