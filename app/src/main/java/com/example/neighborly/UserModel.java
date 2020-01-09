@@ -1,22 +1,25 @@
 package com.example.neighborly;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class UserModel {
     private String id;
     private String userPresentedName;
     private String address;
     private String description;
     private List<Item> userItems;
 
-    public User(){
+    public UserModel() {
         userItems = new ArrayList<>();
     }
 
-    public User(String id, String name){
+    public UserModel(String id, String name, String address) {
         this.id = id;
         this.userPresentedName = name;
+        this.address = address;
     }
+
     public String getUserPresentedName() {
         return userPresentedName;
     }
