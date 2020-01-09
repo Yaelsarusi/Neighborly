@@ -6,7 +6,7 @@ import java.util.List;
 class BuildingModel {
 
     private String address;
-    private List<String> userId;
+    private List<String> userIdList;
 
     public BuildingModel() {
 
@@ -14,8 +14,8 @@ class BuildingModel {
 
     public BuildingModel(String address, String userId) {
         this.address = address;
-        this.userId = new ArrayList<>();
-        this.userId.add(userId);
+        this.userIdList = new ArrayList<>();
+        this.userIdList.add(userId);
     }
 
     public String getAddress() {
@@ -26,11 +26,11 @@ class BuildingModel {
         this.address = address;
     }
 
-    public List<String> getUserId() {
-        return userId;
+    public List<String> getUserIdList() {
+        return userIdList;
     }
 
     public void addUserId(String uid) {
-        userId.add(uid);
+        userIdList.add(uid);
     }
 }
