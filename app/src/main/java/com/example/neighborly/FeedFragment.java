@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class FeedFragment extends Fragment {
 
     Integer[] colors = null;
-    ArrayList<Request> privateChats;
+    ArrayList<RequestModel> privateChats;
     ViewPager privateChatCarouselViewPager;
     PrivateChatAdapter privateChatCarouselAdapter;
     int privateChatCarouselPosition;

@@ -1,6 +1,7 @@
 package com.example.neighborly;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class ItemCardAdapter extends PagerAdapter {
         ImageView imageView;
 
         imageView = view.findViewById(R.id.image);
-        imageView.setImageBitmap(models.get(new_position).getImage());
+        imageView.setImageURI(Uri.parse(models.get(new_position).getImageUriString()));
 
         container.addView(view, 0);
         return view;
