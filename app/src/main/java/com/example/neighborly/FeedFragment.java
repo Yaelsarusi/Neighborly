@@ -1,5 +1,6 @@
 package com.example.neighborly;
 
+import android.content.Intent;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -37,6 +38,15 @@ public class FeedFragment extends Fragment {
                 showPopup(v, itemsFound);
             }
         });
+
+        Button buttonRequest = feedView.findViewById(R.id.buttonRequest);
+        buttonRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), RequestActivity.class));
+            }
+        });
+
         return feedView;
     }
 
