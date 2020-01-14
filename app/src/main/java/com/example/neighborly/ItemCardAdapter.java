@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class ItemCardAdapter extends PagerAdapter {
@@ -54,7 +56,7 @@ public class ItemCardAdapter extends PagerAdapter {
         ImageView imageView;
 
         imageView = view.findViewById(R.id.image);
-        imageView.setImageURI(Uri.parse(models.get(new_position).getImageUriString()));
+        Picasso.get().load(Uri.parse(models.get(new_position).getImageUriString())).into(imageView);
 
         container.addView(view, 0);
         return view;
