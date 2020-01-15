@@ -1,36 +1,69 @@
 package com.example.neighborly;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 
 public class FeedFragment extends Fragment {
-
-    Integer[] colors = null;
-    ArrayList<RequestModel> privateChats;
-    ViewPager privateChatCarouselViewPager;
-    PrivateChatAdapter privateChatCarouselAdapter;
-    int privateChatCarouselPosition;
+    private View feedView;
+    private Dialog popupRequestDialog;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_feed, container, false);
-        Button searchButton = view.findViewById(R.id.searchButton);
-        return view;
+        super.onCreate(savedInstanceState);
+        popupRequestDialog = new Dialog(this.getContext());
+        feedView = inflater.inflate(R.layout.fragment_feed, container, false);
+
+        Button searchButton = feedView.findViewById(R.id.searchButton);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText searchText = feedView.findViewById(R.id.SearchText);
+                ArrayList<ItemModel> itemsFound = searchForItem(searchText.getText().toString());
+                showPopup(v, itemsFound);
+            }
+        });
+        return feedView;
     }
 
-    protected void createPopup(ArrayList<ItemModel> itemModelList) {
-        // https://www.awsrh.com/2017/10/custom-pop-up-window-with-android-studio.html
+    private String cleanSearchWord(String itemToSearch){
+        // todo - add the same "clean" function when we save the item.
+        return itemToSearch;
+    }
+
+    private ArrayList<ItemModel> searchForItem(String itemToSearch) {
+        // todo - search for the item
+        String cleanSearch = cleanSearchWord(itemToSearch);
+        ArrayList<ItemModel> foundItems = new ArrayList<>();
+        return foundItems;
+    }
+
+    private void showPopup(View view, ArrayList<ItemModel> itemsFound) {
+        Button sendButton;
+        popupRequestDialog.setContentView(R.layout.popup_add_request);
+        sendButton = popupRequestDialog.findViewById(R.id.send);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupRequestDialog.dismiss();
+            }
+        });
+        popupRequestDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupRequestDialog.show();
     }
 
 }
