@@ -111,7 +111,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
         DatabaseReference usersRef = database.getReference().child("Users");
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        UserModel newUser = new UserModel(firebaseUser.getUid(), firebaseUser.getDisplayName(), address);
+        UserModel newUser = new UserModel(firebaseUser.getUid(), firebaseUser.getDisplayName(), address, firebaseUser.getPhotoUrl().toString());
 
         Map<String, Object> users = new HashMap<>();
         users.put(firebaseUser.getUid(), newUser);

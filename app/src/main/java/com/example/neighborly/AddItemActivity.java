@@ -100,7 +100,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         // Create a reference to "itemName.jpg"
         String imageReference = newItem.getName() + ".jpg";
-        StorageReference itemImageRef = storageRef.child(imageReference);
+        final StorageReference itemImageRef = storageRef.child(imageReference);
 
         // Get the data from an ImageView as bytes
         addItemImage.setDrawingCacheEnabled(true);
@@ -110,7 +110,7 @@ public class AddItemActivity extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        UploadTask uploadTask = itemImageRef.putBytes(data);
+        final UploadTask uploadTask = itemImageRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -120,13 +120,18 @@ public class AddItemActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // update the items image uri to reference firestorage
-                Uri imageUri = taskSnapshot.getUploadSessionUri();
-                newItem.setImageUriString(imageUri.toString());
-                // upload to db with updated image uri
-                addItemToDB(newItem);
-                addItemToUserInDB(newItem);
-            }
-        });
+                itemImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        newItem.setImageUriString(uri.toString());
+                        // upload to db with updated image uri
+                        addItemToDB(newItem);
+                        addItemToUserInDB(newItem);
+
+                        //Do what you need to do with url
+                    }});
+
+                }});
 
     }
 
