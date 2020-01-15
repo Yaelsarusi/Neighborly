@@ -17,8 +17,8 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 
 public class FeedFragment extends Fragment {
-    View feedView;
-    Dialog popupRequestDialog;
+    private View feedView;
+    private Dialog popupRequestDialog;
 
     @Nullable
     @Override
@@ -33,26 +33,32 @@ public class FeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 EditText searchText = feedView.findViewById(R.id.SearchText);
-                ArrayList<ItemModel> n = searchForItem(searchText.getText().toString());
-                showPopup(v);
+                ArrayList<ItemModel> itemsFound = searchForItem(searchText.getText().toString());
+                showPopup(v, itemsFound);
             }
         });
         return feedView;
     }
 
+    private String cleanSearchWord(String itemToSearch){
+        // todo - add the same "clean" function when we save the item.
+        return itemToSearch;
+    }
+
     private ArrayList<ItemModel> searchForItem(String itemToSearch) {
         // todo - search for the item
+        String cleanSearch = cleanSearchWord(itemToSearch);
         ArrayList<ItemModel> foundItems = new ArrayList<>();
         return foundItems;
     }
 
-    private void showPopup(View v) {
-        Button sandButton;
+    private void showPopup(View view, ArrayList<ItemModel> itemsFound) {
+        Button sendButton;
         popupRequestDialog.setContentView(R.layout.popup_add_request);
-        sandButton = popupRequestDialog.findViewById(R.id.sand);
-        sandButton.setOnClickListener(new View.OnClickListener() {
+        sendButton = popupRequestDialog.findViewById(R.id.send);
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 popupRequestDialog.dismiss();
             }
         });
