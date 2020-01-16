@@ -51,7 +51,7 @@ public class NeighborsFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         BuildingModel curBuilding = dataSnapshot.getValue(BuildingModel.class);
-                        neighborsList = curBuilding.getUserIdList();
+                        neighborsList = curBuilding.getUserList();
                         neighborsList.remove(curUserId);
                         updateNeighborsScroll();
                     }
@@ -68,15 +68,14 @@ public class NeighborsFragment extends Fragment {
 
             }
         });
-
-        neighborsListView = neighborsView.findViewById(R.id.list_1);
-        neighborsListView.setAdapter(new NeighborsListAdapter(neighborsList, getContext()));
-        //Toast.makeText(this, text[0], Toast.LENGTH_LONG).show();
         return neighborsView;
     }
 
     private void updateNeighborsScroll(){
         // maybe do something like this: https://stackoverflow.com/questions/40043289/how-to-put-many-objects-in-a-scroll-view-entry-in-android
+        neighborsListView = neighborsView.findViewById(R.id.list_1);
+        neighborsListView.setAdapter(new NeighborsListAdapter(neighborsList, getContext()));
+        //Toast.makeText(this, text[0], Toast.LENGTH_LONG).show();
 
     }
 }

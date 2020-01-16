@@ -36,10 +36,11 @@ public class JoinBuildingActivity extends AppCompatActivity {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final int PICK_IMAGE = 1;
     private CircleImageView buildingImage;
-    Uri newImageUri;
-    Button btnDone;
-    Dialog dialog;
-    String address;
+    private UserModel newUser;
+    private Uri newImageUri;
+    private Button btnDone;
+    private Dialog dialog;
+    private String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,8 @@ public class JoinBuildingActivity extends AppCompatActivity {
                         + ((EditText) findViewById(R.id.editTextCity)).getText().toString();
                 // check for existing building
                 DatabaseReference buildingRef = database.getReference().child("Buildings");
+                newUser = createUser();
+
                 buildingRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -75,7 +78,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
                             if (buildingModel != null && buildingModel.getAddress() != null) {
                                 if (buildingModel.getAddress().equals(address)) {
                                     // building exists, add user to it
-                                    addUserAndAssignBuildingInDB(address);
+                                    addUserToDatabase();
                                     Toast.makeText(JoinBuildingActivity.this, "added to building", Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(JoinBuildingActivity.this, MainActivity.class));
                                     return;
@@ -96,25 +99,27 @@ public class JoinBuildingActivity extends AppCompatActivity {
         });
     }
 
-    private void addBuildingToDB(String address) {
+    private UserModel createUser() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        return new UserModel(firebaseUser.getUid(), firebaseUser.getDisplayName(), address, firebaseUser.getPhotoUrl().toString());
+
+    }
+
+    private void addBuildingToDB() {
         DatabaseReference buildingRef = database.getReference().child("Buildings");
 
-        String userId = FirebaseAuth.getInstance().getUid();
-        BuildingModel newBuilding = new BuildingModel(address, userId);
+        UserModelFacade newUserFacade = new UserModelFacade(newUser);
+        BuildingModel newBuilding = new BuildingModel(address, newUserFacade);
 
         Map<String, Object> buildings = new HashMap<>();
         buildings.put(address, newBuilding);
         buildingRef.updateChildren(buildings);
     }
 
-    private void addUserAndAssignBuildingInDB(String address) {
+    private void addUserToDatabase() {
         DatabaseReference usersRef = database.getReference().child("Users");
-
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        UserModel newUser = new UserModel(firebaseUser.getUid(), firebaseUser.getDisplayName(), address, firebaseUser.getPhotoUrl().toString());
-
         Map<String, Object> users = new HashMap<>();
-        users.put(firebaseUser.getUid(), newUser);
+        users.put(newUser.getId(), newUser);
         usersRef.updateChildren(users);
     }
 
@@ -150,8 +155,8 @@ public class JoinBuildingActivity extends AppCompatActivity {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addBuildingToDB(address);
-                addUserAndAssignBuildingInDB(address);
+                addBuildingToDB();
+                addUserToDatabase();
                 startActivity(new Intent(JoinBuildingActivity.this, MainActivity.class));
             }
         });

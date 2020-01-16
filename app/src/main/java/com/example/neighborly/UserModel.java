@@ -16,7 +16,7 @@ public class UserModel {
         userItemModels = new ArrayList<>();
     }
 
-    public UserModel(String id, String name, String addres, String imageUriString) {
+    public UserModel(String id, String name, String address, String imageUriString) {
         this.id = id;
         this.userPresentedName = name;
         this.address = address;

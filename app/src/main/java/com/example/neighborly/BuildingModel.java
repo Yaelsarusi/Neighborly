@@ -25,11 +25,11 @@ class BuildingModel {
         this.address = address;
     }
 
-    public List<UserModelFacade> getUserIdList() {
+    public List<UserModelFacade> getUserList() {
         return userList;
     }
 
-    public void addUserId(UserModelFacade user) {
+    public void addUser(UserModelFacade user) {
         userList.add(user);
     }
 }
