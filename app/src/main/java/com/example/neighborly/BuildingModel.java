@@ -6,15 +6,15 @@ import java.util.List;
 class BuildingModel {
 
     private String address;
-    private List<String> userIdList;
+    private List<UserModelFacade> userList;
 
     public BuildingModel() {
     }
 
-    public BuildingModel(String address, String userId) {
+    public BuildingModel(String address, UserModelFacade user) {
         this.address = address;
-        this.userIdList = new ArrayList<>();
-        this.userIdList.add(userId);
+        this.userList = new ArrayList<>();
+        this.userList.add(user);
     }
 
     public String getAddress() {
@@ -25,11 +25,11 @@ class BuildingModel {
         this.address = address;
     }
 
-    public List<String> getUserIdList() {
-        return userIdList;
+    public List<UserModelFacade> getUserIdList() {
+        return userList;
     }
 
-    public void addUserId(String uid) {
-        userIdList.add(uid);
+    public void addUserId(UserModelFacade user) {
+        userList.add(user);
     }
 }

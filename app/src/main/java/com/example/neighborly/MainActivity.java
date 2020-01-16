@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.nev_neighbors:
                     btnSignOut.setVisibility(View.INVISIBLE);
-                    selected = new NeighboursFragment();
+                    selected = new NeighborsFragment();
                     break;
                 default:
                     selected = new FeedFragment();
