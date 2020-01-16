@@ -9,15 +9,18 @@ public class UserModel {
     private String address;
     private String description;
     private List<ItemModel> userItemModels;
+    // firebase does not handle uri, we hold a string instead
+    private String imageUriString;
 
     public UserModel() {
         userItemModels = new ArrayList<>();
     }
 
-    public UserModel(String id, String name, String address) {
+    public UserModel(String id, String name, String addres, String imageUriString) {
         this.id = id;
         this.userPresentedName = name;
         this.address = address;
+        this.imageUriString = imageUriString;
     }
 
     public String getUserPresentedName() {
@@ -54,5 +57,9 @@ public class UserModel {
 
     public String getId() {
         return id;
+    }
+
+    public String getImageUriString() {
+        return this.imageUriString;
     }
 }

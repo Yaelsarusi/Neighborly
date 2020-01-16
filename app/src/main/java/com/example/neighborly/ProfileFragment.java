@@ -1,6 +1,7 @@
 package com.example.neighborly;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class ProfileFragment extends Fragment {
     private ArrayList<ItemModel> userItems;
     private ViewPager itemCarouselViewPager;
     private ItemCardAdapter itemCarouselCardAdapter;
-
+    private int itemCarouselPosition;
 
 
     @Nullable
@@ -46,11 +48,12 @@ public class ProfileFragment extends Fragment {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = auth.getCurrentUser();
+
         mDatabase.child("Users").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                loadProfileDetails(dataSnapshot);
-                //loadProfileImage();
+                UserModel user = dataSnapshot.getValue(UserModel.class);
+                loadProfileDetails(user);
             }
 
             @Override
@@ -67,7 +70,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        mDatabase.child("Users").child(firebaseUser.getUid()).child("userItemList").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("Users").child(firebaseUser.getUid()).child("userItemModels").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 loadUserSavedItems(dataSnapshot);
@@ -91,8 +94,7 @@ public class ProfileFragment extends Fragment {
         return profileView;
     }
 
-    private void loadProfileDetails(DataSnapshot dataSnapshot) {
-        UserModel user = dataSnapshot.getValue(UserModel.class);
+    private void loadProfileDetails(UserModel user) {
         if (user == null){
             return;
         }
@@ -100,41 +102,29 @@ public class ProfileFragment extends Fragment {
         TextView userName = profileView.findViewById(R.id.userName);
         TextView userDescription = profileView.findViewById(R.id.userDescription);
         TextView userAddress = profileView.findViewById(R.id.userAddress);
+        ImageView userImage = profileView.findViewById(R.id.profilePicture);
 
         userName.setText(user.getUserPresentedName());
         userDescription.setText(user.getDescription());
+        // TODO - Change this, it's not working for some reason
+        Picasso.get().load(user.getImageUriString()).into(userImage);
+
         userAddress.setText(user.getAddress());
+
     }
 
     private void loadUserSavedItems(DataSnapshot dataSnapshot) {
-        //ProfileFragment.this.userItems;
         ArrayList<ItemModel> itemList = new ArrayList<ItemModel>();
-        for (DataSnapshot building : dataSnapshot.getChildren()) {
-            ItemModel itemModel = building.getValue(ItemModel.class);
+        for (DataSnapshot item : dataSnapshot.getChildren()) {
+            ItemModel itemModel = item.getValue(ItemModel.class);
             itemList.add(itemModel);
         }
 
         ProfileFragment.this.userItems = itemList;
         ProfileFragment.this.itemCarouselCardAdapter = new ItemCardAdapter(itemList, getContext(), true);
         itemCarouselViewPager = ProfileFragment.this.profileView.findViewById(R.id.userItemPager);
+        itemCarouselViewPager.setPadding(200, 0, 200, 0);
         itemCarouselViewPager.setAdapter(ProfileFragment.this.itemCarouselCardAdapter);
-
-        // todo - init the item carousel
-    }
-
-    private void loadProfileImage(DataSnapshot dataSnapshot){
-        // This is taken from here:
-        // https://stackoverflow.com/questions/50816557/storing-and-displaying-image-using-glide-firebase-android
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String curUser = auth.getUid();
-
-        // Reference to an image file in Cloud Storage
-        // Todo - This maybe isn't how we will store the curUser Image. Need to decide how and to refactor this.
-        StorageReference storageReference  = FirebaseStorage.getInstance().getReference().child(curUser).child("images/profile_image");
-        imageView = profileView.findViewById(R.id.profilePicture);
-
-        // Load the image using Glide
-        Glide.with(ProfileFragment.this.getContext()).load(storageReference).into(imageView);
     }
 
 }
