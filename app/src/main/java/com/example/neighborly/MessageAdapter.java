@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, MessageAdapter.MessageHolder> {

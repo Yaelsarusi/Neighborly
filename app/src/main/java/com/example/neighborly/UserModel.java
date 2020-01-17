@@ -62,4 +62,8 @@ public class UserModel {
     public String getImageUriString() {
         return this.imageUriString;
     }
+
+    public void setUserItemModels(List<ItemModel> itemList) {
+        userItemModels = itemList;
+    }
 }

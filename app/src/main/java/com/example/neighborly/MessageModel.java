@@ -60,4 +60,5 @@ public class MessageModel {
     public String getSenderImageUri() {
         return this.sender.getImageUriString();
     }
+
 }

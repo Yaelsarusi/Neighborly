@@ -54,7 +54,6 @@ public class NeighborsListAdapter extends BaseAdapter {
         name.setText(curNeighbor.getUserPresentedName());
         description.setText(curNeighbor.getDescription());
 
-        // Uncomment after merge with main branch:
         Glide.with(context).load(curNeighbor.getImageUriString()).into(picture);
         return (row);
     }

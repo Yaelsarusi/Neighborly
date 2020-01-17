@@ -20,4 +20,14 @@
     <string name="item_name">Item Name</string>
     <string name="add">Add</string>
     <string name="ItemImagesStorageUrl">gs://neighborly-a250f.appspot.com/ItemImages</string>
+    <string name="neighborPicture">Your neighbors profile picture</string>
+    <string name="editButton">Edit</string>
+    <string name="addItem">Add item</string>
+    <string name="profileFragmentTitle">My profile</string>
+    <string name="userNamePlaceHolder">user name</string>
+    <string name="userItemsListTitle">Your saved Items:</string>
+    <string name="userAddressTitle">Your address:</string>
+    <string name="userAddressNamePlaceholder">user address</string>
+    <string name="editButtonText">Edit</string>
+    <string name="saveButtonText">Save</string>
 </resources>
