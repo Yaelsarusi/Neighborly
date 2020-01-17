@@ -1,13 +1,13 @@
 package com.example.neighborly;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,10 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.firebase.ui.database.SnapshotParser;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -29,38 +26,32 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RequestActivity extends AppCompatActivity {
     private FirebaseRecyclerAdapter<MessageModel, MessageAdapter.MessageHolder> adapter;
-    private EditText input;
-    private ProgressBar progressBar;
-    private String userId;
-    private String userName;
-    private CircleImageView profileImage;
-
-    private FirebaseUser user;
     private FirebaseDatabase database;
+    private TextView textViewItemName;
+    private EditText input;
+    private UserModel curUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
 
-        //todo add intent logic for getting the request context
         Intent intent = getIntent();
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        String itemId = intent.getStringExtra("itemId");
+        String itemName = intent.getStringExtra("itemName");
+        curUser = UserModelDataHolder.getInstance().getCurrentUser();
 
         input = findViewById(R.id.editTextInput);
-        progressBar = findViewById(R.id.progressBar);
+        textViewItemName = findViewById(R.id.textViewItemName);
         final RecyclerView recyclerView = findViewById(R.id.recycleView);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+        textViewItemName.setText(itemName);
 
-        userName = user.getDisplayName();
-        userId = user.getUid();
-
-        // todo change to request context from intent
-        String path = "messages/" + "requestedItemId";
+        String path = "messages/" + itemId;
         database = FirebaseDatabase.getInstance();
-        DatabaseReference messagesRef = database.getReference("messages");
+        final DatabaseReference messagesRef = database.getReference(path);
 
         // New child entries
         SnapshotParser<MessageModel> parser = new SnapshotParser<MessageModel>() {
@@ -69,7 +60,7 @@ public class RequestActivity extends AppCompatActivity {
             public MessageModel parseSnapshot(DataSnapshot dataSnapshot) {
                 MessageModel message = dataSnapshot.getValue(MessageModel.class);
                 if (message != null) {
-                    message.setId(dataSnapshot.getKey());
+                    message.setMessageId(dataSnapshot.getKey());
                 }
                 return message;
             }
@@ -80,7 +71,7 @@ public class RequestActivity extends AppCompatActivity {
                         .setQuery(messagesRef, parser)
                         .build();
 
-        adapter = new MessageAdapter(RequestActivity.this, options, userId);
+        adapter = new MessageAdapter(RequestActivity.this, options, curUser.getId());
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
@@ -111,9 +102,7 @@ public class RequestActivity extends AppCompatActivity {
                     return;
                 }
 
-                // todo use path
-                // todo change to reference
-                database.getReference().child("messages").push().setValue(new MessageModel(userName, message, user.getUid()));
+                messagesRef.push().setValue(new MessageModel(curUser, message));
                 input.setText("");
             }
         });

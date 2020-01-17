@@ -8,7 +8,7 @@
     android:padding="5dp">
 
     <TextView
-        android:id="@+id/txtclose"
+        android:id="@+id/txtClose"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="end"

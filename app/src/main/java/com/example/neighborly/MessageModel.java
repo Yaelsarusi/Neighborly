@@ -3,32 +3,34 @@ package com.example.neighborly;
 import java.util.Date;
 
 public class MessageModel {
-    private String senderUid;
-    private String sender;
+    private UserModel sender;
     private String text;
     private long sentTime;
-    private String id;
+    private String messageId;
 
     public MessageModel() {
     }
 
-    public MessageModel(String sender, String text, String senderUid) {
+    public MessageModel(UserModel sender, String text) {
         this.sender = sender;
         this.text = text;
         this.sentTime = new Date().getTime();
-        this.senderUid = senderUid;
     }
 
-    public String getSender() {
-        return sender;
+    public UserModel getSender() {
+        return this.sender;
     }
 
-    public void setSender(String sender) {
+    public void setSender(UserModel sender) {
         this.sender = sender;
     }
 
+    public String getSenderUserPresentedName() {
+        return this.sender.getUserPresentedName();
+    }
+
     public String getText() {
-        return text;
+        return this.text;
     }
 
     public void setText(String text) {
@@ -36,26 +38,26 @@ public class MessageModel {
     }
 
     public String getSenderUid() {
-        return senderUid;
-    }
-
-    public void setSenderUid(String senderUid) {
-        this.senderUid = senderUid;
+        return this.sender.getId();
     }
 
     public long getSentTime() {
-        return sentTime;
+        return this.sentTime;
     }
 
     public void setSentTime(long sentTime) {
         this.sentTime = sentTime;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
-    public String getId() {
-        return id;
+    public String getMessageId() {
+        return this.messageId;
+    }
+
+    public String getSenderImageUri() {
+        return this.sender.getImageUriString();
     }
 }

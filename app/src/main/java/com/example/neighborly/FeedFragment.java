@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class FeedFragment extends Fragment {
     private View feedView;
     private Dialog popupRequestDialog;
+    private EditText searchText;
 
     @Nullable
     @Override
@@ -33,24 +34,16 @@ public class FeedFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText searchText = feedView.findViewById(R.id.SearchText);
+                searchText = feedView.findViewById(R.id.SearchText);
                 ArrayList<ItemModel> itemsFound = searchForItem(searchText.getText().toString());
                 showPopup(v, itemsFound);
-            }
-        });
-
-        Button buttonRequest = feedView.findViewById(R.id.buttonRequest);
-        buttonRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), RequestActivity.class));
             }
         });
 
         return feedView;
     }
 
-    private String cleanSearchWord(String itemToSearch){
+    private String cleanSearchWord(String itemToSearch) {
         // todo - add the same "clean" function when we save the item.
         return itemToSearch;
     }
@@ -69,6 +62,11 @@ public class FeedFragment extends Fragment {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), RequestActivity.class);
+                // todo get real id
+                intent.putExtra("itemId", 0);
+                intent.putExtra("itemName", searchText.getText().toString());
+                startActivity(intent);
                 popupRequestDialog.dismiss();
             }
         });

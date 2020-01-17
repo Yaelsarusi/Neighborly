@@ -14,20 +14,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
 public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, MessageAdapter.MessageHolder> {
-    private final String TAG = "MessageAdapter";
-    private Context context;
-    private String userId;
-    private StorageReference storageReference;
-    private RequestOptions requestOptions = new RequestOptions();
     private final int MESSAGE_IN_VIEW_TYPE = 1;
     private final int MESSAGE_OUT_VIEW_TYPE = 2;
+    private RequestOptions requestOptions = new RequestOptions();
+    private Context context;
+    private String userId;
 
     public MessageAdapter(@NonNull Context context, FirebaseRecyclerOptions<MessageModel> options, String userID) {
         /*
@@ -39,8 +34,6 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, Messag
         this.context = context;
         this.userId = userID;
         requestOptions.placeholder(R.mipmap.ic_launcher);
-        storageReference = FirebaseStorage.getInstance().getReference()
-                .child("profile_images");
     }
 
     @Override
@@ -55,19 +48,18 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, Messag
     @Override
     protected void onBindViewHolder(@NonNull MessageHolder holder, int position, @NonNull MessageModel model) {
         //Bind values from Message to the viewHolder
-
         final TextView mText = holder.mText;
         final TextView mUsername = holder.mUsername;
         final TextView mTime = holder.mTime;
         final CircleImageView imgProfile = holder.imgProfile;
 
-        mUsername.setText(model.getSender());
+        mUsername.setText(model.getSenderUserPresentedName());
         mText.setText(model.getText());
-        //mTime.setText(DateFormat.format("dd MMM  (h:mm a)", model.getSentTime()));
-//        Glide.with(context)
-//                .setDefaultRequestOptions(requestOptions)
-//                .load(storageReference.child(model.getSenderUid()))
-//                .into(imgProfile);
+        mTime.setText(DateFormat.format("dd MMM  (h:mm a)", model.getSentTime()));
+        Glide.with(context)
+                .setDefaultRequestOptions(requestOptions)
+                .load(model.getSenderImageUri())
+                .into(imgProfile);
     }
 
     @NonNull
@@ -98,7 +90,7 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, Messag
             super(itemView);
             mText = itemView.findViewById(R.id.textViewMessage);
             mUsername = itemView.findViewById(R.id.textViewUserName);
-//            mTime = itemView.findViewById(R.id.message_time);
+            mTime = itemView.findViewById(R.id.textViewTime);
             imgProfile = itemView.findViewById(R.id.profileImage);
         }
     }

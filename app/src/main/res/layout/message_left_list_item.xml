@@ -31,4 +31,14 @@
         android:text="hello"
         android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@+id/profileImage"
+        android:text="15:00"
+        android:textSize="13sp" />
+
 </RelativeLayout>
