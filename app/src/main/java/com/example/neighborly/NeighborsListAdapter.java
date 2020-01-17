@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +55,7 @@ public class NeighborsListAdapter extends BaseAdapter {
         description.setText(curNeighbor.getDescription());
 
         // Uncomment after merge with main branch:
-        //Picasso.get().load(curNeighbor.getImageUriString()).into(picture);
+        Glide.with(context).load(curNeighbor.getImageUriString()).into(picture);
         return (row);
     }
 }

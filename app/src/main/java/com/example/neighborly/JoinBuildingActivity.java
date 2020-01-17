@@ -36,11 +36,11 @@ public class JoinBuildingActivity extends AppCompatActivity {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final int PICK_IMAGE = 1;
     private CircleImageView buildingImage;
-    private UserModel newUser;
     private Uri newImageUri;
     private Button btnDone;
     private Dialog dialog;
     private String address;
+    private UserModel newUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +65,12 @@ public class JoinBuildingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 address = ((EditText) findViewById(R.id.editTextStreetAddress)).getText().toString()
-                        + ((EditText) findViewById(R.id.editTextCity)).getText().toString();
-                // check for existing building
+                        + " " + ((EditText) findViewById(R.id.editTextCity)).getText().toString();
+
                 DatabaseReference buildingRef = database.getReference().child("Buildings");
                 newUser = createUser();
 
+                // check for existing building
                 buildingRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -101,8 +102,10 @@ public class JoinBuildingActivity extends AppCompatActivity {
 
     private UserModel createUser() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        return new UserModel(firebaseUser.getUid(), firebaseUser.getDisplayName(), address, firebaseUser.getPhotoUrl().toString());
-
+        UserModel newUser = new UserModel(firebaseUser.getUid(), firebaseUser.getDisplayName(), address, firebaseUser.getPhotoUrl().toString());
+        // set data holder user model for reuse across the app
+        UserModelDataHolder.getInstance().setCurrentUser(newUser);
+        return newUser;
     }
 
     private void addBuildingToDB() {
@@ -141,7 +144,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
 
     public void ShowNewBuildingPopup() {
         dialog.setContentView(R.layout.activity_add_building_popup);
-        TextView textClose = (TextView) dialog.findViewById(R.id.txtclose);
+        TextView textClose = (TextView) dialog.findViewById(R.id.txtClose);
         Button btnDone = (Button) dialog.findViewById(R.id.buttonDone);
         textClose.setOnClickListener(new View.OnClickListener() {
             @Override
