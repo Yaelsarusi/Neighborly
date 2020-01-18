@@ -14,23 +14,24 @@
         android:layout_marginStart="47.3dp"
         android:layout_marginTop="25.3dp"
         android:layout_marginEnd="47.3dp"
-        android:text="My profile"
+        android:text="@string/profileFragmentTitle"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePicture"
-        android:layout_width="66dp"
-        android:layout_height="71dp"
+        android:layout_width="81dp"
+        android:layout_height="83dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="21dp"
         android:layout_marginTop="70dp"
-        android:layout_marginEnd="325dp"
-        android:layout_marginBottom="590dp"
-        android:visibility="visible"
+        android:layout_marginEnd="309dp"
+        android:layout_marginBottom="578dp"
+        android:contentDescription="@string/neighborPicture"
         tools:srcCompat="@tools:sample/avatars" />
+
 
     <TextView
         android:id="@+id/userName"
@@ -42,34 +43,55 @@
         android:layout_marginStart="103dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="6dp"
-        android:text="user name"
+        android:text="@string/userNamePlaceHolder"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+    <RelativeLayout
+        android:id="@+id/switcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userAddressTitle">
 
-    <TextView
-        android:id="@+id/userDescription"
-        android:layout_width="364dp"
-        android:layout_height="81dp"
-        android:layout_below="@+id/userAddressTitle"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginRight="25dp" />
+        <TextView
+            android:id="@+id/userDescription"
+            android:layout_width="364dp"
+            android:layout_height="81dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginRight="25dp" />
+
+        <EditText
+            android:id="@+id/userDescriptionEdit"
+            android:layout_width="364dp"
+            android:layout_height="81dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginRight="25dp">
+
+        </EditText>
+
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/userItemTitle"
         android:layout_width="251dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/userDescription"
+        android:layout_below="@+id/switcher"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="27dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="133dp"
-        android:text="Your saved Items:"
+        android:text="@string/userItemsListTitle"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TextView
@@ -80,7 +102,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="23dp"
         android:layout_marginTop="25dp"
-        android:text="Your address:"
+        android:text="@string/userAddressTitle"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TextView
@@ -93,7 +115,7 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="94dp"
         android:layout_toEndOf="@+id/userAddressTitle"
-        android:text="user address"
+        android:text="@string/userAddressNamePlaceholder"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <Button
@@ -101,14 +123,14 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_above="@+id/userItemPager"
-        android:layout_below="@+id/userDescription"
+        android:layout_below="@+id/switcher"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="-110dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="11dp"
         android:layout_marginRight="25dp"
         android:layout_marginBottom="-5dp"
-        android:text="Add item" />
+        android:text="@string/addItem" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/userItemPager"
@@ -123,5 +145,19 @@
         app:layout_constraintStart_toStartOf="parent">
 
     </androidx.viewpager.widget.ViewPager>
+
+    <Button
+        android:id="@+id/editToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/switcher"
+        android:layout_below="@+id/userName"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="315dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="-8dp"
+        android:text="@string/editButton" />
 
 </RelativeLayout>
