@@ -102,7 +102,12 @@ public class JoinBuildingActivity extends AppCompatActivity {
 
     private UserModel createUser() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        UserModel newUser = new UserModel(firebaseUser.getUid(), firebaseUser.getDisplayName(), address, firebaseUser.getPhotoUrl().toString());
+        String photoUrl = "";
+        if (firebaseUser.getPhotoUrl() != null) {
+            photoUrl = firebaseUser.getPhotoUrl().toString();
+        }
+
+        UserModel newUser = new UserModel(firebaseUser.getUid(), firebaseUser.getDisplayName(), address, photoUrl);
         // set data holder user model for reuse across the app
         UserModelDataHolder.getInstance().setCurrentUser(newUser);
         return newUser;
