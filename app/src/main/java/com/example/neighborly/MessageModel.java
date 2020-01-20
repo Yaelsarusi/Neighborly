@@ -25,7 +25,7 @@ public class MessageModel {
         this.sender = sender;
     }
 
-    public String getSenderUserPresentedName() {
+    public String getSenderPresentedName() {
         return this.sender.getPresentedName();
     }
 

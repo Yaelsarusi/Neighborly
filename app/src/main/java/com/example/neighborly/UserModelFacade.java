@@ -22,7 +22,7 @@ public class UserModelFacade implements Serializable {
         return id;
     }
 
-    public String getUserPresentedName() {
+    public String getPresentedName() {
         return presentedName;
     }
 
