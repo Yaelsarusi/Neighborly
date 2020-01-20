@@ -11,6 +11,7 @@ public class UserModelFacade implements Serializable {
     // firebase does not handle uri, we hold a string instead
     private String imageUriString;
 
+
     public UserModelFacade() {}
 
     public UserModelFacade(UserModel user) {
