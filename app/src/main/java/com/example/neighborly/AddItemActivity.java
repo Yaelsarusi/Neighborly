@@ -76,8 +76,6 @@ public class AddItemActivity extends AppCompatActivity {
                         currentUser.getId(), description.getText().toString());
 
                 addImageToStorage(newItem);
-
-                currentUser.addToItemsList(newItem);
                 UserModelDataHolder.getInstance().setCurrentUser(currentUser);
 
                 startActivity(new Intent(AddItemActivity.this, MainActivity.class));
