@@ -1,14 +1,12 @@
 package com.example.neighborly;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserModelFacade {
     private String id;
     private String userPresentedName;
     private String description;
     // firebase does not handle uri, we hold a string instead
     private String imageUriString;
+
 
     public UserModelFacade() {}
 
