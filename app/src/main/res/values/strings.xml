@@ -30,4 +30,7 @@
     <string name="userAddressNamePlaceholder">user address</string>
     <string name="editButtonText">Edit</string>
     <string name="saveButtonText">Save</string>
+    <string name="emptyBuilding1Msg">Your the first one!</string>
+    <string name="emptyBuilding2Msg">spread the word</string>
+    <string name="SayHelloToYourNeighbors">Click on your neighbor and say hello :)</string>
 </resources>

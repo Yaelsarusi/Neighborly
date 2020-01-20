@@ -59,19 +59,6 @@ public class ProfileFragment extends Fragment {
         });
         setUserSavedItemsCarousel();
 
-        mDatabase.child("Users").child(curUser.getId()).child("userItemModels").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                updateUserSavedItems(dataSnapshot);
-                setUserSavedItemsCarousel();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
         editToggleButton = profileView.findViewById(R.id.editToggleButton);
         setToViewMode();
 
@@ -135,16 +122,6 @@ public class ProfileFragment extends Fragment {
         itemCarouselViewPager = ProfileFragment.this.profileView.findViewById(R.id.userItemPager);
         itemCarouselViewPager.setPadding(200, 0, 200, 0);
         itemCarouselViewPager.setAdapter(ProfileFragment.this.itemCarouselCardAdapter);
-
-    }
-
-    private void updateUserSavedItems(DataSnapshot dataSnapshot) {
-        List<ItemModel> itemList = new ArrayList<>();
-        for (DataSnapshot item : dataSnapshot.getChildren()) {
-            ItemModel itemModel = item.getValue(ItemModel.class);
-            itemList.add(itemModel);
-        }
-        curUser.setUserItemModels(itemList);
 
     }
 

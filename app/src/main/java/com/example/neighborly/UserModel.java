@@ -52,6 +52,9 @@ public class UserModel {
     }
 
     public void addItemToList(ItemModel item) {
+        if (userItemModels == null){
+            userItemModels = new ArrayList<>();
+        }
         userItemModels.add(item);
     }
 
