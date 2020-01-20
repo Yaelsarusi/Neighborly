@@ -1,6 +1,8 @@
 package com.example.neighborly;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +15,23 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 public class NeighborsListAdapter extends BaseAdapter {
     List<UserModelFacade> neighborsList;
     LayoutInflater inflater;
     Context context;
+    Activity activity;
 
-    public NeighborsListAdapter() {
+    public NeighborsListAdapter(Activity activity) {
         neighborsList = new ArrayList<>();
+        this.activity = activity;
     }
 
-    public NeighborsListAdapter(List<UserModelFacade> neighborsList, Context context) {
+    public NeighborsListAdapter(Activity activity, List<UserModelFacade> neighborsList, Context context) {
         this.neighborsList = neighborsList;
         this.context = context;
+        this.activity = activity;
     }
 
     public int getCount() {
@@ -42,7 +49,7 @@ public class NeighborsListAdapter extends BaseAdapter {
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row;
@@ -55,6 +62,17 @@ public class NeighborsListAdapter extends BaseAdapter {
         description.setText(curNeighbor.getDescription());
 
         Glide.with(context).load(curNeighbor.getImageUriString()).into(picture);
+
+        picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserModelFacade neighbor = neighborsList.get(position);
+                Intent intent = new Intent(NeighborsListAdapter.this.activity, RequestActivity.class);
+                //intent.putExtra("context", RequestActivity.chatContext);
+                intent.putExtra("neighbor", neighbor);
+                NeighborsListAdapter.this.activity.startActivity(intent);
+            }
+        });
         return (row);
     }
 }

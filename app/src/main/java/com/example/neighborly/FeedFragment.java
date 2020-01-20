@@ -64,6 +64,7 @@ public class FeedFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), RequestActivity.class);
                 // todo get real id
+                //intent.putExtra("context", RequestActivity.itemRequestContext);
                 intent.putExtra("itemId", 0);
                 intent.putExtra("itemName", searchText.getText().toString());
                 startActivity(intent);

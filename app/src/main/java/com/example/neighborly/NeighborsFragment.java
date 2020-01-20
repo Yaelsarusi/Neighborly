@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,7 +18,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 
 public class NeighborsFragment extends Fragment {
-    private DatabaseReference buildingRef;
     private View neighborsView;
     private List<UserModelFacade> neighborsList;
     private UserModel curUser;
@@ -26,7 +27,7 @@ public class NeighborsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         neighborsView = inflater.inflate(R.layout.fragment_neighbours, container, false);
         curUser = UserModelDataHolder.getInstance().getCurrentUser();
-        buildingRef = FirebaseDatabase.getInstance().getReference().child("Buildings").child(curUser.getAddress());
+        DatabaseReference buildingRef = FirebaseDatabase.getInstance().getReference().child("Buildings").child(curUser.getAddress());
 
         buildingRef.addValueEventListener(new ValueEventListener() {
 
@@ -34,11 +35,24 @@ public class NeighborsFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 BuildingModel curBuilding = dataSnapshot.getValue(BuildingModel.class);
                 neighborsList = curBuilding.getUserList();
-                if (neighborsList != null){
-
-                    neighborsList.remove(new UserModelFacade(curUser));
+                for (UserModelFacade neighbor: neighborsList){
+                    if (neighbor.getId().equals(curUser.getId())) {
+                        neighborsList.remove(new UserModelFacade(curUser));
+                        break;
+                    }
                 }
-                updateNeighborsScroll();
+
+                if (neighborsList.isEmpty()){
+                    Toast.makeText(getActivity(),
+                            getString(R.string.emptyBuilding1Msg) + getString(R.string.emptyBuilding2Msg),
+                            Toast.LENGTH_LONG).show();
+                }
+                else {
+                    updateNeighborsScroll();
+                    Toast.makeText(getActivity(),
+                            getString(R.string.SayHelloToYourNeighbors),
+                            Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
@@ -46,14 +60,13 @@ public class NeighborsFragment extends Fragment {
 
             }
         });
+
+
         return neighborsView;
     }
 
     private void updateNeighborsScroll(){
-        // maybe do something like this: https://stackoverflow.com/questions/40043289/how-to-put-many-objects-in-a-scroll-view-entry-in-android
         ListView neighborsListView = neighborsView.findViewById(R.id.neighborsDetailsList);
-        neighborsListView.setAdapter(new NeighborsListAdapter(neighborsList, getContext()));
-        //Toast.makeText(this, text[0], Toast.LENGTH_LONG).show();
-
+        neighborsListView.setAdapter(new NeighborsListAdapter(getActivity(), neighborsList, getContext()));
     }
 }

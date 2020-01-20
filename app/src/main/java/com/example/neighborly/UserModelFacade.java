@@ -1,9 +1,10 @@
 package com.example.neighborly;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserModelFacade {
+public class UserModelFacade implements Serializable {
     private String id;
     private String userPresentedName;
     private String description;

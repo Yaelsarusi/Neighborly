@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:text="Your the first one!"
+            android:text="@string/emptyBuilding1Msg"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:text="spread the word"
+            android:text="@string/emptyBuilding2Msg"
             android:textColor="@color/white" />
     </LinearLayout>
 
