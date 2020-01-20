@@ -1,14 +1,11 @@
 package com.example.neighborly;
 
-import java.util.ArrayList;
-
 public class UserModelFacade {
     private String id;
     private String userPresentedName;
     private String description;
     // firebase does not handle uri, we hold a string instead
     private String imageUriString;
-    private ArrayList<ItemModel> userItemModels;
 
 
     public UserModelFacade() {}
@@ -18,8 +15,6 @@ public class UserModelFacade {
         this.userPresentedName = user.getUserPresentedName();
         this.description = user.getDescription();
         this.imageUriString = user.getImageUriString();
-        this.userItemModels = new ArrayList<>();
-        this.userItemModels.addAll(user.getUserItemModels());
     }
 
     public String getId() {
@@ -36,10 +31,6 @@ public class UserModelFacade {
 
     public String getImageUriString() {
         return this.imageUriString;
-    }
-
-    public ArrayList<ItemModel> getUserItemModels() {
-        return userItemModels;
     }
 
 }

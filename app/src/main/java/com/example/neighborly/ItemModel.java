@@ -26,7 +26,7 @@ public class ItemModel {
     }
 
     public String getName() {
-        return name.toLowerCase();
+        return name;
     }
 
     public void setName(String name) {

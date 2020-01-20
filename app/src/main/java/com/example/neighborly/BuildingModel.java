@@ -14,10 +14,9 @@ class BuildingModel {
 
     public BuildingModel(String address, UserModelFacade user) {
         this.address = address;
+        this.itemList = new ArrayList<>();
         this.userList = new ArrayList<>();
         this.userList.add(user);
-        this.itemList = new ArrayList<>();
-        this.itemList.addAll(user.getUserItemModels());
     }
 
     public String getAddress() {
@@ -34,7 +33,6 @@ class BuildingModel {
 
     public void addUser(UserModelFacade user) {
         userList.add(user);
-        itemList.addAll(user.getUserItemModels());
     }
 
     public List<ItemModel> getItemsList() {
