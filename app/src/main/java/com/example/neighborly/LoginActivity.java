@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     List<AuthUI.IdpConfig> providers;
     private boolean isNewUser;
     // todo remove when not needed!
-    boolean debugFlag = false;
+    boolean debugFlag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         // todo remove debugFlag when not needed!
         if (auth.getCurrentUser() != null && !debugFlag) {
             // already signed in, set current user and go to main activity
-            DatabaseReference users = FirebaseDatabase.getInstance().getReference().child("Users").child(auth.getUid());
+            DatabaseReference users = FirebaseDatabase.getInstance().getReference().child(Constants.DB_USERS).child(auth.getUid());
             users.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

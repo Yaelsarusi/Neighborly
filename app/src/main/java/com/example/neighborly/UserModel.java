@@ -5,68 +5,74 @@ import java.util.List;
 
 public class UserModel {
     private String id;
-    private String userPresentedName;
+    private String presentedName;
     private String address;
     private String description;
-    private List<ItemModel> userItemModels;
+    private List<ItemModel> itemsList;
     // firebase does not handle uri, we hold a string instead
     private String imageUriString;
 
     public UserModel() {
-        userItemModels = new ArrayList<>();
+        this.itemsList = new ArrayList<>();
     }
 
     public UserModel(String id, String name, String address, String imageUriString) {
         this.id = id;
-        this.userPresentedName = name;
+        this.presentedName = name;
         this.address = address;
+        this.itemsList = new ArrayList<>();
         this.imageUriString = imageUriString;
-    }
-
-    public String getUserPresentedName() {
-        return userPresentedName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public List<ItemModel> getUserItemModels() {
-        return userItemModels;
-    }
-
-    public void setUserPresentedName(String userPresentedName) {
-        this.userPresentedName = userPresentedName;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void addItemToList(ItemModel item) {
-        if (userItemModels == null){
-            userItemModels = new ArrayList<>();
-        }
-        userItemModels.add(item);
     }
 
     public String getId() {
         return id;
     }
 
-    public String getImageUriString() {
-        return this.imageUriString;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setUserItemModels(List<ItemModel> itemList) {
-        userItemModels = itemList;
+    public String getPresentedName() {
+        return presentedName;
+    }
+
+    public void setPresentedName(String presentedName) {
+        this.presentedName = presentedName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<ItemModel> getItemsList() {
+        return itemsList;
+    }
+
+    public void setItemsList(List<ItemModel> itemsList) {
+        this.itemsList = itemsList;
+    }
+
+    public void addToItemsList(ItemModel item){
+        this.itemsList.add(item);
+    }
+
+    public String getImageUriString() {
+        return imageUriString;
+    }
+
+    public void setImageUriString(String imageUriString) {
+        this.imageUriString = imageUriString;
     }
 }

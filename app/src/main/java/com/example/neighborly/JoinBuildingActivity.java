@@ -67,19 +67,20 @@ public class JoinBuildingActivity extends AppCompatActivity {
                 address = ((EditText) findViewById(R.id.editTextStreetAddress)).getText().toString()
                         + " " + ((EditText) findViewById(R.id.editTextCity)).getText().toString();
 
-                DatabaseReference buildingRef = database.getReference().child("Buildings");
+                DatabaseReference buildingRef = database.getReference().child(Constants.DB_BUILDINGS);
                 newUser = createUser();
 
                 // check for existing building
                 buildingRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        addUserToDatabase();
                         for (DataSnapshot building : dataSnapshot.getChildren()) {
                             BuildingModel buildingModel = building.getValue(BuildingModel.class);
                             if (buildingModel != null && buildingModel.getAddress() != null) {
                                 if (buildingModel.getAddress().equals(address)) {
                                     // building exists, add user to it
-                                    addUserToDatabase();
+                                    addUserToBuilding(buildingModel);
                                     Toast.makeText(JoinBuildingActivity.this, "added to building", Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(JoinBuildingActivity.this, MainActivity.class));
                                     return;
@@ -113,40 +114,24 @@ public class JoinBuildingActivity extends AppCompatActivity {
         return newUser;
     }
 
-    private void addBuildingToDB() {
-        DatabaseReference buildingRef = database.getReference().child("Buildings");
-
-        UserModelFacade newUserFacade = new UserModelFacade(newUser);
-        BuildingModel newBuilding = new BuildingModel(address, newUserFacade);
-
-        Map<String, Object> buildings = new HashMap<>();
-        buildings.put(address, newBuilding);
-        buildingRef.updateChildren(buildings);
-
-        BuildingModelDataHolder.getInstance().setCurrentBuilding(newBuilding);
-    }
-
     private void addUserToDatabase() {
-        DatabaseReference usersRef = database.getReference().child("Users");
+        DatabaseReference usersRef = database.getReference().child(Constants.DB_USERS);
         Map<String, Object> users = new HashMap<>();
         users.put(newUser.getId(), newUser);
         usersRef.updateChildren(users);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE) {
-            if (resultCode == RESULT_OK) {
-                newImageUri = data.getData();
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), newImageUri);
-                    buildingImage.setImageBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+    public void addUserToBuilding(BuildingModel buildingModel){
+        DatabaseReference buildingRef = database.getReference().child(Constants.DB_BUILDINGS);
+
+        // update the building model
+        buildingModel.addUserToList(new UserModelFacade(newUser));
+
+        Map<String, Object> buildings = new HashMap<>();
+        buildings.put(buildingModel.getAddress(), buildingModel);
+        buildingRef.updateChildren(buildings);
+
+        BuildingModelDataHolder.getInstance().setCurrentBuilding(buildingModel);
     }
 
     public void ShowNewBuildingPopup() {
@@ -166,9 +151,39 @@ public class JoinBuildingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addBuildingToDB();
-                addUserToDatabase();
                 startActivity(new Intent(JoinBuildingActivity.this, MainActivity.class));
             }
         });
     }
+
+    private void addBuildingToDB() {
+        DatabaseReference buildingRef = database.getReference().child(Constants.DB_BUILDINGS);
+
+        UserModelFacade newUserFacade = new UserModelFacade(newUser);
+        BuildingModel newBuilding = new BuildingModel(address, newUserFacade);
+
+        Map<String, Object> buildings = new HashMap<>();
+        buildings.put(address, newBuilding);
+        buildingRef.updateChildren(buildings);
+
+        BuildingModelDataHolder.getInstance().setCurrentBuilding(newBuilding);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                newImageUri = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), newImageUri);
+                    buildingImage.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 }
