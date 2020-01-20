@@ -15,8 +15,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 public class NeighborsListAdapter extends BaseAdapter {
     List<UserModelFacade> neighborsList;
     LayoutInflater inflater;
@@ -58,7 +56,7 @@ public class NeighborsListAdapter extends BaseAdapter {
         TextView description = row.findViewById(R.id.neighborDesc);
         ImageView picture = row.findViewById(R.id.neighborsPic);
         UserModelFacade curNeighbor = neighborsList.get(position);
-        name.setText(curNeighbor.getUserPresentedName());
+        name.setText(curNeighbor.getPresentedName());
         description.setText(curNeighbor.getDescription());
 
         Glide.with(context).load(curNeighbor.getImageUriString()).into(picture);

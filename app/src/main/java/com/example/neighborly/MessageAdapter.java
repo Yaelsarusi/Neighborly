@@ -52,7 +52,7 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, Messag
         final TextView mTime = holder.mTime;
         final CircleImageView imgProfile = holder.imgProfile;
 
-        mUsername.setText(model.getSenderUserPresentedName());
+        mUsername.setText(model.getSenderPresentedName());
         mText.setText(model.getText());
         mTime.setText(DateFormat.format("dd MMM  (h:mm a)", model.getSentTime()));
         Glide.with(context)

@@ -47,15 +47,14 @@ class BuildingModel {
     }
 
     public void addItemToList(ItemModel item) {
-        if (itemsList == null){
-            itemsList = new ArrayList<>();
-        }
         itemsList.add(item);
     }
 
     public void addUserToList(UserModelFacade user) {
-        if (usersList == null){
-            usersList = new ArrayList<>();
+        for (UserModelFacade oldUser: usersList){
+            if (oldUser.getId().equals(user.getId())){
+                return;
+            }
         }
         for (UserModelFacade oldUser: usersList){
             if (oldUser.getId().equals(user.getId())){
