@@ -6,7 +6,8 @@ import java.util.List;
 class BuildingModel {
 
     private String address;
-    private List<UserModelFacade> userList;
+    private ArrayList<UserModelFacade> userList;
+    private ArrayList<ItemModel> itemList;
 
     public BuildingModel() {
     }
@@ -15,6 +16,8 @@ class BuildingModel {
         this.address = address;
         this.userList = new ArrayList<>();
         this.userList.add(user);
+        this.itemList = new ArrayList<>();
+        this.itemList.addAll(user.getUserItemModels());
     }
 
     public String getAddress() {
@@ -31,5 +34,14 @@ class BuildingModel {
 
     public void addUser(UserModelFacade user) {
         userList.add(user);
+        itemList.addAll(user.getUserItemModels());
+    }
+
+    public List<ItemModel> getItemsList() {
+        return itemList;
+    }
+
+    public void addItemToList(ItemModel item) {
+        itemList.add(item);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.neighborly;
 
-import android.content.Intent;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,7 +31,7 @@ public class FeedFragment extends Fragment {
         popupRequestDialog = new Dialog(this.getContext());
         feedView = inflater.inflate(R.layout.fragment_feed, container, false);
 
-        Button searchButton = feedView.findViewById(R.id.searchButton);
+        ImageButton searchButton = feedView.findViewById(R.id.searchButton);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override

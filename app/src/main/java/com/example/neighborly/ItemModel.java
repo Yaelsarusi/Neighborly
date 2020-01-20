@@ -1,20 +1,19 @@
 package com.example.neighborly;
 
 public class ItemModel {
-
+    private String name;
+    private String ownerId;
+    private String description;
     // firebase does not handle uri, we hold a string instead
     private String imageUriString;
-    private String name;
-    private String owner;
-    private String description;
 
     public ItemModel() {
     }
 
-    public ItemModel(String imageUriString, String name, String owner, String description) {
+    public ItemModel(String imageUriString, String name, String ownerId, String description) {
         this.imageUriString = imageUriString;
-        this.name = name;
-        this.owner = owner;
+        this.name = cleanItemName(name);
+        this.ownerId = ownerId;
         this.description = description;
     }
 
@@ -27,7 +26,7 @@ public class ItemModel {
     }
 
     public String getName() {
-        return name;
+        return name.toLowerCase();
     }
 
     public void setName(String name) {
@@ -35,11 +34,11 @@ public class ItemModel {
     }
 
     public String getOwner() {
-        return owner;
+        return ownerId;
     }
 
     public void setOwner(String owner) {
-        this.owner = owner;
+        this.ownerId = owner;
     }
 
     public String getDescription() {
@@ -48,5 +47,9 @@ public class ItemModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public static String cleanItemName(String name) {
+        return name.toLowerCase().replaceAll("\\s+","");
     }
 }
