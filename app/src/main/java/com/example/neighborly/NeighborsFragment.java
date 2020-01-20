@@ -10,11 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +27,7 @@ public class NeighborsFragment extends Fragment {
         curUser = UserModelDataHolder.getInstance().getCurrentUser();
         curBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
 
-        neighborsList = new ArrayList<UserModelFacade>();
+        neighborsList = new ArrayList<>();
 
         // Delete curUser from the neighbors list.
         for (UserModelFacade neighbor: curBuilding.getUserList()){
