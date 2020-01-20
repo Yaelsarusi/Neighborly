@@ -77,7 +77,7 @@ public class AddItemActivity extends AppCompatActivity {
 
                 addImageToStorage(newItem);
 
-                currentUser.addItemToList(newItem);
+                currentUser.addToItemsList(newItem);
                 UserModelDataHolder.getInstance().setCurrentUser(currentUser);
 
                 startActivity(new Intent(AddItemActivity.this, MainActivity.class));
@@ -129,18 +129,22 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
     private void addItemsUnderBuildingInDB(ItemModel newItem) {
-        DatabaseReference itemsRef = database.getReference().child("Buildings").child(currentUser.getAddress()).child("Items");
+        DatabaseReference buildingsRef = database.getReference().child(Constants.DB_BUILDINGS);
 
-        Map<String, Object> items = new HashMap<>();
-        items.put(newItem.getName(), newItem);
-        itemsRef.updateChildren(items);
+        // update the building model
+        BuildingModel currentBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
+        currentBuilding.addItemToList(newItem);
+
+        Map<String, Object> buildings = new HashMap<>();
+        buildings.put(currentBuilding.getAddress(), currentBuilding);
+        buildingsRef.updateChildren(buildings);
     }
 
     private void addItemToUserInDB(ItemModel newItem) {
-        DatabaseReference usersRef = database.getReference().child("Users");
+        DatabaseReference usersRef = database.getReference().child(Constants.DB_USERS);
 
         // update the user model
-        currentUser.addItemToList(newItem);
+        currentUser.addToItemsList(newItem);
 
         Map<String, Object> users = new HashMap<>();
         users.put(currentUser.getId(), currentUser);
