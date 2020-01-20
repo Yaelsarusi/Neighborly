@@ -21,12 +21,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final int RC_SIGN_IN = 1;
     private List<AuthUI.IdpConfig> providers;
     private boolean isNewUser;
@@ -45,6 +51,23 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new FeedFragment()).commit();
         }
+
+        UserModel curUser = UserModelDataHolder.getInstance().getCurrentUser();
+        DatabaseReference buildingRef = database.getReference().child("Buildings").child(curUser.getAddress());
+
+        // update current building when changed in DB
+        buildingRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                BuildingModel curBuilding = dataSnapshot.getValue(BuildingModel.class);
+                BuildingModelDataHolder.getInstance().setCurrentBuilding(curBuilding);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
 
         setSignOutButton();
     }

@@ -27,6 +27,9 @@ public class ItemCardAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
+        if (models == null){
+            return 0;
+        }
         return models.size() * LOOPS_COUNT;
     }
 

@@ -18,12 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -43,7 +39,6 @@ public class AddItemActivity extends AppCompatActivity {
     private CircleImageView addItemImage;
     Uri newImageUri;
     Button btnAdd;
-    String ownerUid;
     UserModel currentUser;
 
     @Override
@@ -63,20 +58,9 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
-        ownerUid = FirebaseAuth.getInstance().getUid();
-        database.getReference("Users").child(ownerUid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                currentUser = dataSnapshot.getValue(UserModel.class);
-            }
+        currentUser = UserModelDataHolder.getInstance().getCurrentUser();
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        btnAdd = (Button) findViewById(R.id.buttonAdd);
+        btnAdd = findViewById(R.id.buttonAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,9 +72,13 @@ public class AddItemActivity extends AppCompatActivity {
                     newImageUri = Uri.parse("android.resource://com.example.neighborly/drawable/sticker");
                 }
 
-                ItemModel newItem = new ItemModel(newImageUri.toString(), name.getText().toString(), ownerUid, description.getText().toString());
+                ItemModel newItem = new ItemModel(newImageUri.toString(), name.getText().toString(),
+                        currentUser.getId(), description.getText().toString());
 
                 addImageToStorage(newItem);
+
+                currentUser.addItemToList(newItem);
+                UserModelDataHolder.getInstance().setCurrentUser(currentUser);
 
                 startActivity(new Intent(AddItemActivity.this, MainActivity.class));
             }
@@ -130,7 +118,7 @@ public class AddItemActivity extends AppCompatActivity {
                     public void onSuccess(Uri uri) {
                         newItem.setImageUriString(uri.toString());
                         // upload to db with updated image uri
-                        addItemToDB(newItem);
+                        addItemsUnderBuildingInDB(newItem);
                         addItemToUserInDB(newItem);
 
                         //Do what you need to do with url
@@ -140,8 +128,8 @@ public class AddItemActivity extends AppCompatActivity {
 
     }
 
-    private void addItemToDB(ItemModel newItem) {
-        DatabaseReference itemsRef = database.getReference().child("Items");
+    private void addItemsUnderBuildingInDB(ItemModel newItem) {
+        DatabaseReference itemsRef = database.getReference().child("Buildings").child(currentUser.getAddress()).child("Items");
 
         Map<String, Object> items = new HashMap<>();
         items.put(newItem.getName(), newItem);
@@ -155,7 +143,7 @@ public class AddItemActivity extends AppCompatActivity {
         currentUser.addItemToList(newItem);
 
         Map<String, Object> users = new HashMap<>();
-        users.put(ownerUid, currentUser);
+        users.put(currentUser.getId(), currentUser);
         usersRef.updateChildren(users);
     }
 

@@ -15,52 +15,44 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class NeighborsFragment extends Fragment {
     private View neighborsView;
-    private List<UserModelFacade> neighborsList;
     private UserModel curUser;
+    private BuildingModel curBuilding;
+    private List<UserModelFacade> neighborsList;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         neighborsView = inflater.inflate(R.layout.fragment_neighbours, container, false);
         curUser = UserModelDataHolder.getInstance().getCurrentUser();
-        DatabaseReference buildingRef = FirebaseDatabase.getInstance().getReference().child("Buildings").child(curUser.getAddress());
+        curBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
 
-        buildingRef.addValueEventListener(new ValueEventListener() {
+        neighborsList = new ArrayList<UserModelFacade>();
 
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                BuildingModel curBuilding = dataSnapshot.getValue(BuildingModel.class);
-                neighborsList = curBuilding.getUserList();
-                for (UserModelFacade neighbor: neighborsList){
-                    if (neighbor.getId().equals(curUser.getId())) {
-                        neighborsList.remove(new UserModelFacade(curUser));
-                        break;
-                    }
-                }
-
-                if (neighborsList.isEmpty()){
-                    Toast.makeText(getActivity(),
-                            getString(R.string.emptyBuilding1Msg) + getString(R.string.emptyBuilding2Msg),
-                            Toast.LENGTH_LONG).show();
-                }
-                else {
-                    updateNeighborsScroll();
-                    Toast.makeText(getActivity(),
-                            getString(R.string.SayHelloToYourNeighbors),
-                            Toast.LENGTH_LONG).show();
-                }
+        // Delete curUser from the neighbors list.
+        for (UserModelFacade neighbor: curBuilding.getUserList()){
+            if (!neighbor.getId().equals(curUser.getId())) {
+                neighborsList.add(new UserModelFacade(curUser));
             }
+        }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        if (neighborsList.isEmpty()){
+            Toast.makeText(getActivity(),
+                    getString(R.string.emptyBuilding1Msg) + " " + getString(R.string.emptyBuilding2Msg),
+                    Toast.LENGTH_LONG).show();
+        }
 
-            }
-        });
-
+        else {
+            updateNeighborsScroll();
+            Toast.makeText(getActivity(),
+                    getString(R.string.SayHelloToYourNeighbors),
+                    Toast.LENGTH_LONG).show();
+        }
 
         return neighborsView;
     }
