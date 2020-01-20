@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     List<AuthUI.IdpConfig> providers;
     private boolean isNewUser;
     // todo remove when not needed!
-    boolean debugFlag = true;
+    private boolean debugFlag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +41,17 @@ public class LoginActivity extends AppCompatActivity {
                 new AuthUI.IdpConfig.FacebookBuilder().build());
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        // todo remove debugFlag when not needed!
-        if (auth.getCurrentUser() != null && !debugFlag) {
-            // already signed in, set current user and go to main activity
+
+        // if Login is successful or in debug mode
+        if (auth.getCurrentUser() != null && !debugFlag){
             DatabaseReference users = FirebaseDatabase.getInstance().getReference().child(Constants.DB_USERS).child(auth.getUid());
+
+            // This call will only happen if user was already logged in
             users.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     UserModel curUser = dataSnapshot.getValue(UserModel.class);
                     UserModelDataHolder.getInstance().setCurrentUser(curUser);
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
 
                 @Override
@@ -58,10 +59,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
-        } else {
-            // not signed in
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
+        else {
             showSignInOptions();
         }
+
     }
 
     private void showSignInOptions() {
