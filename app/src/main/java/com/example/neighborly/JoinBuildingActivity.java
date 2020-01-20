@@ -122,6 +122,8 @@ public class JoinBuildingActivity extends AppCompatActivity {
         Map<String, Object> buildings = new HashMap<>();
         buildings.put(address, newBuilding);
         buildingRef.updateChildren(buildings);
+
+        BuildingModelDataHolder.getInstance().setCurrentBuilding(newBuilding);
     }
 
     private void addUserToDatabase() {
