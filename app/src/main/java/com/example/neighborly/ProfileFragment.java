@@ -15,14 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -117,8 +111,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setUserSavedItemsCarousel() {
-
-        ProfileFragment.this.itemCarouselCardAdapter = new ItemCardAdapter(curUser.getUserItemModels(), getContext(), true);
+        ProfileFragment.this.itemCarouselCardAdapter = new ItemCardAdapter(curUser.getUserItemModels(), getContext(), false);
         itemCarouselViewPager = ProfileFragment.this.profileView.findViewById(R.id.userItemPager);
         itemCarouselViewPager.setPadding(200, 0, 200, 0);
         itemCarouselViewPager.setAdapter(ProfileFragment.this.itemCarouselCardAdapter);
