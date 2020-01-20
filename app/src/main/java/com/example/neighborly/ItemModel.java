@@ -7,21 +7,12 @@ public class ItemModel {
     // firebase does not handle uri, we hold a string instead
     private String imageUriString;
 
-    public ItemModel() {
-    }
+    public ItemModel() { }
 
     public ItemModel(String imageUriString, String name, String ownerId, String description) {
-        this.imageUriString = imageUriString;
         this.name = cleanItemName(name);
         this.ownerId = ownerId;
         this.description = description;
-    }
-
-    public String getImageUriString() {
-        return this.imageUriString;
-    }
-
-    public void setImageUriString(String imageUriString) {
         this.imageUriString = imageUriString;
     }
 
@@ -33,12 +24,12 @@ public class ItemModel {
         this.name = name;
     }
 
-    public String getOwner() {
+    public String getOwnerId() {
         return ownerId;
     }
 
-    public void setOwner(String owner) {
-        this.ownerId = owner;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getDescription() {
@@ -47,6 +38,14 @@ public class ItemModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImageUriString() {
+        return imageUriString;
+    }
+
+    public void setImageUriString(String imageUriString) {
+        this.imageUriString = imageUriString;
     }
 
     public static String cleanItemName(String name) {

@@ -1,17 +1,16 @@
 package com.example.neighborly;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -53,10 +52,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         UserModel curUser = UserModelDataHolder.getInstance().getCurrentUser();
-        DatabaseReference buildingRef = database.getReference().child("Buildings").child(curUser.getAddress());
+        DatabaseReference buildingRef = database.getReference().child(Constants.DB_BUILDINGS).child(curUser.getAddress());
 
         // update current building when changed in DB
-        buildingRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        buildingRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 BuildingModel curBuilding = dataSnapshot.getValue(BuildingModel.class);

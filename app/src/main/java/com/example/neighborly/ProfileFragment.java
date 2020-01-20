@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -101,7 +101,7 @@ public class ProfileFragment extends Fragment {
         TextView userAddress = profileView.findViewById(R.id.userAddress);
         CircleImageView userImage = profileView.findViewById(R.id.profilePicture);
 
-        userName.setText(curUser.getUserPresentedName());
+        userName.setText(curUser.getPresentedName());
         userDescription.setText(curUser.getDescription());
 
         Glide.with(getContext()).load(curUser.getImageUriString()).into(userImage);
@@ -111,7 +111,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setUserSavedItemsCarousel() {
-        ProfileFragment.this.itemCarouselCardAdapter = new ItemCardAdapter(curUser.getUserItemModels(), getContext(), false);
+        ProfileFragment.this.itemCarouselCardAdapter = new ItemCardAdapter(curUser.getItemsList(), getContext(), false);
         itemCarouselViewPager = ProfileFragment.this.profileView.findViewById(R.id.userItemPager);
         itemCarouselViewPager.setPadding(200, 0, 200, 0);
         itemCarouselViewPager.setAdapter(ProfileFragment.this.itemCarouselCardAdapter);
@@ -122,7 +122,7 @@ public class ProfileFragment extends Fragment {
         EditText searchText = profileView.findViewById(R.id.userDescriptionEdit);
         String newDesc = searchText.getText().toString();
         curUser.setDescription(newDesc);
-        database.getReference().child("Users").child(curUser.getId()).child("description").setValue(curUser.getDescription());
+        database.getReference().child(Constants.DB_USERS).child(curUser.getId()).child("description").setValue(curUser.getDescription());
     }
 
 }

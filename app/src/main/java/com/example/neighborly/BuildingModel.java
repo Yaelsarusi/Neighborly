@@ -6,17 +6,20 @@ import java.util.List;
 class BuildingModel {
 
     private String address;
-    private ArrayList<UserModelFacade> userList;
-    private ArrayList<ItemModel> itemList;
+
+    private List<UserModelFacade> usersList;
+    private List<ItemModel> itemsList;
 
     public BuildingModel() {
+        usersList = new ArrayList<>();
+        itemsList = new ArrayList<>();
     }
 
     public BuildingModel(String address, UserModelFacade user) {
         this.address = address;
-        this.itemList = new ArrayList<>();
-        this.userList = new ArrayList<>();
-        this.userList.add(user);
+        this.usersList = new ArrayList<>();
+        this.itemsList = new ArrayList<>();
+        this.usersList.add(user);
     }
 
     public String getAddress() {
@@ -27,19 +30,34 @@ class BuildingModel {
         this.address = address;
     }
 
-    public List<UserModelFacade> getUserList() {
-        return userList;
+    public List<UserModelFacade> getUsersList() {
+        return usersList;
     }
 
-    public void addUser(UserModelFacade user) {
-        userList.add(user);
+    public void setUsersList(List<UserModelFacade> usersList) {
+        this.usersList = usersList;
     }
 
     public List<ItemModel> getItemsList() {
-        return itemList;
+        return itemsList;
+    }
+
+    public void setItemsList(List<ItemModel> itemsList) {
+        this.itemsList = itemsList;
     }
 
     public void addItemToList(ItemModel item) {
-        itemList.add(item);
+        if (itemsList == null){
+            itemsList = new ArrayList<>();
+        }
+        itemsList.add(item);
+    }
+
+    public void addUserToList(UserModelFacade user) {
+        if (usersList == null){
+            usersList = new ArrayList<>();
+        }
+        usersList.add(user);
     }
 }
+

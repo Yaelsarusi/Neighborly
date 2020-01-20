@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FeedFragment extends Fragment {
     private View feedView;
@@ -45,21 +46,36 @@ public class FeedFragment extends Fragment {
         return feedView;
     }
 
-    private String cleanSearchWord(String itemToSearch) {
-        // todo - add the same "clean" function when we save the item.
-        return itemToSearch;
-    }
 
     private ArrayList<ItemModel> searchForItem(String itemToSearch) {
-        // todo - search for the item
-        String cleanSearch = cleanSearchWord(itemToSearch);
-        ArrayList<ItemModel> foundItems = new ArrayList<>();
+        final String cleanedSearch = ItemModel.cleanItemName(itemToSearch);
+        final ArrayList<ItemModel> foundItems = new ArrayList<>();
+
+        BuildingModel building = BuildingModelDataHolder.getInstance().getCurrentBuilding();
+        List<ItemModel> buildingitems = building.getItemsList();
+        if (buildingitems != null){
+            for (ItemModel item : buildingitems) {
+                if (item.getName().contains(cleanedSearch)){
+                    foundItems.add(item);
+                }
+            }
+        }
+
         return foundItems;
     }
 
     private void showPopup(View view, ArrayList<ItemModel> itemsFound) {
         Button sendButton;
         popupRequestDialog.setContentView(R.layout.popup_add_request);
+
+        StringBuilder allN = new StringBuilder();
+
+        for (ItemModel i: itemsFound) {
+            allN.append(i.getOwnerId());
+        }
+        TextView t = popupRequestDialog.findViewById(R.id.found_neighbors);
+        t.setText(allN);
+
         sendButton = popupRequestDialog.findViewById(R.id.send);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override

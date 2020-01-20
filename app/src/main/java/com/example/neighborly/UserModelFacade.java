@@ -1,22 +1,19 @@
 package com.example.neighborly;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserModelFacade implements Serializable {
     private String id;
-    private String userPresentedName;
+    private String presentedName;
     private String description;
     // firebase does not handle uri, we hold a string instead
     private String imageUriString;
-
 
     public UserModelFacade() {}
 
     public UserModelFacade(UserModel user) {
         this.id = user.getId();
-        this.userPresentedName = user.getUserPresentedName();
+        this.presentedName = user.getPresentedName();
         this.description = user.getDescription();
         this.imageUriString = user.getImageUriString();
     }
@@ -26,7 +23,7 @@ public class UserModelFacade implements Serializable {
     }
 
     public String getUserPresentedName() {
-        return userPresentedName;
+        return presentedName;
     }
 
     public String getDescription() {
