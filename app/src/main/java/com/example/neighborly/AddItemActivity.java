@@ -83,6 +83,11 @@ public class AddItemActivity extends AppCompatActivity {
                 EditText name = findViewById(R.id.editTextName);
                 EditText description = findViewById(R.id.editTextDescription);
 
+                if (newImageUri == null)
+                {
+                    newImageUri = Uri.parse("android.resource://com.example.neighborly/drawable/sticker");
+                }
+
                 ItemModel newItem = new ItemModel(newImageUri.toString(), name.getText().toString(), ownerUid, description.getText().toString());
 
                 addImageToStorage(newItem);

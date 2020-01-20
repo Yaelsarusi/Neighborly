@@ -25,6 +25,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="press to start a privet chat" />
+
+        <TextView
+            android:id="@+id/found"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="text" />
     </LinearLayout>
 
     <LinearLayout
