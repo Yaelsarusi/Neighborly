@@ -76,7 +76,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         addUserToDatabase();
                         for (DataSnapshot building : dataSnapshot.getChildren()) {
-                            BuildingModel buildingModel = building.getValue(BuildingModel.class);
+                            BuildingModel buildingModel = (BuildingModel) building.getValue(BuildingModel.class);
                             if (buildingModel != null && buildingModel.getAddress() != null) {
                                 if (buildingModel.getAddress().equals(address)) {
                                     // building exists, add user to it
