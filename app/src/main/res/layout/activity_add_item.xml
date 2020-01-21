@@ -17,61 +17,84 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
 
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/layout_name"
+        style="@style/TextColor"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="@string/item_name"
-        app:layout_constraintBottom_toTopOf="@+id/textViewCity"
-        app:layout_constraintStart_toStartOf="@+id/textViewCity"
-        app:layout_constraintTop_toBottomOf="@+id/itemImage" />
-
-    <TextView
-        android:id="@+id/textViewCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/description"
-        app:layout_constraintEnd_toStartOf="@+id/editTextDescription"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextDescription" />
-
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="ex. 5 steps ladder"
-        android:inputType="textAutoComplete"
-        app:layout_constraintBottom_toTopOf="@+id/editTextDescription"
-        app:layout_constraintStart_toEndOf="@+id/textViewName"
-        app:layout_constraintStart_toStartOf="@+id/editTextDescription"
-        app:layout_constraintTop_toBottomOf="@+id/itemImage"
-        app:layout_constraintVertical_bias="0.07" />
-
-    <EditText
-        android:id="@+id/editTextDescription"
-        android:layout_width="194dp"
-        android:layout_height="108dp"
-        android:gravity="center"
-        android:inputType="textMultiLine"
-        android:lines="8"
-        android:maxLines="10"
-        android:minLines="6"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewCity"
-        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+
+
+        <TextView
+            android:id="@+id/textViewName"
+            style="@style/TextColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/item_name" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            style="@style/TextColor"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:hint="@string/item_example"
+            android:inputType="textAutoComplete" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_description"
+        style="@style/TextColor"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_name">
+
+
+        <TextView
+            android:id="@+id/textViewCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description"
+            app:layout_constraintEnd_toStartOf="@+id/editTextDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editTextDescription" />
+
+
+        <EditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:scrollbars="vertical" />
+
+    </RelativeLayout>
+
 
     <Button
         android:id="@+id/buttonAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="53dp"
-        android:text="@string/add"
+        android:background="@drawable/send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,12 +25,16 @@
     <string name="addItem">Add item</string>
     <string name="profileFragmentTitle">My profile</string>
     <string name="userNamePlaceHolder">user name</string>
-    <string name="userItemsListTitle">Your saved Items:</string>
-    <string name="userAddressTitle">Your address:</string>
+    <string name="userItemsListTitle">My Items:</string>
+    <string name="userAddressTitle">My building:</string>
     <string name="userAddressNamePlaceholder">user address</string>
     <string name="editButtonText">Edit</string>
     <string name="saveButtonText">Save</string>
     <string name="emptyBuilding1Msg">You are the first one!</string>
     <string name="emptyBuilding2Msg">Be neighborly and spread the word :)</string>
     <string name="SayHelloToYourNeighbors">Click on your neighbor and say hello :)</string>
+    <string name="welcome">Welcome</string>
+    <string name="sign_up">Sign up</string>
+    <string name="info">Info:</string>
+    <string name="item_example">ex. 5 steps ladder</string>
 </resources>

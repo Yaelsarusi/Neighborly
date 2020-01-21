@@ -3,29 +3,19 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/frame_large"
     android:gravity="center_horizontal"
-    android:background="@drawable/frame">
-
-
-    <TextView
-        android:id="@+id/neighborsFragmentTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/neighbors"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+    android:orientation="vertical">
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp"/>
+        android:layout_height="20dp" />
 
     <ListView
+        android:layout_gravity="center"
         android:id="@+id/neighborsDetailsList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
-
-    </ListView>
+        android:padding="8dp"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -91,7 +91,7 @@ public class ProfileFragment extends Fragment {
 
     private void setToViewMode() {
         editMode = false;
-        editToggleButton.setText(getResources().getString(R.string.editButtonText));
+//        editToggleButton.setText(getResources().getString(R.string.editButtonText));
         EditText descEdit = profileView.findViewById(R.id.userDescriptionEdit);
         TextView descView = profileView.findViewById(R.id.userDescription);
         descEdit.setVisibility(View.INVISIBLE);
@@ -100,7 +100,7 @@ public class ProfileFragment extends Fragment {
 
     private void setToEditMode() {
         editMode = true;
-        editToggleButton.setText(getResources().getString(R.string.saveButtonText));
+//        editToggleButton.setText(getResources().getString(R.string.saveButtonText));
         EditText descEdit = profileView.findViewById(R.id.userDescriptionEdit);
         TextView descView = profileView.findViewById(R.id.userDescription);
         descEdit.setText(curUser.getDescription());
