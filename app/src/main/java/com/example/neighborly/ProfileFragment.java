@@ -8,15 +8,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -30,8 +31,7 @@ public class ProfileFragment extends Fragment {
     private UserModel curUser;
     private boolean editMode;
 
-    // This data is currently not needed until we will add the option to delete or edit items.
-    private ItemCardAdapter itemCarouselCardAdapter;
+    public ItemCardAdapter itemCarouselCardAdapter;
 
 
     @Nullable
@@ -48,9 +48,26 @@ public class ProfileFragment extends Fragment {
         btnAddNewItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AddItemActivity.class));
+                getActivity().startActivity(new Intent(getActivity(), AddItemActivity.class));
+
             }
         });
+
+        DatabaseReference userItemsRef = database.getReference().child(Constants.DB_USERS).child(curUser.getId());
+
+        // update current building when changed in DB
+        userItemsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                itemCarouselCardAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
+
         setUserSavedItemsCarousel();
 
         editToggleButton = profileView.findViewById(R.id.editToggleButton);
@@ -112,7 +129,10 @@ public class ProfileFragment extends Fragment {
 
     private void setUserSavedItemsCarousel() {
 
-        ProfileFragment.this.itemCarouselCardAdapter = new ItemCardAdapter(curUser.getItemsList(), getContext(), true);
+
+
+
+        ProfileFragment.this.itemCarouselCardAdapter = new ItemCardAdapter(curUser.getItemsList(), getContext(), false);
         itemCarouselViewPager = ProfileFragment.this.profileView.findViewById(R.id.userItemPager);
         itemCarouselViewPager.setPadding(200, 0, 200, 0);
         itemCarouselViewPager.setAdapter(ProfileFragment.this.itemCarouselCardAdapter);
@@ -125,5 +145,6 @@ public class ProfileFragment extends Fragment {
         curUser.setDescription(newDesc);
         database.getReference().child(Constants.DB_USERS).child(curUser.getId()).child("description").setValue(curUser.getDescription());
     }
+
 
 }

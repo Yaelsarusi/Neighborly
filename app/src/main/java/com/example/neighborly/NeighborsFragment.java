@@ -32,7 +32,7 @@ public class NeighborsFragment extends Fragment {
         // Delete curUser from the neighbors list.
         for (UserModelFacade neighbor: curBuilding.getUsersList()){
             if (!neighbor.getId().equals(curUser.getId())) {
-                neighborsList.add(new UserModelFacade(curUser));
+                neighborsList.add(neighbor);
             }
         }
 

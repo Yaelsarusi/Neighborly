@@ -33,6 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddItemActivity extends AppCompatActivity {
 
+    public static final int ADD_NEW_ITEM = 0;
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final int PICK_IMAGE = 1;
     private static final int MY_CAMERA_PERMISSION_CODE = 2;

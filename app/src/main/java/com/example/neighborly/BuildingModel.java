@@ -56,6 +56,11 @@ class BuildingModel {
                 return;
             }
         }
+        for (UserModelFacade oldUser: usersList){
+            if (oldUser.getId().equals(user.getId())){
+                return;
+            }
+        }
         usersList.add(user);
     }
 }

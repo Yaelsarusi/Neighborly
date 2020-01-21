@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -53,11 +54,14 @@ public class ItemModelAdapter extends PagerAdapter {
         int new_position = position % models.size();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.card_item, container, false);
+        ItemModel curItem = models.get(new_position);
+        ImageView imageView = view.findViewById(R.id.image);
+        imageView.setImageURI(Uri.parse(curItem.getImageUriString()));
+        TextView imageName = view.findViewById(R.id.itemName);
+        TextView imageDesc = view.findViewById(R.id.itemDesc);
 
-        ImageView imageView;
-
-        imageView = view.findViewById(R.id.image);
-        imageView.setImageURI(Uri.parse(models.get(new_position).getImageUriString()));
+        imageName.setText(curItem.getName());
+        imageDesc.setText(curItem.getDescription());
         container.addView(view, 0);
         return view;
     }

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,7 +41,9 @@ public class JoinBuildingActivity extends AppCompatActivity {
     private Button btnDone;
     private Dialog dialog;
     private String address;
-    private UserModel newUser;
+    private UserModel userLoggedIn;
+    private boolean isNewUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,23 @@ public class JoinBuildingActivity extends AppCompatActivity {
             }
         });
 
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        DatabaseReference users = FirebaseDatabase.getInstance().getReference().child(Constants.DB_USERS).child(auth.getUid());
+
+        // This call will only happen if user was already logged in
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserModel curUser = dataSnapshot.getValue(UserModel.class);
+                UserModelDataHolder.getInstance().setCurrentUser(curUser);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         btnDone = (Button) findViewById(R.id.buttonAdd);
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +88,8 @@ public class JoinBuildingActivity extends AppCompatActivity {
                         + " " + ((EditText) findViewById(R.id.editTextCity)).getText().toString();
 
                 DatabaseReference buildingRef = database.getReference().child(Constants.DB_BUILDINGS);
-                newUser = createUser();
+
+                userLoggedIn = createUserModelForLoggedInUser();
 
                 // check for existing building
                 buildingRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -101,37 +122,38 @@ public class JoinBuildingActivity extends AppCompatActivity {
         });
     }
 
-    private UserModel createUser() {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String photoUrl = "";
-        if (firebaseUser.getPhotoUrl() != null) {
-            photoUrl = firebaseUser.getPhotoUrl().toString();
-        }
+    private UserModel createUserModelForLoggedInUser() {
+        UserModel user = UserModelDataHolder.getInstance().getCurrentUser();
 
-        UserModel newUser = new UserModel(firebaseUser.getUid(), firebaseUser.getDisplayName(), address, photoUrl);
-        // set data holder user model for reuse across the app
-        UserModelDataHolder.getInstance().setCurrentUser(newUser);
-        return newUser;
+        if (user == null) {
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            String photoUrl = "";
+            if (firebaseUser.getPhotoUrl() != null) {
+                photoUrl = firebaseUser.getPhotoUrl().toString();
+            }
+
+            user = new UserModel(firebaseUser.getUid(), firebaseUser.getDisplayName(), address, photoUrl);
+            // set data holder user model for reuse across the app
+            UserModelDataHolder.getInstance().setCurrentUser(user);
+        }
+        return user;
     }
 
     private void addUserToDatabase() {
         DatabaseReference usersRef = database.getReference().child(Constants.DB_USERS);
         Map<String, Object> users = new HashMap<>();
-        users.put(newUser.getId(), newUser);
+        users.put(userLoggedIn.getId(), userLoggedIn);
         usersRef.updateChildren(users);
     }
 
     public void addUserToBuilding(BuildingModel buildingModel){
         DatabaseReference buildingRef = database.getReference().child(Constants.DB_BUILDINGS);
-
-        // update the building model
-        buildingModel.addUserToList(new UserModelFacade(newUser));
-
+        buildingModel.addUserToList(new UserModelFacade(userLoggedIn));
         Map<String, Object> buildings = new HashMap<>();
         buildings.put(buildingModel.getAddress(), buildingModel);
         buildingRef.updateChildren(buildings);
-
         BuildingModelDataHolder.getInstance().setCurrentBuilding(buildingModel);
+
     }
 
     public void ShowNewBuildingPopup() {
@@ -159,7 +181,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
     private void addBuildingToDB() {
         DatabaseReference buildingRef = database.getReference().child(Constants.DB_BUILDINGS);
 
-        UserModelFacade newUserFacade = new UserModelFacade(newUser);
+        UserModelFacade newUserFacade = new UserModelFacade(userLoggedIn);
         BuildingModel newBuilding = new BuildingModel(address, newUserFacade);
 
         Map<String, Object> buildings = new HashMap<>();
