@@ -30,19 +30,17 @@ public class NeighborsFragment extends Fragment {
         neighborsList = new ArrayList<>();
 
         // Delete curUser from the neighbors list.
-        for (UserModelFacade neighbor: curBuilding.getUsersList()){
+        for (UserModelFacade neighbor : curBuilding.getUsersList()) {
             if (!neighbor.getId().equals(curUser.getId())) {
                 neighborsList.add(neighbor);
             }
         }
 
-        if (neighborsList.isEmpty()){
+        if (neighborsList.isEmpty()) {
             Toast.makeText(getActivity(),
                     getString(R.string.emptyBuilding1Msg) + " " + getString(R.string.emptyBuilding2Msg),
                     Toast.LENGTH_LONG).show();
-        }
-
-        else {
+        } else {
             updateNeighborsScroll();
             Toast.makeText(getActivity(),
                     getString(R.string.SayHelloToYourNeighbors),
@@ -52,7 +50,7 @@ public class NeighborsFragment extends Fragment {
         return neighborsView;
     }
 
-    private void updateNeighborsScroll(){
+    private void updateNeighborsScroll() {
         ListView neighborsListView = neighborsView.findViewById(R.id.neighborsDetailsList);
         neighborsListView.setAdapter(new NeighborsListAdapter(getActivity(), neighborsList, getContext()));
     }

@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     List<AuthUI.IdpConfig> providers;
     private boolean isNewUser;
     // todo remove when not needed!
-    private boolean debugFlag = true;
+    private boolean debugFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
