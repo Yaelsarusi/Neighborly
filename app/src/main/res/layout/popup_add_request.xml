@@ -13,24 +13,27 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/found_neighbors"
-            android:layout_width="267dp"
+            android:id="@+id/intro"
+            android:layout_width="288dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Hi {user}, we found neighbors that have the item you were looking for!"
+            android:text="text"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/start_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5pt"
             android:text="press to start a privet chat" />
 
-        <TextView
-            android:id="@+id/found"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="text" />
+        <ListView
+            android:id="@+id/foundNeighbors"
+            android:layout_width="311dp"
+            android:layout_height="149dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5pt"
+            android:padding="8dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -52,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginTop="100pt"
+        android:layout_marginTop="10pt"
         android:text="Send"
         android:textColor="@color/white" />
 

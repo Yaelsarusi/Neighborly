@@ -11,16 +11,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+
 
 public class FeedFragment extends Fragment {
+    private static final String introText= "Hi %1s, we found neighbors that have the item you were looking for!";
     private View feedView;
     private Dialog popupRequestDialog;
     private EditText searchText;
@@ -29,52 +34,52 @@ public class FeedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        popupRequestDialog = new Dialog(this.getContext());
         feedView = inflater.inflate(R.layout.fragment_feed, container, false);
+        popupRequestDialog = new Dialog(this.getContext());
 
         ImageButton searchButton = feedView.findViewById(R.id.searchButton);
-
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchText = feedView.findViewById(R.id.SearchText);
-                ArrayList<ItemModel> itemsFound = searchForItem(searchText.getText().toString());
-                showPopup(v, itemsFound);
+                showPopup(v, searchForItem(searchText.getText().toString()));
             }
         });
 
         return feedView;
     }
 
-
-    private ArrayList<ItemModel> searchForItem(String itemToSearch) {
+    private Map<UserModelFacade,ItemModel> searchForItem(String itemToSearch) {
         final String cleanedSearch = ItemModel.cleanItemName(itemToSearch);
-        final ArrayList<ItemModel> foundItems = new ArrayList<>();
+        final Map<UserModelFacade,ItemModel> foundItems = new HashMap<>();
 
         BuildingModel building = BuildingModelDataHolder.getInstance().getCurrentBuilding();
-        List<ItemModel> buildingitems = building.getItemsList();
-        if (buildingitems != null){
-            for (ItemModel item : buildingitems) {
-                if (item.getName().contains(cleanedSearch)){
-                    foundItems.add(item);
+        List<ItemModel> buildingItems = building.getItemsList();
+        if (buildingItems != null){
+            for (UserModelFacade neighbor : BuildingModelDataHolder.getInstance().getCurrentBuilding().getUsersList()) {
+                for (ItemModel item : buildingItems) {
+                    if (neighbor != null && item != null && item.getOwnerId().equals(neighbor.getId())) {
+                        if (item.getName().contains(cleanedSearch)) {
+                            foundItems.put(neighbor, item);
+                            break;
+                        }
+                    }
                 }
+
             }
         }
 
         return foundItems;
     }
 
-    private void showPopup(View view, ArrayList<ItemModel> itemsFound) {
+    private void showPopup(View view, Map<UserModelFacade,ItemModel> foundItems) {
         Button sendButton;
         popupRequestDialog.setContentView(R.layout.popup_add_request);
 
-        StringBuilder allN = new StringBuilder();
-
-        for (ItemModel i: itemsFound) {
-            allN.append(i.getOwnerId());
-        }
-        TextView t = popupRequestDialog.findViewById(R.id.found_neighbors);
-        t.setText(allN);
+        TextView intro = popupRequestDialog.findViewById(R.id.intro);
+        intro.setText(String.format(introText, UserModelDataHolder.getInstance().getCurrentUser().getPresentedName()));
+        ListView neighborsListView = popupRequestDialog.findViewById(R.id.foundNeighbors);
+        neighborsListView.setAdapter(new SearchResultListAdapter(getActivity(), foundItems, getContext()));
 
         sendButton = popupRequestDialog.findViewById(R.id.send);
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -92,5 +97,4 @@ public class FeedFragment extends Fragment {
         popupRequestDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupRequestDialog.show();
     }
-
 }

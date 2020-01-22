@@ -55,7 +55,7 @@ class BuildingModel {
 
     public void addUserToList(UserModelFacade user) {
         for (UserModelFacade oldUser: usersList){
-            if (oldUser.getId().equals(user.getId())){
+            if (oldUser != null && oldUser.getId().equals(user.getId())){
                 return;
             }
         }

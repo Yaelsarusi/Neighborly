@@ -65,7 +65,6 @@ public class LoginActivity extends AppCompatActivity {
         else {
             showSignInOptions();
         }
-
     }
 
     private void showSignInOptions() {
