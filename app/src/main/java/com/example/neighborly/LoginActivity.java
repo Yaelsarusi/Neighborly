@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     UserModel curUser = dataSnapshot.getValue(UserModel.class);
                     UserModelDataHolder.getInstance().setCurrentUser(curUser);
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
 
                 @Override
@@ -59,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
         }
         else {
             showSignInOptions();

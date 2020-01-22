@@ -9,16 +9,19 @@ class BuildingModel {
 
     private List<UserModelFacade> usersList;
     private List<ItemModel> itemsList;
+    private List<RequestModel> requestList;
 
     public BuildingModel() {
         usersList = new ArrayList<>();
         itemsList = new ArrayList<>();
+        requestList = new ArrayList<>();
     }
 
     public BuildingModel(String address, UserModelFacade user) {
         this.address = address;
         this.usersList = new ArrayList<>();
         this.itemsList = new ArrayList<>();
+        this.requestList = new ArrayList<>();
         this.usersList.add(user);
     }
 
@@ -56,12 +59,28 @@ class BuildingModel {
                 return;
             }
         }
-        for (UserModelFacade oldUser: usersList){
-            if (oldUser.getId().equals(user.getId())){
-                return;
+        usersList.add(user);
+    }
+
+    public void addRequestToList(RequestModel requestModel) {
+        requestList.add(requestModel);
+    }
+
+    public List<RequestModel> getRequestList() {
+        return requestList;
+    }
+
+    public void setRequestList(List<RequestModel> requestList) {
+        this.requestList = requestList;
+    }
+
+    public UserModelFacade getUserById(String id){
+        for (UserModelFacade user: usersList){
+            if (user!= null && user.getId().equals(id)){
+                return user;
             }
         }
-        usersList.add(user);
+        return null;
     }
 }
 
