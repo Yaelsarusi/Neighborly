@@ -5,17 +5,21 @@ import java.io.Serializable;
 public class RequestModel implements Serializable {
 
     private boolean resolved;
+    private String requestId;
+    private String requestMsg;
+    private String requestUserId;
+    private String itemRequested;
+
 
     public RequestModel() {
     }
 
-    public RequestModel(boolean resolved) {
+    public RequestModel(String requestId, boolean resolved, String requestUserId, String requestMsg, String itemRequested) {
+        this.requestId = requestId;
         this.resolved = resolved;
-    }
-
-    // Todo: implement this
-    int getImage() {
-        return 0;
+        this.requestUserId = requestUserId;
+        this.requestMsg = requestMsg;
+        this.itemRequested = itemRequested;
     }
 
     public boolean isResolved() {
@@ -24,5 +28,42 @@ public class RequestModel implements Serializable {
 
     public void setResolved(boolean resolved) {
         this.resolved = resolved;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+
+    public String getRequestUserId() {
+        return requestUserId;
+    }
+
+    public void setRequestUserId(String requestUserId) {
+        this.requestUserId = requestUserId;
+    }
+
+    public String getRequestMsg() {
+        return requestMsg;
+    }
+
+    public void setRequestMsg(String requestMsg) {
+        this.requestMsg = requestMsg;
+    }
+
+    public String getItemRequested() {
+        return itemRequested;
+    }
+
+    public void setItemRequested(String itemRequested) {
+        this.itemRequested = itemRequested;
+    }
+
+    // Todo: implement this
+    int getImage() {
+        return 0;
     }
 }

@@ -66,8 +66,9 @@ public class NeighborsListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 UserModelFacade neighbor = neighborsList.get(position);
                 Intent intent = new Intent(NeighborsListAdapter.this.activity, RequestActivity.class);
-                //intent.putExtra("context", RequestActivity.chatContext);
-                intent.putExtra("neighbor", neighbor);
+
+                intent.putExtra("requestType", RequestActivity.REQUEST_PRIVATE_CHAT);
+                intent.putExtra("neighbor", neighbor.getId());
                 NeighborsListAdapter.this.activity.startActivity(intent);
             }
         });

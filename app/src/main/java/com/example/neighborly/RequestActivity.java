@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,36 +21,47 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class RequestActivity extends AppCompatActivity {
+
+    static public final String REQUEST_PRIVATE_CHAT = "private chat";
+    static public final String REQUEST_ITEM = "request item";
+
     private FirebaseRecyclerAdapter<MessageModel, MessageAdapter.MessageHolder> adapter;
     private FirebaseDatabase database;
-    private TextView textViewItemName;
+    private TextView privateChatTitle;
     private EditText input;
     private UserModel curUser;
+    private BuildingModel curBuilding;
+    private String msgPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_request);
+
+        curUser = UserModelDataHolder.getInstance().getCurrentUser();
+        curBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
 
         Intent intent = getIntent();
-        String itemId = intent.getStringExtra("itemId");
-        String itemName = intent.getStringExtra("itemName");
-        curUser = UserModelDataHolder.getInstance().getCurrentUser();
+        String requestType = intent.getStringExtra("requestType");
 
-        input = findViewById(R.id.editTextInput);
-        textViewItemName = findViewById(R.id.textViewItemName);
+        if (requestType.equals(RequestActivity.REQUEST_PRIVATE_CHAT)){
+            String otherUser = intent.getStringExtra("neighbor");
+            handlePrivateChat(otherUser);
+        }
+        if (requestType.equals(RequestActivity.REQUEST_ITEM)){
+            // (Delete comment when the intent is actually sent)
+            // This is supposed to be the requestId as hold in the buildingModel, there  is stored all the data needed.
+            String requestId = intent.getStringExtra("requestId");
+            handleItemRequest(requestId);
+        }
+
         final RecyclerView recyclerView = findViewById(R.id.recycleView);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        textViewItemName.setText(itemName);
 
-        String path = "messages/" + itemId;
         database = FirebaseDatabase.getInstance();
-        final DatabaseReference messagesRef = database.getReference(path);
+        final DatabaseReference messagesRef = database.getReference(msgPath);
 
         // New child entries
         SnapshotParser<MessageModel> parser = new SnapshotParser<MessageModel>() {
@@ -108,6 +118,23 @@ public class RequestActivity extends AppCompatActivity {
         });
     }
 
+    private void handleItemRequest(String requestId) {
+        setContentView(R.layout.activity_request_public);
+    }
+
+    private void handlePrivateChat(String otherUser) {
+        setContentView(R.layout.activity_request);
+        input = findViewById(R.id.editTextInput);
+        privateChatTitle = findViewById(R.id.privateChatTitle);
+        UserModelFacade neighbor = curBuilding.getUserById(otherUser);
+        privateChatTitle.setText(String.format(this.getString(R.string.private_chat_title), neighbor.getPresentedName()));
+
+        if (otherUser.compareTo(curUser.getId()) > 0){
+            msgPath = String.format(this.getString(R.string.private_messages_db_path), otherUser, curUser.getId());
+        } else {msgPath = String.format(this.getString(R.string.private_messages_db_path), curUser.getId(), otherUser);}
+
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -120,5 +147,10 @@ public class RequestActivity extends AppCompatActivity {
         super.onStop();
         if (adapter != null)
             adapter.stopListening();
+    }
+
+    // Todo: implement this
+    int getImage() {
+        return 0;
     }
 }

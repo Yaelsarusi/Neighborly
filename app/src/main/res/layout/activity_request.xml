@@ -3,50 +3,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/frame_large"
     tools:context=".RequestActivity">
 
-    <TextView
-        android:id="@+id/textViewItemName"
+    <LinearLayout
+        android:id="@+id/privateChatLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/item_name"
-        />
+        android:layout_height="65dp"
+        android:layout_above="@+id/chat"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:background="@drawable/frame_large"
+        android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleView"
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/chat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom" />
+        android:layout_height="664dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/frame_large"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleView"
+            android:layout_width="match_parent"
+            android:layout_height="608dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="406dp"
+            android:layout_height="40dp" />
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="#fff"
+        android:background="@drawable/frame_large"
         android:padding="5dp">
-
-        <EditText
-            android:id="@+id/editTextInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/buttonSend"
-            android:background="@android:color/transparent"
-            android:hint="Type a message..." />
 
         <ImageButton
             android:id="@+id/buttonSend"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
+            android:background="@color/fui_transparent"
+            android:contentDescription="@string/com_facebook_send_button_text"
+            android:src="@drawable/send" />
+
+        <EditText
+            android:id="@+id/editTextInput"
+            android:layout_width="352dp"
+            android:layout_height="38dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toStartOf="@+id/buttonSend"
+            android:autofillHints="@string/messageHint"
+            android:background="@android:color/transparent"
+            android:hint="@string/messageHint" />
 
     </RelativeLayout>
 
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/progressBar"
+    <TextView
+        android:id="@+id/privateChatTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:background="@color/fui_transparent"
+        android:gravity="center"
+        android:text="@string/private_chat_title" />
 
 </RelativeLayout>

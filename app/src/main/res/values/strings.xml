@@ -19,6 +19,7 @@
     <string name="where_do_i_belong">Where Do I Belong?</string>
     <string name="description">Description</string>
     <string name="item_name">Item Name</string>
+    <string name="public_request_title">%s is looking for a %s</string>
     <string name="add">Add</string>
     <string name="ItemImagesStorageUrl">gs://neighborly-a250f.appspot.com/ItemImages</string>
     <string name="neighborPicture">Your neighbors profile picture</string>
@@ -38,4 +39,8 @@
     <string name="sign_up">Sign up</string>
     <string name="info">Info:</string>
     <string name="item_example">ex. 5 steps ladder</string>
+    <string name="messageHint">Type a message...</string>
+    <string name="neighborly_help_message">I can help you out! :)</string>
+    <string name="private_chat_title">Private chat with %s</string>
+    <string name="private_messages_db_path">messages/%s_%s</string>
 </resources>
