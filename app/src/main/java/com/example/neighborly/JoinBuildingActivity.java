@@ -79,7 +79,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
                 address = ((EditText) findViewById(R.id.editTextStreetAddress)).getText().toString()
                         + " " + ((EditText) findViewById(R.id.editTextCity)).getText().toString();
 
-                description = ((EditText) findViewById(R.id.editTextDescription)).getText().toString();
+                description = ((EditText) findViewById(R.id.userDescriptionEdit)).getText().toString();
 
                 DatabaseReference buildingRef = database.getReference().child(Constants.DB_BUILDINGS);
 

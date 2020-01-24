@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,6 +48,8 @@ public class AddItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
+        setToolbar();
+
         addItemImage = (CircleImageView) findViewById(R.id.itemImage);
         addItemImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +71,7 @@ public class AddItemActivity extends AppCompatActivity {
                 EditText name = findViewById(R.id.editTextName);
                 EditText description = findViewById(R.id.editTextDescription);
 
-                if (newImageUri == null)
-                {
+                if (newImageUri == null) {
                     newImageUri = Uri.parse("android.resource://com.example.neighborly/drawable/sticker");
                 }
 
@@ -121,10 +123,24 @@ public class AddItemActivity extends AppCompatActivity {
                         addItemToUserInDB(newItem);
 
                         //Do what you need to do with url
-                    }});
+                    }
+                });
 
-                }});
+            }
+        });
 
+    }
+
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.back_button);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void addItemsUnderBuildingInDB(ItemModel newItem) {
