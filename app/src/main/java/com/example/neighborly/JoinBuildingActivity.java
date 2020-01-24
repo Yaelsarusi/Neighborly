@@ -2,12 +2,10 @@ package com.example.neighborly;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,9 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,14 +33,12 @@ public class JoinBuildingActivity extends AppCompatActivity {
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final int PICK_IMAGE = 1;
-    private CircleImageView buildingImage;
-    private Uri newImageUri;
     private Button btnDone;
     private Dialog dialog;
     private String address;
+    private String description;
     private UserModel userLoggedIn;
-    private boolean isNewUser;
-
+    private Uri profilePhotoUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +46,17 @@ public class JoinBuildingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_join_building);
         dialog = new Dialog(this);
 
-        buildingImage = (CircleImageView) findViewById(R.id.addItemImage);
-        buildingImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent gallery = new Intent();
-                gallery.setType("image/*");
-                gallery.setAction(Intent.ACTION_GET_CONTENT);
-
-                startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
-            }
-        });
-
         FirebaseAuth auth = FirebaseAuth.getInstance();
         DatabaseReference users = FirebaseDatabase.getInstance().getReference().child(Constants.DB_USERS).child(auth.getUid());
+
+        CircleImageView profileImage = findViewById(R.id.profileImage);
+        profilePhotoUri = auth.getCurrentUser().getPhotoUrl();
+        if (profilePhotoUri != null) {
+            Glide.with(this).load(profilePhotoUri).into(profileImage);
+        }
+
+        TextView userName = findViewById(R.id.userName);
+        userName.setText(auth.getCurrentUser().getDisplayName());
 
         // This call will only happen if user was already logged in
         users.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -86,6 +78,8 @@ public class JoinBuildingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 address = ((EditText) findViewById(R.id.editTextStreetAddress)).getText().toString()
                         + " " + ((EditText) findViewById(R.id.editTextCity)).getText().toString();
+
+                description = ((EditText) findViewById(R.id.editTextDescription)).getText().toString();
 
                 DatabaseReference buildingRef = database.getReference().child(Constants.DB_BUILDINGS);
 
@@ -128,11 +122,11 @@ public class JoinBuildingActivity extends AppCompatActivity {
         if (user == null) {
             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             String photoUrl = "";
-            if (firebaseUser.getPhotoUrl() != null) {
-                photoUrl = firebaseUser.getPhotoUrl().toString();
+            if (profilePhotoUri != null) {
+                photoUrl = profilePhotoUri.toString();
             }
 
-            user = new UserModel(firebaseUser.getUid(), firebaseUser.getDisplayName(), address, photoUrl);
+            user = new UserModel(firebaseUser.getUid(), firebaseUser.getDisplayName(), address, photoUrl, description);
             // set data holder user model for reuse across the app
             UserModelDataHolder.getInstance().setCurrentUser(user);
         }
@@ -146,7 +140,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
         usersRef.updateChildren(users);
     }
 
-    public void addUserToBuilding(BuildingModel buildingModel){
+    public void addUserToBuilding(BuildingModel buildingModel) {
         DatabaseReference buildingRef = database.getReference().child(Constants.DB_BUILDINGS);
         buildingModel.addUserToList(new UserModelFacade(userLoggedIn));
         Map<String, Object> buildings = new HashMap<>();
@@ -189,23 +183,6 @@ public class JoinBuildingActivity extends AppCompatActivity {
         buildingRef.updateChildren(buildings);
 
         BuildingModelDataHolder.getInstance().setCurrentBuilding(newBuilding);
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE) {
-            if (resultCode == RESULT_OK) {
-                newImageUri = data.getData();
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), newImageUri);
-                    buildingImage.setImageBitmap(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
 }
