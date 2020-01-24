@@ -24,17 +24,19 @@ public class SearchResultListAdapter extends BaseAdapter {
     LayoutInflater inflater;
     Context context;
     Activity activity;
+    String itemName;
 
     public SearchResultListAdapter(Activity activity) {
         neighborsList = new ArrayList<>();
         this.activity = activity;
     }
 
-    public SearchResultListAdapter(Activity activity, Map<UserModelFacade,ItemModel> map, Context context) {
+    public SearchResultListAdapter(Activity activity, Map<UserModelFacade,ItemModel> map, Context context, String itemName) {
         this.neighborsItemsMap = map;
         this.neighborsList = new ArrayList<>(map.keySet());
         this.context = context;
         this.activity = activity;
+        this.itemName = itemName;
     }
 
     public int getCount() {
@@ -58,7 +60,7 @@ public class SearchResultListAdapter extends BaseAdapter {
         View row;
         row = inflater.inflate(R.layout.search_result_details, parent, false);
 
-        UserModelFacade curNeighbor = neighborsList.get(position);
+        final UserModelFacade curNeighbor = neighborsList.get(position);
         Map<Integer, String> neighborMap = new HashMap<>();
         neighborMap.put(R.id.neighborName, curNeighbor.getPresentedName());
         setVales(row, neighborMap , R.id.neighborPic, curNeighbor.getImageUriString());
@@ -75,8 +77,9 @@ public class SearchResultListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 UserModelFacade neighbor = neighborsList.get(position);
                 Intent intent = new Intent(SearchResultListAdapter.this.activity, RequestActivity.class);
-                //intent.putExtra("context", RequestActivity.chatContext);
-                intent.putExtra("neighbor", neighbor);
+                intent.putExtra("requestType", RequestActivity.REQUEST_PRIVATE_CHAT);
+                intent.putExtra("neighbor", neighbor.getId());
+                intent.putExtra("itemName", itemName);
                 SearchResultListAdapter.this.activity.startActivity(intent);
             }
         });

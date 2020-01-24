@@ -82,5 +82,14 @@ class BuildingModel {
         }
         return null;
     }
+
+    public RequestModel getRequestById(String requestId) {
+        for (RequestModel request: requestList){
+            if (request != null && request.getRequestId().equals(requestId)){
+                return request;
+            }
+        }
+        return null;
+    }
 }
 

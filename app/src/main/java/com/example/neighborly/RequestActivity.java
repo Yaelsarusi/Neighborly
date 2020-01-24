@@ -46,7 +46,8 @@ public class RequestActivity extends AppCompatActivity {
 
         if (requestType.equals(RequestActivity.REQUEST_PRIVATE_CHAT)){
             String otherUser = intent.getStringExtra("neighbor");
-            handlePrivateChat(otherUser);
+            String itemName = intent.getStringExtra("itemName");
+            handlePrivateChat(otherUser, itemName);
         }
         if (requestType.equals(RequestActivity.REQUEST_ITEM)){
             // (Delete comment when the intent is actually sent)
@@ -80,6 +81,8 @@ public class RequestActivity extends AppCompatActivity {
                 new FirebaseRecyclerOptions.Builder<MessageModel>()
                         .setQuery(messagesRef, parser)
                         .build();
+
+        input = findViewById(R.id.editRequestMessage);
 
         adapter = new MessageAdapter(RequestActivity.this, options, curUser.getId());
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -120,14 +123,24 @@ public class RequestActivity extends AppCompatActivity {
 
     private void handleItemRequest(String requestId) {
         setContentView(R.layout.activity_request_public);
+        msgPath = String.format("messages/%s", requestId);
+        RequestModel curRequest = curBuilding.getRequestById(requestId);
+        TextView requestTitle = findViewById(R.id.requestDetailsTitle);
+        requestTitle.setText(String.format(getString(R.string.public_request_title), curUser.getPresentedName(), curRequest.getItemRequested()));
+        TextView originalMsg = findViewById(R.id.requestDetailsOriginalMessage);
+        originalMsg.setText(curRequest.getRequestMsg());
     }
 
-    private void handlePrivateChat(String otherUser) {
+    private void handlePrivateChat(String otherUser, String itemName) {
         setContentView(R.layout.activity_request);
-        input = findViewById(R.id.editTextInput);
+
         privateChatTitle = findViewById(R.id.privateChatTitle);
         UserModelFacade neighbor = curBuilding.getUserById(otherUser);
         privateChatTitle.setText(String.format(this.getString(R.string.private_chat_title), neighbor.getPresentedName()));
+
+        if (itemName != null){
+            input.setText(String.format(this.getString(R.string.request_item_from_neighbor_message), neighbor.getPresentedName(), itemName));
+        }
 
         if (otherUser.compareTo(curUser.getId()) > 0){
             msgPath = String.format(this.getString(R.string.private_messages_db_path), otherUser, curUser.getId());

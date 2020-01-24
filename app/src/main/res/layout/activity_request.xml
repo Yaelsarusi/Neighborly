@@ -63,7 +63,7 @@
             android:src="@drawable/send" />
 
         <EditText
-            android:id="@+id/editTextInput"
+            android:id="@+id/editRequestMessage"
             android:layout_width="352dp"
             android:layout_height="38dp"
             android:layout_alignParentBottom="true"

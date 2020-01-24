@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5pt"
-            android:text="press to start a privet chat" />
+            android:text="@string/start_private_chat_title" />
 
         <ListView
             android:id="@+id/foundNeighbors"
@@ -44,19 +44,41 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/newRequestTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Share a new request" />
+            android:text="@string/share_a_new_request_title" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="10pt"
-        android:text="Send"
-        android:textColor="@color/white" />
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="77dp"
+        android:background="@drawable/frame_large"
+        android:padding="5dp">
+
+        <EditText
+            android:id="@+id/editRequestMessage"
+            android:layout_width="291dp"
+            android:layout_height="61dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="6dp"
+            android:layout_toStartOf="@+id/send"
+            android:background="@android:color/transparent"
+            android:hint="@string/neighborly_send_help_message" />
+
+        <ImageButton
+            android:id="@+id/send"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="17dp"
+            android:background="@color/fui_transparent"
+            android:contentDescription="@string/com_facebook_send_button_text"
+            android:src="@drawable/send" />
+
+    </RelativeLayout>
 
 </LinearLayout>
