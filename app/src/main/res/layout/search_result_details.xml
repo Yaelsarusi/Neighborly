@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/neighbor"
         android:layout_width="match_parent"
-        android:layout_height="83dp"
+        android:layout_height="101dp"
         android:background="@android:color/transparent"
         android:padding="8dp">
 
@@ -20,22 +20,22 @@
             <TextView
                 android:id="@+id/neighborName"
                 style="@style/TextColor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/neighbors"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="100dp"
+            android:layout_width="129dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/itemName"
                 style="@style/TextColor"
-                android:layout_width="match_parent"
+                android:layout_width="116dp"
                 android:layout_height="wrap_content"
                 android:text="@string/item"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -43,24 +43,24 @@
             <TextView
                 android:id="@+id/itemDesc"
                 style="@style/TextColor"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_width="118dp"
+                android:layout_height="40dp"
                 android:text="@string/item" />
 
         </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/neighborPic"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="98dp"
+            android:layout_height="87dp"
             android:layout_weight="1"
             android:contentDescription="@string/neighborPicture"
             tools:srcCompat="@tools:sample/avatars" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/itemPic"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="102dp"
+            android:layout_height="87dp"
             android:layout_weight="1"
             tools:srcCompat="@tools:sample/avatars" />
 

@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/textViewItemName"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="147dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="0dp"
         android:background="@drawable/frame_large"
@@ -24,13 +24,13 @@
             android:text="@string/public_request_title" />
 
         <Space
-            android:layout_width="match_parent"
-            android:layout_height="25dp" />
+            android:layout_width="427dp"
+            android:layout_height="13dp" />
 
         <TextView
             android:id="@+id/requestDetailsOriginalMessage"
             android:layout_width="342dp"
-            android:layout_height="77dp"
+            android:layout_height="86dp"
             android:layout_gravity="center"
             android:background="@drawable/frame_large"
             android:gravity="center"
@@ -41,11 +41,11 @@
     <LinearLayout
         android:id="@+id/chat"
         android:layout_width="match_parent"
-        android:layout_height="576dp"
-        android:layout_below="@+id/requestDetails"
+        android:layout_height="536dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/frame_large"
         android:orientation="vertical">
 
@@ -64,21 +64,21 @@
     <RelativeLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:padding="5dp"
-        android:background="@drawable/frame_large">
+        android:background="@drawable/frame_large"
+        android:padding="5dp">
 
         <EditText
-            android:id="@+id/editTextInput"
+            android:id="@+id/editRequestMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             android:layout_toStartOf="@+id/buttonSend"
+            android:autofillHints="@string/neighborly_help_message"
             android:background="@android:color/transparent"
-            android:hint="@string/messageHint"
-            android:autofillHints="@string/neighborly_help_message"/>
+            android:hint="@string/messageHint" />
 
         <ImageButton
             android:id="@+id/buttonSend"
@@ -86,8 +86,10 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="686dp"
-            android:contentDescription="@string/com_facebook_send_button_text"/>
+            android:layout_marginBottom="0dp"
+            android:background="@color/fui_transparent"
+            android:contentDescription="@string/com_facebook_send_button_text"
+            android:src="@drawable/send" />
 
     </RelativeLayout>
 
