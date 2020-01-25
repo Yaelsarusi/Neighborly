@@ -86,6 +86,8 @@
 
     <EditText
         android:id="@+id/editTextCity"
+        android:textCursorDrawable="@drawable/cursor_color"
+        android:backgroundTint="@color/green"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -97,6 +99,8 @@
 
     <EditText
         android:id="@+id/editTextStreetAddress"
+        android:textCursorDrawable="@drawable/cursor_color"
+        android:backgroundTint="@color/green"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -139,6 +143,8 @@
 
     <EditText
         android:id="@+id/userDescriptionEdit"
+        android:textCursorDrawable="@drawable/cursor_color"
+        android:backgroundTint="@color/green"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"

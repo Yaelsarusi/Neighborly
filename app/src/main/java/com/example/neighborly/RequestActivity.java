@@ -106,6 +106,7 @@ public class RequestActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
+        input = findViewById(R.id.editRequestMessage);
         ImageButton btnSend = findViewById(R.id.buttonSend);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +154,6 @@ public class RequestActivity extends AppCompatActivity {
         privateChatTitle = findViewById(R.id.privateChatTitle);
         UserModelFacade neighbor = curBuilding.getUserById(otherUser);
         privateChatTitle.setText(String.format(this.getString(R.string.private_chat_title), neighbor.getPresentedName()));
-        input = findViewById(R.id.editRequestMessage);
 
         if (itemName != null) {
             input.setText(String.format(this.getString(R.string.request_item_from_neighbor_message), neighbor.getPresentedName(), itemName));

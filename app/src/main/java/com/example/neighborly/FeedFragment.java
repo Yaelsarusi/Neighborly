@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.flexbox.FlexboxLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +34,7 @@ import java.util.Map;
 public class FeedFragment extends Fragment {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final String foundIntroText = "Hi %1s, we found neighbors that have the item you were looking for!";
-    private static final String notFoundIntroText = "Hi %1s, we haven't found neighbors that have the item you were looking for. :(";
+    private static final String notFoundIntroText = "Hi %1s, we didn't find neighbors that have the item you were looking for. :(";
     private View feedView;
     private Dialog popupRequestDialog;
     private EditText searchText;
@@ -61,15 +63,14 @@ public class FeedFragment extends Fragment {
             }
         });
 
-        database.getReference().child(Constants.DB_BUILDINGS).child(curUser.getAddress()).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child(Constants.DB_BUILDINGS).child(curUser.getAddress()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 curBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
-
                 if (curBuilding != null) {
                     separateRequestsInBuilding();
+                    addMyRequestsButtons((FlexboxLayout) feedView.findViewById(R.id.myRequests));
                     updateNeighborsScroll();
-
                 }
             }
 
@@ -82,6 +83,7 @@ public class FeedFragment extends Fragment {
         return feedView;
     }
 
+    // -------------- Search and popup --------------
     private Map<UserModelFacade, ItemModel> searchForItem(String itemToSearch) {
         final String cleanedSearch = ItemModel.cleanItemName(itemToSearch);
         final Map<UserModelFacade, ItemModel> foundItems = new HashMap<>();
@@ -165,6 +167,37 @@ public class FeedFragment extends Fragment {
         popupRequestDialog.show();
     }
 
+    // -------------- My requests --------------
+
+    private void addMyRequestsButtons(FlexboxLayout layoutRecepient)
+    {
+        layoutRecepient.removeAllViews();
+        if(userOpenRequests.size() > 4){
+            ViewGroup.LayoutParams params = layoutRecepient.getLayoutParams();
+            params.height = 360;
+            layoutRecepient.setLayoutParams(params);
+        }
+        for (final RequestModel request : userOpenRequests) {
+            if(request != null){
+                Button button = new Button(feedView.getContext());
+                button.setText(request.getItemRequested());
+                button.setPadding(0, 20, 0, 20);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(FeedFragment.this.getActivity(), RequestActivity.class);
+                        intent.putExtra("requestType", RequestActivity.REQUEST_ITEM);
+                        intent.putExtra("requestId", request.getRequestId());
+                        FeedFragment.this.getActivity().startActivity(intent);
+                    }
+                });
+                layoutRecepient.addView(button);
+            }
+        }
+    }
+
+    // -------------- Other's requests --------------
+
     private void addRequestsUnderBuildingInDB(RequestModel newRequest) {
         DatabaseReference buildingsRef = database.getReference().child(Constants.DB_BUILDINGS);
 
@@ -197,5 +230,4 @@ public class FeedFragment extends Fragment {
         ListView neighborsRequestListView = feedView.findViewById(R.id.neighborsRequestList);
         neighborsRequestListView.setAdapter(new NeighborsRequestListAdapter(getActivity(), neighborsOpenRequests, getContext()));
     }
-
 }
