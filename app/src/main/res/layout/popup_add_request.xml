@@ -14,14 +14,17 @@
 
         <TextView
             android:id="@+id/intro"
+            style="@style/TextColor"
             android:layout_width="288dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="text"
+            android:text="@string/we_found_neighbors"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/start_chat"
+            android:id="@+id/startChat"
+            style="@style/TextColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5pt"
@@ -30,14 +33,14 @@
         <ListView
             android:id="@+id/foundNeighbors"
             android:layout_width="311dp"
-            android:layout_height="149dp"
+            android:layout_height="204dp"
             android:layout_gravity="center"
             android:layout_marginTop="5pt"
             android:padding="8dp" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/new_request"
+        android:id="@+id/newRequest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10pt"
@@ -45,6 +48,7 @@
 
         <TextView
             android:id="@+id/newRequestTitle"
+            style="@style/TextColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/share_a_new_request_title" />
@@ -54,7 +58,7 @@
         android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="77dp"
-        android:background="@drawable/frame_large"
+        android:background="@drawable/frame_narrow"
         android:padding="5dp">
 
         <EditText
@@ -66,6 +70,7 @@
             android:layout_marginBottom="6dp"
             android:layout_toStartOf="@+id/send"
             android:background="@android:color/transparent"
+            style="@style/TextColor"
             android:hint="@string/neighborly_send_help_message" />
 
         <ImageButton
@@ -76,7 +81,6 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="17dp"
             android:background="@color/fui_transparent"
-            android:contentDescription="@string/com_facebook_send_button_text"
             android:src="@drawable/send" />
 
     </RelativeLayout>
