@@ -44,8 +44,6 @@ public class FeedFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         feedView = inflater.inflate(R.layout.fragment_feed, container, false);
-
-        curBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
         curUser = UserModelDataHolder.getInstance().getCurrentUser();
 
         popupRequestDialog = new Dialog(this.getContext());
@@ -60,6 +58,7 @@ public class FeedFragment extends Fragment {
             }
         });
 
+        curBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
         if (curBuilding != null){
             separateRequestsInBuilding();
             updateNeighborsScroll();

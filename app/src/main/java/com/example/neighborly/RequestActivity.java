@@ -83,7 +83,7 @@ public class RequestActivity extends AppCompatActivity {
                         .setQuery(messagesRef, parser)
                         .build();
 
-        input = findViewById(R.id.editRequestMessage);
+
 
         adapter = new MessageAdapter(RequestActivity.this, options, curUser.getId());
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -153,6 +153,7 @@ public class RequestActivity extends AppCompatActivity {
         privateChatTitle = findViewById(R.id.privateChatTitle);
         UserModelFacade neighbor = curBuilding.getUserById(otherUser);
         privateChatTitle.setText(String.format(this.getString(R.string.private_chat_title), neighbor.getPresentedName()));
+        input = findViewById(R.id.editRequestMessage);
 
         if (itemName != null) {
             input.setText(String.format(this.getString(R.string.request_item_from_neighbor_message), neighbor.getPresentedName(), itemName));
