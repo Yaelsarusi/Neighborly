@@ -57,6 +57,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-storage'
     implementation 'com.firebaseui:firebase-ui-database:4.2.0'
+    implementation 'com.google.android:flexbox:0.3.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

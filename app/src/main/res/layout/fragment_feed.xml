@@ -8,6 +8,8 @@
 
     <EditText
         android:id="@+id/SearchText"
+        android:textCursorDrawable="@drawable/cursor_color"
+        android:backgroundTint="@color/green"
         style="@style/Widget.AppCompat.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,38 +40,55 @@
         tools:layout_editor_absoluteX="-57dp"
         tools:layout_editor_absoluteY="121dp" />
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/personalRequests"
         android:layout_width="wrap_content"
-        android:layout_height="121dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/SearchText"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="3dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp">
+        android:layout_marginEnd="0dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/personalRequestsTitle"
+            style="@style/TextColor"
             android:layout_width="246dp"
-            android:layout_height="49dp"
-            android:text="Your requests"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="My requests"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-    </FrameLayout>
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/myRequests"
+            style="@style/TextColor"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:alignContent="flex_start"
+            app:alignItems="flex_start"
+            app:flexWrap="wrap"
+            app:layout_constraintTop_toBottomOf="@+id/personalRequestsTitle" />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/neighborsRequestList"
-        android:layout_width="match_parent"
-        android:layout_height="648dp"
+        android:layout_width="409dp"
+        android:layout_height="406dp"
         android:layout_below="@id/personalRequests"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="2dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="-1dp"
         android:padding="8dp" />
 
 </RelativeLayout>
