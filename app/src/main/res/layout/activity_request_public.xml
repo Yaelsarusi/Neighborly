@@ -25,9 +25,8 @@
     <LinearLayout
         android:id="@+id/textViewItemName"
         android:layout_width="match_parent"
-        android:layout_height="147dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp"
         android:background="@drawable/frame_large"
         android:orientation="vertical">
 
@@ -48,9 +47,9 @@
         <TextView
             android:id="@+id/requestDetailsOriginalMessage"
             android:layout_width="342dp"
-            android:layout_height="86dp"
-            android:layout_marginTop="-25dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="-25dp"
             android:background="@drawable/frame_large"
             android:gravity="center"
             android:text="@string/item_name" />
@@ -64,14 +63,15 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="150dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/frame_large"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:padding="4dp" />
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/progressBar"
@@ -83,7 +83,7 @@
     <RelativeLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/frame_large"
         android:padding="5dp">
@@ -91,7 +91,7 @@
         <EditText
             android:id="@+id/editRequestMessage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             android:layout_toStartOf="@+id/buttonSend"
@@ -104,7 +104,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
             android:layout_marginBottom="0dp"
             android:background="@color/fui_transparent"
             android:contentDescription="@string/com_facebook_send_button_text"

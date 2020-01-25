@@ -70,10 +70,10 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, Messag
         View view = null;
         if (viewType == MESSAGE_IN_VIEW_TYPE) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.message_right_list_item, parent, false);
+                    .inflate(R.layout.message_left_list_item, parent, false);
         } else {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.message_left_list_item, parent, false);
+                    .inflate(R.layout.message_right_list_item, parent, false);
         }
         return new MessageHolder(view);
     }
