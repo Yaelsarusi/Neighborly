@@ -16,12 +16,13 @@ public class UserModel {
         this.itemsList = new ArrayList<>();
     }
 
-    public UserModel(String id, String name, String address, String imageUriString) {
+    public UserModel(String id, String name, String address, String imageUriString, String description) {
         this.id = id;
         this.presentedName = name;
         this.address = address;
         this.itemsList = new ArrayList<>();
         this.imageUriString = imageUriString;
+        this.description = description;
     }
 
     public String getId() {
