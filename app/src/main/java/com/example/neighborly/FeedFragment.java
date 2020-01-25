@@ -17,8 +17,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,10 +29,9 @@ import java.util.List;
 import java.util.Map;
 
 
-
 public class FeedFragment extends Fragment {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private static final String introText= "Hi %1s, we found neighbors that have the item you were looking for!";
+    private static final String introText = "Hi %1s, we found neighbors that have the item you were looking for!";
     private View feedView;
     private Dialog popupRequestDialog;
     private EditText searchText;
@@ -58,23 +60,34 @@ public class FeedFragment extends Fragment {
             }
         });
 
-        curBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
-        if (curBuilding != null){
-            separateRequestsInBuilding();
-            updateNeighborsScroll();
+        database.getReference().child(Constants.DB_BUILDINGS).child(curUser.getAddress()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                curBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
 
-        }
+                if (curBuilding != null) {
+                    separateRequestsInBuilding();
+                    updateNeighborsScroll();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        });
 
         return feedView;
     }
 
-    private Map<UserModelFacade,ItemModel> searchForItem(String itemToSearch) {
+    private Map<UserModelFacade, ItemModel> searchForItem(String itemToSearch) {
         final String cleanedSearch = ItemModel.cleanItemName(itemToSearch);
-        final Map<UserModelFacade,ItemModel> foundItems = new HashMap<>();
+        final Map<UserModelFacade, ItemModel> foundItems = new HashMap<>();
 
         BuildingModel building = BuildingModelDataHolder.getInstance().getCurrentBuilding();
         List<ItemModel> buildingItems = building.getItemsList();
-        if (buildingItems != null){
+        if (buildingItems != null) {
             for (UserModelFacade neighbor : BuildingModelDataHolder.getInstance().getCurrentBuilding().getUsersList()) {
                 for (ItemModel item : buildingItems) {
                     if (neighbor != null && item != null && item.getOwnerId().equals(neighbor.getId())) {
@@ -91,7 +104,7 @@ public class FeedFragment extends Fragment {
         return foundItems;
     }
 
-    private void showPopup(View view, final String itemName, Map<UserModelFacade,ItemModel> foundItems) {
+    private void showPopup(View view, final String itemName, Map<UserModelFacade, ItemModel> foundItems) {
         ImageButton sendButton;
         popupRequestDialog.setContentView(R.layout.popup_add_request);
         EditText requestMessageEditor = popupRequestDialog.findViewById(R.id.editRequestMessage);
@@ -150,15 +163,15 @@ public class FeedFragment extends Fragment {
         buildingsRef.updateChildren(buildings);
     }
 
-    private void separateRequestsInBuilding(){
+    private void separateRequestsInBuilding() {
 
         userOpenRequests = new ArrayList<>();
         neighborsOpenRequests = new ArrayList<>();
-        for (RequestModel request : curBuilding.getRequestList()){
-            if (request.isResolved()){
+        for (RequestModel request : curBuilding.getRequestList()) {
+            if (request.isResolved()) {
                 continue;
             }
-            if (request.getRequestUserId().equals(curUser.getId())){
+            if (request.getRequestUserId().equals(curUser.getId())) {
                 userOpenRequests.add(request);
             } else {
                 neighborsOpenRequests.add(request);
