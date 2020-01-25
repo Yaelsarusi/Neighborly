@@ -63,6 +63,8 @@
 
         <EditText
             android:id="@+id/editRequestMessage"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:backgroundTint="@color/green"
             android:layout_width="291dp"
             android:layout_height="61dp"
             android:layout_alignParentBottom="true"

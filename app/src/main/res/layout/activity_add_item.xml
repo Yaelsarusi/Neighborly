@@ -61,6 +61,8 @@
 
         <EditText
             android:id="@+id/editTextName"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:backgroundTint="@color/green"
             style="@style/TextColor"
             android:layout_width="300dp"
             android:layout_height="70dp"
@@ -93,6 +95,8 @@
 
         <EditText
             android:id="@+id/editTextDescription"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:backgroundTint="@color/green"
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:gravity="center"
