@@ -46,7 +46,7 @@
     <string name="request_item_from_neighbor_message">Hey %s! Can I please borrow your %s?</string>
     <string name="neighborly_send_help_message">Hi neighbors! I\'m looking for a %s...</string>
     <string name="start_private_chat_title">Press to start a private chat</string>
-    <string name="share_a_new_request_title">You can share a new request:</string>
+    <string name="share_a_new_request_title">You can edit &amp; share a new request:</string>
     <string name="create_a_profile">Create a profile</string>
     <string name="join_your_neighbors">Join your neighbors:</string>
     <string name="city">City:</string>
