@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/frame">
+    android:background="@drawable/frame_large">
 
     <EditText
         android:id="@+id/SearchText"
@@ -12,22 +12,64 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
         android:hint="@string/SearchText"
         android:inputType="textShortMessage"
         android:selectAllOnFocus="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
 
     <ImageButton
         android:id="@+id/searchButton"
-        android:layout_width="59dp"
-        android:layout_height="57dp"
+        android:layout_width="75dp"
+        android:layout_height="66dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/SearchText"
         android:background="@color/fui_transparent"
-        app:srcCompat="@drawable/send" />
+        app:layout_constraintRight_toLeftOf="@+id/SearchText"
+        app:srcCompat="@drawable/send"
+        tools:layout_editor_absoluteX="-57dp"
+        tools:layout_editor_absoluteY="121dp" />
+
+    <FrameLayout
+        android:id="@+id/personalRequests"
+        android:layout_width="wrap_content"
+        android:layout_height="121dp"
+        android:layout_below="@+id/SearchText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp">
+
+        <TextView
+            android:id="@+id/personalRequestsTitle"
+            android:layout_width="246dp"
+            android:layout_height="49dp"
+            android:text="Your requests"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/neighborsRequestList"
+        android:layout_width="match_parent"
+        android:layout_height="648dp"
+        android:layout_below="@id/personalRequests"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="8dp" />
 
 </RelativeLayout>

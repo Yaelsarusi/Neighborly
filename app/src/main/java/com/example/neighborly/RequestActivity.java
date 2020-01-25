@@ -126,7 +126,8 @@ public class RequestActivity extends AppCompatActivity {
         msgPath = String.format("messages/%s", requestId);
         RequestModel curRequest = curBuilding.getRequestById(requestId);
         TextView requestTitle = findViewById(R.id.requestDetailsTitle);
-        requestTitle.setText(String.format(getString(R.string.public_request_title), curUser.getPresentedName(), curRequest.getItemRequested()));
+        UserModelFacade curNeighbor = BuildingModelDataHolder.getInstance().getCurrentBuilding().getUserById(curRequest.getRequestUserId());
+        requestTitle.setText(String.format(getString(R.string.public_request_title), curNeighbor.getPresentedName(), curRequest.getItemRequested()));
         TextView originalMsg = findViewById(R.id.requestDetailsOriginalMessage);
         originalMsg.setText(curRequest.getRequestMsg());
     }
