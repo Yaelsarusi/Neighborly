@@ -31,7 +31,8 @@ import java.util.Map;
 
 public class FeedFragment extends Fragment {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private static final String introText = "Hi %1s, we found neighbors that have the item you were looking for!";
+    private static final String foundIntroText = "Hi %1s, we found neighbors that have the item you were looking for!";
+    private static final String notFoundIntroText = "Hi %1s, we haven't found neighbors that have the item you were looking for. :(";
     private View feedView;
     private Dialog popupRequestDialog;
     private EditText searchText;
@@ -89,15 +90,20 @@ public class FeedFragment extends Fragment {
         List<ItemModel> buildingItems = building.getItemsList();
         if (buildingItems != null) {
             for (UserModelFacade neighbor : BuildingModelDataHolder.getInstance().getCurrentBuilding().getUsersList()) {
+                if(neighbor == null || neighbor.getId().equals(curUser.getId())){
+                    continue;
+                }
                 for (ItemModel item : buildingItems) {
-                    if (neighbor != null && item != null && item.getOwnerId().equals(neighbor.getId())) {
-                        if (item.getName().contains(cleanedSearch)) {
+                    if (item != null && item.getOwnerId().equals(neighbor.getId())) {
+                        if (item.getName().equals(cleanedSearch)) {
                             foundItems.put(neighbor, item);
                             break;
                         }
+                        else if (item.getName().contains(cleanedSearch)) {
+                            foundItems.put(neighbor, item);
+                        }
                     }
                 }
-
             }
         }
 
@@ -109,10 +115,18 @@ public class FeedFragment extends Fragment {
         popupRequestDialog.setContentView(R.layout.popup_add_request);
         EditText requestMessageEditor = popupRequestDialog.findViewById(R.id.editRequestMessage);
         requestMessageEditor.setText(String.format(getString(R.string.neighborly_send_help_message), itemName));
+        requestMessageEditor.setHint(String.format(getString(R.string.neighborly_send_help_message), itemName));
         TextView intro = popupRequestDialog.findViewById(R.id.intro);
-        intro.setText(String.format(introText, UserModelDataHolder.getInstance().getCurrentUser().getPresentedName()));
-        ListView neighborsListView = popupRequestDialog.findViewById(R.id.foundNeighbors);
-        neighborsListView.setAdapter(new SearchResultListAdapter(getActivity(), foundItems, getContext(), itemName));
+        if(foundItems.size() == 0){
+            intro.setText(String.format(notFoundIntroText, curUser.getPresentedName()));
+            popupRequestDialog.findViewById(R.id.startChat).setVisibility(View.GONE);
+            popupRequestDialog.findViewById(R.id.foundNeighbors).setVisibility(View.GONE);
+        }
+        else {
+            intro.setText(String.format(foundIntroText, curUser.getPresentedName()));
+            ListView neighborsListView = popupRequestDialog.findViewById(R.id.foundNeighbors);
+            neighborsListView.setAdapter(new SearchResultListAdapter(getActivity(), foundItems, getContext(), itemName));
+        }
 
         sendButton = popupRequestDialog.findViewById(R.id.send);
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +182,7 @@ public class FeedFragment extends Fragment {
         userOpenRequests = new ArrayList<>();
         neighborsOpenRequests = new ArrayList<>();
         for (RequestModel request : curBuilding.getRequestList()) {
-            if (request.isResolved()) {
+            if(request == null || request.isResolved()) {
                 continue;
             }
             if (request.getRequestUserId().equals(curUser.getId())) {

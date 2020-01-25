@@ -50,18 +50,18 @@
         </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/itemPic"
+            android:layout_width="102dp"
+            android:layout_height="87dp"
+            android:layout_weight="1"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/neighborPic"
             android:layout_width="98dp"
             android:layout_height="87dp"
             android:layout_weight="1"
             android:contentDescription="@string/neighborPicture"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/itemPic"
-            android:layout_width="102dp"
-            android:layout_height="87dp"
-            android:layout_weight="1"
             tools:srcCompat="@tools:sample/avatars" />
 
     </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.neighborly;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -54,6 +55,7 @@ public class SearchResultListAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("ViewHolder")
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
