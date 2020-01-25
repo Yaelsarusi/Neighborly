@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -21,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,12 +33,19 @@ public class FeedFragment extends Fragment {
     private View feedView;
     private Dialog popupRequestDialog;
     private EditText searchText;
+    private BuildingModel curBuilding;
+    private UserModel curUser;
+    private List<RequestModel> userOpenRequests;
+    private List<RequestModel> neighborsOpenRequests;
+    private List<UserModel> privateChats;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         feedView = inflater.inflate(R.layout.fragment_feed, container, false);
+        curUser = UserModelDataHolder.getInstance().getCurrentUser();
+
         popupRequestDialog = new Dialog(this.getContext());
 
         ImageButton searchButton = feedView.findViewById(R.id.searchButton);
@@ -50,6 +57,13 @@ public class FeedFragment extends Fragment {
                 showPopup(v, itemName, searchForItem(itemName));
             }
         });
+
+        curBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
+        if (curBuilding != null){
+            separateRequestsInBuilding();
+            updateNeighborsScroll();
+
+        }
 
         return feedView;
     }
@@ -109,7 +123,7 @@ public class FeedFragment extends Fragment {
                     requests.put(requestId, newRequest);
 
                     requestKeyRef.setValue(newRequest);
-                    addItemsUnderBuildingInDB(newRequest);
+                    addRequestsUnderBuildingInDB(newRequest);
 
                     Intent intent = new Intent(getActivity(), RequestActivity.class);
                     intent.putExtra("requestType", RequestActivity.REQUEST_ITEM);
@@ -124,7 +138,7 @@ public class FeedFragment extends Fragment {
         popupRequestDialog.show();
     }
 
-    private void addItemsUnderBuildingInDB(RequestModel newRequest) {
+    private void addRequestsUnderBuildingInDB(RequestModel newRequest) {
         DatabaseReference buildingsRef = database.getReference().child(Constants.DB_BUILDINGS);
 
         // update the building model
@@ -135,4 +149,26 @@ public class FeedFragment extends Fragment {
         buildings.put(currentBuilding.getAddress(), currentBuilding);
         buildingsRef.updateChildren(buildings);
     }
+
+    private void separateRequestsInBuilding(){
+
+        userOpenRequests = new ArrayList<>();
+        neighborsOpenRequests = new ArrayList<>();
+        for (RequestModel request : curBuilding.getRequestList()){
+            if (request.isResolved()){
+                continue;
+            }
+            if (request.getRequestUserId().equals(curUser.getId())){
+                userOpenRequests.add(request);
+            } else {
+                neighborsOpenRequests.add(request);
+            }
+        }
+    }
+
+    private void updateNeighborsScroll() {
+        ListView neighborsRequestListView = feedView.findViewById(R.id.neighborsRequestList);
+        neighborsRequestListView.setAdapter(new NeighborsRequestListAdapter(getActivity(), neighborsOpenRequests, getContext()));
+    }
+
 }
