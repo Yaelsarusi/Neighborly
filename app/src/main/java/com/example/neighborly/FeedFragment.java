@@ -163,7 +163,7 @@ public class FeedFragment extends Fragment {
         buildingsRef.updateChildren(buildings);
     }
 
-    public void separateRequestsInBuilding() {
+    private void separateRequestsInBuilding() {
 
         userOpenRequests = new ArrayList<>();
         neighborsOpenRequests = new ArrayList<>();
@@ -179,7 +179,7 @@ public class FeedFragment extends Fragment {
         }
     }
 
-    public void updateNeighborsScroll() {
+    private void updateNeighborsScroll() {
         ListView neighborsRequestListView = feedView.findViewById(R.id.neighborsRequestList);
         neighborsRequestListView.setAdapter(new NeighborsRequestListAdapter(getActivity(), neighborsOpenRequests, getContext()));
     }
