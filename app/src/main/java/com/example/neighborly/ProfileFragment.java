@@ -128,13 +128,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setUserSavedItemsCarousel() {
-
-
-
-
         ProfileFragment.this.itemCarouselCardAdapter = new ItemCardAdapter(curUser.getItemsList(), getContext(), false);
         itemCarouselViewPager = ProfileFragment.this.profileView.findViewById(R.id.userItemPager);
-        itemCarouselViewPager.setPadding(200, 0, 200, 0);
+        itemCarouselViewPager.setPadding(250, 0, 250, 0);
         itemCarouselViewPager.setAdapter(ProfileFragment.this.itemCarouselCardAdapter);
 
     }
