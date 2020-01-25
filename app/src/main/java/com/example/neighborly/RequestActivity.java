@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,12 +45,12 @@ public class RequestActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String requestType = intent.getStringExtra("requestType");
 
-        if (requestType.equals(RequestActivity.REQUEST_PRIVATE_CHAT)){
+        if (requestType.equals(RequestActivity.REQUEST_PRIVATE_CHAT)) {
             String otherUser = intent.getStringExtra("neighbor");
             String itemName = intent.getStringExtra("itemName");
             handlePrivateChat(otherUser, itemName);
         }
-        if (requestType.equals(RequestActivity.REQUEST_ITEM)){
+        if (requestType.equals(RequestActivity.REQUEST_ITEM)) {
             // (Delete comment when the intent is actually sent)
             // This is supposed to be the requestId as hold in the buildingModel, there  is stored all the data needed.
             String requestId = intent.getStringExtra("requestId");
@@ -119,6 +120,20 @@ public class RequestActivity extends AppCompatActivity {
                 input.setText("");
             }
         });
+
+        setToolbar();
+    }
+
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.back_button);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void handleItemRequest(String requestId) {
@@ -138,13 +153,15 @@ public class RequestActivity extends AppCompatActivity {
         UserModelFacade neighbor = curBuilding.getUserById(otherUser);
         privateChatTitle.setText(String.format(this.getString(R.string.private_chat_title), neighbor.getPresentedName()));
 
-        if (itemName != null){
+        if (itemName != null) {
             input.setText(String.format(this.getString(R.string.request_item_from_neighbor_message), neighbor.getPresentedName(), itemName));
         }
 
-        if (otherUser.compareTo(curUser.getId()) > 0){
+        if (otherUser.compareTo(curUser.getId()) > 0) {
             msgPath = String.format(this.getString(R.string.private_messages_db_path), otherUser, curUser.getId());
-        } else {msgPath = String.format(this.getString(R.string.private_messages_db_path), curUser.getId(), otherUser);}
+        } else {
+            msgPath = String.format(this.getString(R.string.private_messages_db_path), curUser.getId(), otherUser);
+        }
 
     }
 

@@ -6,57 +6,148 @@
     android:layout_height="match_parent"
     tools:context=".JoinBuildingActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/addItemImage"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
-        android:src="@android:drawable/ic_input_add"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/profileTitle"
+        style="@style/TextColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/create_a_profile"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@id/profileImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextStreetAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        app:layout_constraintStart_toEndOf="@+id/textViewStreetAddress"
-        app:layout_constraintStart_toStartOf="@+id/editTextCity"
-        app:layout_constraintTop_toTopOf="@+id/textViewStreetAddress" />
-
-    <EditText
-        android:id="@+id/editTextCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/neighborPicture"
+        android:src="@drawable/profile"
+        app:civ_border_color="@color/appBlue"
+        app:civ_border_width="1dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewCity"
-        app:layout_constraintTop_toBottomOf="@+id/editTextStreetAddress" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileTitle"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textViewStreetAddress"
+        android:id="@+id/userName"
+        style="@style/TextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Street Address"
-        app:layout_constraintBottom_toTopOf="@+id/textViewCity"
-        app:layout_constraintEnd_toStartOf="@+id/editTextStreetAddress"
+        android:layout_marginTop="10dp"
+        android:text="@string/userNamePlaceHolder"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addItemImage" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+
+
+    <ImageView
+        android:id="@+id/appCompatImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/frame_for_items"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userName" />
+
+    <TextView
+        android:id="@+id/userAddressTitle"
+        style="@style/TextColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/join_your_neighbors"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userName" />
 
     <TextView
         android:id="@+id/textViewCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="City"
-        app:layout_constraintStart_toStartOf="@+id/textViewStreetAddress"
-        app:layout_constraintTop_toTopOf="@+id/editTextCity" />
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="35dp"
+        android:text="@string/city"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/editTextCity"
+        app:layout_constraintTop_toBottomOf="@+id/userAddressTitle" />
+
+    <EditText
+        android:id="@+id/editTextCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPostalAddress"
+        app:layout_constraintStart_toEndOf="@+id/textViewCity"
+        app:layout_constraintTop_toBottomOf="@+id/userAddressTitle" />
+
+    <EditText
+        android:id="@+id/editTextStreetAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPostalAddress"
+        app:layout_constraintLeft_toRightOf="@+id/textViewStreetAddress"
+        app:layout_constraintTop_toBottomOf="@+id/editTextCity" />
+
+    <TextView
+        android:id="@+id/textViewStreetAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="55dp"
+        android:text="@string/address"
+        app:layout_constraintEnd_toStartOf="@+id/editTextStreetAddress"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/frame_for_items"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStreetAddress" />
+
+    <TextView
+        android:id="@+id/userDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="65dp"
+        android:text="@string/tell_about_yourself"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStreetAddress" />
+
+    <EditText
+        android:id="@+id/userDescriptionEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:inputType="textPostalAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userDescription" />
+
 
     <Button
         android:id="@+id/buttonAdd"
@@ -65,8 +156,7 @@
         android:text="Join"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextCity" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
