@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".RequestActivity">
 
+    <Switch
+        android:id="@+id/isResolved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="90dp"/>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"

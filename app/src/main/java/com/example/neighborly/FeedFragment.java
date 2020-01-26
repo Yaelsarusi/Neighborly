@@ -211,7 +211,6 @@ public class FeedFragment extends Fragment {
     }
 
     private void separateRequestsInBuilding() {
-
         userOpenRequests = new ArrayList<>();
         neighborsOpenRequests = new ArrayList<>();
         for (RequestModel request : curBuilding.getRequestList()) {

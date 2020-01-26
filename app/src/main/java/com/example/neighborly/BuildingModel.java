@@ -91,5 +91,15 @@ class BuildingModel {
         }
         return null;
     }
+
+    public void setIsResolvedByRequestId(String requestId){
+        for (int i = 0; i < requestList.size(); i++){
+            RequestModel curRequest = requestList.get(i);
+            if (curRequest != null && curRequest.getRequestId().equals(requestId)){
+                curRequest.setResolved(true);
+                requestList.set(i, curRequest);
+            }
+        }
+    }
 }
 
