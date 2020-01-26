@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +24,9 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RequestActivity extends AppCompatActivity {
 
@@ -106,7 +112,7 @@ public class RequestActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
-        input = findViewById(R.id.editRequestMessage);
+
         ImageButton btnSend = findViewById(R.id.buttonSend);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,18 +145,39 @@ public class RequestActivity extends AppCompatActivity {
 
     private void handleItemRequest(String requestId) {
         setContentView(R.layout.activity_request_public);
+        input = findViewById(R.id.editRequestMessage);
         msgPath = String.format("messages/%s", requestId);
-        RequestModel curRequest = curBuilding.getRequestById(requestId);
+        final RequestModel curRequest = curBuilding.getRequestById(requestId);
         TextView requestTitle = findViewById(R.id.requestDetailsTitle);
         UserModelFacade curNeighbor = BuildingModelDataHolder.getInstance().getCurrentBuilding().getUserById(curRequest.getRequestUserId());
-        requestTitle.setText(String.format(getString(R.string.public_request_title), curNeighbor.getPresentedName(), curRequest.getItemRequested()));
+        Switch isResolved = findViewById(R.id.isResolved);
+        if (curNeighbor.getId().equals(curUser.getId())){
+            requestTitle.setText(getString(R.string.isResolvedTitle));
+            isResolved.setVisibility(View.VISIBLE);
+            isResolved.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    curBuilding.setIsResolvedByRequestId(curRequest.getRequestId());
+                    DatabaseReference buildingsRef = database.getReference().child(Constants.DB_BUILDINGS);
+                    Map<String, Object> buildings = new HashMap<>();
+                    buildings.put(curBuilding.getAddress(), curBuilding);
+                    buildingsRef.updateChildren(buildings);
+                }
+            });
+        }
+        else {
+            isResolved.setVisibility(View.INVISIBLE);
+            requestTitle.setText(String.format(getString(R.string.public_request_title), curNeighbor.getPresentedName(), curRequest.getItemRequested()));
+        }
+
         TextView originalMsg = findViewById(R.id.requestDetailsOriginalMessage);
         originalMsg.setText(curRequest.getRequestMsg());
+
+
     }
 
     private void handlePrivateChat(String otherUser, String itemName) {
         setContentView(R.layout.activity_request);
-
+        input = findViewById(R.id.editRequestMessage);
         privateChatTitle = findViewById(R.id.privateChatTitle);
         UserModelFacade neighbor = curBuilding.getUserById(otherUser);
         privateChatTitle.setText(String.format(this.getString(R.string.private_chat_title), neighbor.getPresentedName()));
