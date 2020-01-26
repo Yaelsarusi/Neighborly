@@ -110,6 +110,7 @@
             android:backgroundTint="@color/green"
             android:layout_width="300dp"
             android:layout_height="70dp"
+            android:lines="3"
             android:layout_centerInParent="true"
             android:inputType="textAutoComplete"
             android:textColor="@color/appBlue" />
@@ -127,7 +128,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/frame_mid_size"
+        android:src="@drawable/frame_for_items"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switcher" />
@@ -161,7 +162,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/userItemPager"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:layout_marginTop="20dp"
         android:clipToPadding="false"
         android:overScrollMode="never"

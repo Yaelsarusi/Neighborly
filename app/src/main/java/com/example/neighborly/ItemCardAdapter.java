@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -22,12 +23,12 @@ public class ItemCardAdapter extends PagerAdapter {
     public ItemCardAdapter(List<ItemModel> models, Context context, boolean infinite) {
         this.models = models;
         this.context = context;
-        this.LOOPS_COUNT = infinite? 1000 : 1;
+        this.LOOPS_COUNT = infinite ? 1000 : 1;
     }
 
     @Override
     public int getCount() {
-        if (models == null){
+        if (models == null) {
             return 0;
         }
         return models.size() * LOOPS_COUNT;
@@ -60,6 +61,9 @@ public class ItemCardAdapter extends PagerAdapter {
 
         imageView = view.findViewById(R.id.image);
         Picasso.get().load(Uri.parse(models.get(new_position).getImageUriString())).into(imageView);
+
+        TextView title = view.findViewById(R.id.title);
+        title.setText(models.get(new_position).getName());
 
         container.addView(view, 0);
         return view;
