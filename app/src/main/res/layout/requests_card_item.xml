@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="0dp"
         app:cardElevation="0dp">
 
         <RelativeLayout
@@ -19,20 +19,22 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:padding="5dp"
+                android:background="@drawable/rounded_rectangle"
                 android:id="@+id/image"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/frame" />
+                android:layout_height="60dp"
+                android:src="@drawable/profile" />
 
             <TextView
                 android:id="@+id/title"
+                android:text="title"
+                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/image"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:textColor="#262626"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/appBlue"
                 android:textSize="16sp" />
 
         </RelativeLayout>
