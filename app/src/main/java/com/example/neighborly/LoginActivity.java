@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                     UserModel curUser = dataSnapshot.getValue(UserModel.class);
                     UserModelDataHolder.getInstance().setCurrentUser(curUser);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
                 }
 
                 @Override
@@ -95,8 +96,10 @@ public class LoginActivity extends AppCompatActivity {
                 // todo remove debugFlag when not needed!
                 if (isNewUser || debugFlag) {
                     startActivity(new Intent(this, JoinBuildingActivity.class));
+                    finish();
                 } else {
                     startActivity(new Intent(this, MainActivity.class));
+                    finish();
                 }
             } else {
                 Toast.makeText(this, "" + response.getError().getMessage(), Toast.LENGTH_SHORT).show();
