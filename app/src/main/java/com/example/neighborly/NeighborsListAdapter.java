@@ -9,17 +9,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-
+import com.google.android.flexbox.FlexboxLayout;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NeighborsListAdapter extends BaseAdapter {
-    List<UserModelFacade> neighborsList;
-    LayoutInflater inflater;
-    Context context;
-    Activity activity;
+    private List<UserModelFacade> neighborsList;
+    private Context context;
+    private Activity activity;
 
     public NeighborsListAdapter(Activity activity) {
         neighborsList = new ArrayList<>();
@@ -48,10 +46,8 @@ public class NeighborsListAdapter extends BaseAdapter {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row;
-        row = inflater.inflate(R.layout.neighbors_details, parent, false);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View row = inflater.inflate(R.layout.neighbors_details, parent, false);
         TextView name = row.findViewById(R.id.neighborName);
         TextView description = row.findViewById(R.id.neighborDesc);
         ImageView picture = row.findViewById(R.id.neighborsPic);
@@ -61,17 +57,36 @@ public class NeighborsListAdapter extends BaseAdapter {
 
         Glide.with(context).load(curNeighbor.getImageUriString()).into(picture);
 
-        picture.setOnClickListener(new View.OnClickListener() {
+        setNeighborBadges(row, (FlexboxLayout) row.findViewById(R.id.neighborBadges), curNeighbor);
+
+        row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserModelFacade neighbor = neighborsList.get(position);
                 Intent intent = new Intent(NeighborsListAdapter.this.activity, RequestActivity.class);
-
                 intent.putExtra("requestType", RequestActivity.REQUEST_PRIVATE_CHAT);
                 intent.putExtra("neighbor", neighbor.getId());
                 NeighborsListAdapter.this.activity.startActivity(intent);
             }
         });
+
         return (row);
+    }
+
+    private void setNeighborBadges(View row, FlexboxLayout layoutRecepient, UserModelFacade curNeighbor) {
+        layoutRecepient.removeAllViews();
+        List<Integer> neighborBadges = curNeighbor.getBadges();
+
+        if (neighborBadges.isEmpty()){
+            layoutRecepient.setVisibility(View.INVISIBLE);
+            return;
+        }
+
+        for (final int badge : neighborBadges) {
+            ImageView badgeImage = new ImageView(row.getContext());
+            badgeImage.setImageResource(badge);
+            badgeImage.setPadding(0, 20, 0, 20);
+            layoutRecepient.addView(badgeImage);
+        }
     }
 }

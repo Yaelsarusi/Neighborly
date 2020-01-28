@@ -1,12 +1,16 @@
 package com.example.neighborly;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,12 +25,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.SnapshotParser;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.flexbox.FlexboxLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RequestActivity extends AppCompatActivity {
 
@@ -34,12 +36,16 @@ public class RequestActivity extends AppCompatActivity {
     static public final String REQUEST_ITEM = "request item";
 
     private FirebaseRecyclerAdapter<MessageModel, MessageAdapter.MessageHolder> adapter;
-    private FirebaseDatabase database;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private TextView privateChatTitle;
+    private Dialog popupRequestDialog;
     private EditText input;
     private UserModel curUser;
     private BuildingModel curBuilding;
     private String msgPath;
+    private String lastUserToAnswer;
+    private int chosenBadge;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +63,6 @@ public class RequestActivity extends AppCompatActivity {
             handlePrivateChat(otherUser, itemName);
         }
         if (requestType.equals(RequestActivity.REQUEST_ITEM)) {
-            // (Delete comment when the intent is actually sent)
-            // This is supposed to be the requestId as hold in the buildingModel, there  is stored all the data needed.
             String requestId = intent.getStringExtra("requestId");
             handleItemRequest(requestId);
         }
@@ -68,7 +72,6 @@ public class RequestActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        database = FirebaseDatabase.getInstance();
         final DatabaseReference messagesRef = database.getReference(msgPath);
 
         // New child entries
@@ -80,6 +83,10 @@ public class RequestActivity extends AppCompatActivity {
                 if (message != null) {
                     message.setMessageId(dataSnapshot.getKey());
                 }
+                String senderId = message.getSender().getId();
+                if (senderId != null && (lastUserToAnswer == null || !senderId.equals(curUser.getId()))){
+                    lastUserToAnswer = senderId;
+                }
                 return message;
             }
         };
@@ -89,8 +96,6 @@ public class RequestActivity extends AppCompatActivity {
                         .setQuery(messagesRef, parser)
                         .build();
 
-
-
         adapter = new MessageAdapter(RequestActivity.this, options, curUser.getId());
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -99,6 +104,7 @@ public class RequestActivity extends AppCompatActivity {
                 int messageCount = adapter.getItemCount();
                 int lastVisiblePosition =
                         linearLayoutManager.findLastCompletelyVisibleItemPosition();
+
                 // If the recycler view is initially being loaded or the
                 // user is at the bottom of the list, scroll to the bottom
                 // of the list to show the newly added message.
@@ -111,7 +117,6 @@ public class RequestActivity extends AppCompatActivity {
         });
 
         recyclerView.setAdapter(adapter);
-
 
         ImageButton btnSend = findViewById(R.id.buttonSend);
         btnSend.setOnClickListener(new View.OnClickListener() {
@@ -156,11 +161,12 @@ public class RequestActivity extends AppCompatActivity {
             isResolved.setVisibility(View.VISIBLE);
             isResolved.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    curBuilding.setIsResolvedByRequestId(curRequest.getRequestId());
-                    DatabaseReference buildingsRef = database.getReference().child(Constants.DB_BUILDINGS);
-                    Map<String, Object> buildings = new HashMap<>();
-                    buildings.put(curBuilding.getAddress(), curBuilding);
-                    buildingsRef.updateChildren(buildings);
+                    curBuilding.setIsResolvedByRequestId(curRequest.getRequestId(), isChecked);
+                    BuildingModelDataHolder.getInstance().setCurrentBuilding(curBuilding);
+
+                    if (lastUserToAnswer != null && isChecked && !lastUserToAnswer.equals(curUser.getId())) {
+                        showResolvedPopup();
+                    }
                 }
             });
         }
@@ -212,4 +218,49 @@ public class RequestActivity extends AppCompatActivity {
     int getImage() {
         return 0;
     }
+
+    private void showResolvedPopup() {
+        popupRequestDialog = new Dialog(this);
+        popupRequestDialog.setContentView(R.layout.popup_resolved_request);
+
+        Button closeButton = popupRequestDialog.findViewById(R.id.exit);
+        final Button sendButton = popupRequestDialog.findViewById(R.id.send);
+
+        sendButton.setVisibility(View.INVISIBLE);
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupRequestDialog.dismiss();
+            }
+        });
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curBuilding.addBadgeToUserById(chosenBadge, lastUserToAnswer);
+                BuildingModelDataHolder.getInstance().setCurrentBuilding(curBuilding);
+                popupRequestDialog.dismiss();
+            }
+        });
+
+        FlexboxLayout badgesLayout = popupRequestDialog.findViewById(R.id.neighborBadgesOptions);
+
+        for (final int badge : UserModel.BADGES) {
+            ImageView badgeImage = new ImageView(this);
+            badgeImage.setImageResource(badge);
+            badgeImage.setPadding(0, 20, 0, 20);
+            badgesLayout.addView(badgeImage);
+            badgeImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    chosenBadge = badge;
+                    sendButton.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+        popupRequestDialog.show();
+    }
+
+
 }

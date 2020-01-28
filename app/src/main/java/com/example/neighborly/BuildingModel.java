@@ -92,12 +92,33 @@ class BuildingModel {
         return null;
     }
 
-    public void setIsResolvedByRequestId(String requestId){
+    public void setIsResolvedByRequestId(String requestId, boolean isResolved){
         for (int i = 0; i < requestList.size(); i++){
             RequestModel curRequest = requestList.get(i);
             if (curRequest != null && curRequest.getRequestId().equals(requestId)){
-                curRequest.setResolved(true);
+                curRequest.setResolved(isResolved);
                 requestList.set(i, curRequest);
+            }
+        }
+    }
+
+    public void setUserDescriptionById(String id, String newDesc) {
+        for (int i = 0; i < usersList.size(); i++){
+            UserModelFacade curNeighbor = usersList.get(i);
+            if (curNeighbor != null && curNeighbor.getId().equals(id)){
+                curNeighbor.setDescription(newDesc);
+                usersList.set(i, curNeighbor);
+            }
+        }
+
+    }
+
+    public void addBadgeToUserById(int chosenBadge, String userId) {
+        for (int i = 0; i < usersList.size(); i++){
+            UserModelFacade curNeighbor = usersList.get(i);
+            if (curNeighbor != null && curNeighbor.getId().equals(userId)){
+                curNeighbor.addBadge(chosenBadge);
+                usersList.set(i, curNeighbor);
             }
         }
     }

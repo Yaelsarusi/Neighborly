@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -59,7 +60,7 @@ public class FeedFragment extends Fragment {
             public void onClick(View v) {
                 searchText = feedView.findViewById(R.id.SearchText);
                 String itemName = searchText.getText().toString();
-                showPopup(v, itemName, searchForItem(itemName));
+                showSearchPopup(v, itemName, searchForItem(itemName));
             }
         });
 
@@ -112,7 +113,7 @@ public class FeedFragment extends Fragment {
         return foundItems;
     }
 
-    private void showPopup(View view, final String itemName, Map<UserModelFacade, ItemModel> foundItems) {
+    private void showSearchPopup(View view, final String itemName, Map<UserModelFacade, ItemModel> foundItems) {
         ImageButton sendButton;
         popupRequestDialog.setContentView(R.layout.popup_add_request);
         EditText requestMessageEditor = popupRequestDialog.findViewById(R.id.editRequestMessage);
@@ -127,7 +128,7 @@ public class FeedFragment extends Fragment {
         else {
             intro.setText(String.format(foundIntroText, curUser.getPresentedName()));
             ListView neighborsListView = popupRequestDialog.findViewById(R.id.foundNeighbors);
-            neighborsListView.setAdapter(new SearchResultListAdapter(getActivity(), foundItems, getContext(), itemName));
+            neighborsListView.setAdapter(new SearchResultListAdapter(getActivity(), foundItems, getContext(), itemName, popupRequestDialog));
         }
 
         sendButton = popupRequestDialog.findViewById(R.id.send);
@@ -153,11 +154,6 @@ public class FeedFragment extends Fragment {
 
                     requestKeyRef.setValue(newRequest);
                     addRequestsUnderBuildingInDB(newRequest);
-
-                    Intent intent = new Intent(getActivity(), RequestActivity.class);
-                    intent.putExtra("requestType", RequestActivity.REQUEST_ITEM);
-                    intent.putExtra("requestId", requestId);
-                    startActivity(intent);
 
                     popupRequestDialog.dismiss();
                 }

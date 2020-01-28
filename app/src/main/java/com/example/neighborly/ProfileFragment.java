@@ -26,7 +26,6 @@ public class ProfileFragment extends Fragment {
     private Button btnAddNewItem;
     private Button editToggleButton;
     private View profileView;
-    private DatabaseReference mDatabase;
     private ViewPager itemCarouselViewPager;
     private UserModel curUser;
     private boolean editMode;
@@ -38,7 +37,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         profileView = inflater.inflate(R.layout.fragment_profile, container, false);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         curUser = UserModelDataHolder.getInstance().getCurrentUser();
 
@@ -140,6 +138,11 @@ public class ProfileFragment extends Fragment {
         String newDesc = searchText.getText().toString();
         curUser.setDescription(newDesc);
         database.getReference().child(Constants.DB_USERS).child(curUser.getId()).child("description").setValue(curUser.getDescription());
+
+        BuildingModel curBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
+        curBuilding.setUserDescriptionById(curUser.getId(), newDesc);
+        BuildingModelDataHolder.getInstance().setCurrentBuilding(curBuilding);
+
     }
 
 

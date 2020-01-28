@@ -3,7 +3,19 @@ package com.example.neighborly;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class UserModel {
+    // todo - this is temporary until there are real badges
+    public static final List<Integer> BADGES = new ArrayList<Integer>(){
+        {
+            add(R.drawable.send);
+            add(R.drawable.send);
+            add(R.drawable.send);
+            add(R.drawable.send);
+
+        }
+    };
+
     private String id;
     private String presentedName;
     private String address;
@@ -11,6 +23,7 @@ public class UserModel {
     private List<ItemModel> itemsList;
     // firebase does not handle uri, we hold a string instead
     private String imageUriString;
+    private List<Integer> badges;
 
     public UserModel() {
         this.itemsList = new ArrayList<>();
@@ -23,6 +36,7 @@ public class UserModel {
         this.itemsList = new ArrayList<>();
         this.imageUriString = imageUriString;
         this.description = description;
+        this.badges = new ArrayList<>();
     }
 
     public String getId() {
@@ -75,5 +89,17 @@ public class UserModel {
 
     public void setImageUriString(String imageUriString) {
         this.imageUriString = imageUriString;
+    }
+
+    public List<Integer> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(List<Integer> badges) {
+        this.badges = badges;
+    }
+
+    public void addBadge(int badge){
+        this.badges.add(badge);
     }
 }
