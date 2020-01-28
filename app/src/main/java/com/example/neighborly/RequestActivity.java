@@ -22,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.SnapshotParser;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -29,6 +30,8 @@ import com.google.android.flexbox.FlexboxLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RequestActivity extends AppCompatActivity {
 
@@ -38,6 +41,7 @@ public class RequestActivity extends AppCompatActivity {
     private FirebaseRecyclerAdapter<MessageModel, MessageAdapter.MessageHolder> adapter;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private TextView privateChatTitle;
+    private CircleImageView profilePicture;
     private Dialog popupRequestDialog;
     private EditText input;
     private UserModel curUser;
@@ -96,7 +100,7 @@ public class RequestActivity extends AppCompatActivity {
                         .setQuery(messagesRef, parser)
                         .build();
 
-        adapter = new MessageAdapter(RequestActivity.this, options, curUser.getId());
+        adapter = new MessageAdapter(RequestActivity.this, options, curUser.getId(), requestType);
         adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
@@ -156,7 +160,7 @@ public class RequestActivity extends AppCompatActivity {
         TextView requestTitle = findViewById(R.id.requestDetailsTitle);
         UserModelFacade curNeighbor = BuildingModelDataHolder.getInstance().getCurrentBuilding().getUserById(curRequest.getRequestUserId());
         Switch isResolved = findViewById(R.id.isResolved);
-        if (curNeighbor.getId().equals(curUser.getId())){
+        if (curNeighbor.getId().equals(curUser.getId())) {
             requestTitle.setText(getString(R.string.isResolvedTitle));
             isResolved.setVisibility(View.VISIBLE);
             isResolved.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -169,8 +173,7 @@ public class RequestActivity extends AppCompatActivity {
                     }
                 }
             });
-        }
-        else {
+        } else {
             isResolved.setVisibility(View.INVISIBLE);
             requestTitle.setText(String.format(getString(R.string.public_request_title), curNeighbor.getPresentedName(), curRequest.getItemRequested()));
         }
@@ -185,8 +188,10 @@ public class RequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_request);
         input = findViewById(R.id.editRequestMessage);
         privateChatTitle = findViewById(R.id.privateChatTitle);
+        profilePicture = findViewById(R.id.profilePicture);
         UserModelFacade neighbor = curBuilding.getUserById(otherUser);
         privateChatTitle.setText(String.format(this.getString(R.string.private_chat_title), neighbor.getPresentedName()));
+        Glide.with(this).load(neighbor.getImageUriString()).into(profilePicture);
 
         if (itemName != null) {
             input.setText(String.format(this.getString(R.string.request_item_from_neighbor_message), neighbor.getPresentedName(), itemName));

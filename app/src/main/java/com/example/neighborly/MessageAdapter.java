@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, MessageAdapter.MessageHolder> {
@@ -22,8 +23,9 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, Messag
     private RequestOptions requestOptions = new RequestOptions();
     private Context context;
     private String userId;
+    private String requestType;
 
-    public MessageAdapter(@NonNull Context context, FirebaseRecyclerOptions<MessageModel> options, String userID) {
+    public MessageAdapter(@NonNull Context context, FirebaseRecyclerOptions<MessageModel> options, String userID, String requestType) {
         /*
         Configure recycler adapter options:
         query defines the request made to Firestore
@@ -32,6 +34,7 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, Messag
         super(options);
         this.context = context;
         this.userId = userID;
+        this.requestType = requestType;
         requestOptions.placeholder(R.mipmap.ic_launcher);
     }
 
@@ -52,13 +55,19 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, Messag
         final TextView mTime = holder.mTime;
         final CircleImageView imgProfile = holder.imgProfile;
 
-        mUsername.setText(model.getSenderPresentedName());
         mText.setText(model.getText());
         mTime.setText(DateFormat.format("dd MMM  (h:mm a)", model.getSentTime()));
-        Glide.with(context)
-                .setDefaultRequestOptions(requestOptions)
-                .load(model.getSenderImageUri())
-                .into(imgProfile);
+
+        if (requestType.equals(RequestActivity.REQUEST_ITEM)) {
+            mUsername.setText(model.getSenderPresentedName());
+            Glide.with(context)
+                    .setDefaultRequestOptions(requestOptions)
+                    .load(model.getSenderImageUri())
+                    .into(imgProfile);
+        } else {
+            mUsername.setVisibility(View.GONE);
+            imgProfile.setVisibility(View.GONE);
+        }
     }
 
     @NonNull
