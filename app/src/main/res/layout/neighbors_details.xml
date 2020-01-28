@@ -11,6 +11,14 @@
         android:background="@android:color/transparent"
         android:padding="8dp">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/neighborsPic"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/neighborPicture"
+            tools:srcCompat="@tools:sample/avatars" />
+
         <LinearLayout
             android:layout_width="255dp"
             android:layout_height="match_parent"
@@ -31,14 +39,6 @@
                 android:layout_height="52dp"
                 android:text="@string/neighbors" />
         </LinearLayout>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/neighborsPic"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/neighborPicture"
-            tools:srcCompat="@tools:sample/avatars" />
 
     </LinearLayout>
 

@@ -41,7 +41,7 @@
     <string name="item_example">ex. 5 steps ladder</string>
     <string name="messageHint">Type a message...</string>
     <string name="neighborly_help_message">I can help you out! :)</string>
-    <string name="private_chat_title">Private chat with %s</string>
+    <string name="private_chat_title">%s</string>
     <string name="private_messages_db_path">messages/%s_%s</string>
     <string name="request_item_from_neighbor_message">Hey %s! Can I please borrow your %s?</string>
     <string name="neighborly_send_help_message">Hi neighbors! I\'m looking for a %s...</string>
