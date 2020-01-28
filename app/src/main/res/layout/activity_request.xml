@@ -19,15 +19,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profilePicture"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/profile"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/appNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/app_name"
                 android:textColor="@color/appBlue"
                 android:textSize="25sp"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/profilePicture"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -40,32 +51,9 @@
                 app:layout_constraintLeft_toLeftOf="@+id/appNameTextView"
                 app:layout_constraintTop_toBottomOf="@+id/appNameTextView" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profilePicture"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/profile"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
-
-    <!--    <LinearLayout-->
-    <!--        android:id="@+id/privateChatLinearLayout"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="65dp"-->
-    <!--        android:layout_above="@+id/chat"-->
-    <!--        android:layout_alignParentStart="true"-->
-    <!--        android:layout_alignParentTop="true"-->
-    <!--        android:layout_marginStart="0dp"-->
-    <!--        android:background="@drawable/frame_large"-->
-    <!--        android:orientation="vertical">-->
-
-    <!--    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/chat"
