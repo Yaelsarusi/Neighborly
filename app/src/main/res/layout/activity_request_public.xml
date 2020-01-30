@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="90dp"/>
+        android:layout_marginEnd="90dp" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -82,15 +82,17 @@
             android:layout_height="wrap_content"
             android:padding="4dp" />
 
-        <androidx.core.widget.ContentLoadingProgressBar
+        <ProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/appBlue" />
 
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/bottom"
+        android:id="@+id/createNewRequest"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
@@ -99,8 +101,6 @@
 
         <EditText
             android:id="@+id/editRequestMessage"
-            android:textCursorDrawable="@drawable/cursor_color"
-            android:backgroundTint="@color/green"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
@@ -108,7 +108,9 @@
             android:layout_toStartOf="@+id/buttonSend"
             android:autofillHints="@string/neighborly_help_message"
             android:background="@android:color/transparent"
-            android:hint="@string/messageHint" />
+            android:backgroundTint="@color/green"
+            android:hint="@string/messageHint"
+            android:textCursorDrawable="@drawable/cursor_color" />
 
         <ImageButton
             android:id="@+id/buttonSend"
