@@ -63,7 +63,9 @@ public class JoinBuildingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserModel curUser = dataSnapshot.getValue(UserModel.class);
-                UserModelDataHolder.getInstance().setCurrentUser(curUser);
+                if (curUser != null) {
+                    UserModelDataHolder.getInstance().setCurrentUser(curUser);
+                }
             }
 
             @Override
