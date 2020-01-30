@@ -267,5 +267,14 @@ public class RequestActivity extends AppCompatActivity {
         popupRequestDialog.show();
     }
 
+    private void showAskIfAddNewItemPopup() {
+        popupRequestDialog = new Dialog(this);
+        popupRequestDialog.setContentView(R.layout.popup_ask_if_add_new_item);
+
+        Button closeButton = popupRequestDialog.findViewById(R.id.exit);
+        final Button sendButton = popupRequestDialog.findViewById(R.id.send);
+
+        popupRequestDialog.show();
+    }
 
 }
