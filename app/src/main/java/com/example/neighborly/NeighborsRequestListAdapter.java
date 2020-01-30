@@ -56,7 +56,7 @@ public class NeighborsRequestListAdapter extends BaseAdapter {
         TextView description = row.findViewById(R.id.neighborRequestDesc);
         ImageView picture = row.findViewById(R.id.neighborsPic);
         RequestModel curRequest = requestList.get(position);
-        name.setText(curRequest.getItemRequested());
+        name.setText(curRequest.getItemPresentedName());
         description.setText(curRequest.getRequestMsg());
 
         UserModelFacade curNeighbor = BuildingModelDataHolder.getInstance().getCurrentBuilding().getUserById(curRequest.getRequestUserId());

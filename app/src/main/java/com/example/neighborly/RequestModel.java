@@ -55,7 +55,11 @@ public class RequestModel implements Serializable {
     }
 
     public String getItemRequested() {
-        return itemRequested;
+        return  this.itemRequested;
+    }
+
+    public String getItemPresentedName() {
+        return  itemRequested.substring(0,1).toUpperCase() + itemRequested.substring(1).toLowerCase();
     }
 
     public void setItemRequested(String itemRequested) {

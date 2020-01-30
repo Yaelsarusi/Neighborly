@@ -47,6 +47,7 @@ public class RequestActivity extends AppCompatActivity {
     private EditText input;
     private UserModel curUser;
     private BuildingModel curBuilding;
+    private UserModelFacade neighbor;
     private String msgPath;
     private String lastUserToAnswer;
     private int chosenBadge;
@@ -71,6 +72,7 @@ public class RequestActivity extends AppCompatActivity {
             String requestId = intent.getStringExtra("requestId");
             handleItemRequest(requestId);
         }
+        input.requestFocus();
 
         final RecyclerView recyclerView = findViewById(R.id.recycleView);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -137,6 +139,11 @@ public class RequestActivity extends AppCompatActivity {
 
                 messagesRef.push().setValue(new MessageModel(curUser, message));
                 input.setText("");
+
+
+                if (!neighbor.getId().equals(curUser.getId())) {
+                    // todo send popup of item request (As soon as it is a popup)
+                }
             }
         });
 
@@ -161,9 +168,9 @@ public class RequestActivity extends AppCompatActivity {
         msgPath = String.format("messages/%s", requestId);
         final RequestModel curRequest = curBuilding.getRequestById(requestId);
         TextView requestTitle = findViewById(R.id.requestDetailsTitle);
-        UserModelFacade curNeighbor = BuildingModelDataHolder.getInstance().getCurrentBuilding().getUserById(curRequest.getRequestUserId());
+        neighbor = BuildingModelDataHolder.getInstance().getCurrentBuilding().getUserById(curRequest.getRequestUserId());
         Switch isResolved = findViewById(R.id.isResolved);
-        if (curNeighbor.getId().equals(curUser.getId())) {
+        if (neighbor.getId().equals(curUser.getId())) {
             requestTitle.setText(getString(R.string.isResolvedTitle));
             isResolved.setVisibility(View.VISIBLE);
             isResolved.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -178,7 +185,8 @@ public class RequestActivity extends AppCompatActivity {
             });
         } else {
             isResolved.setVisibility(View.INVISIBLE);
-            requestTitle.setText(String.format(getString(R.string.public_request_title), curNeighbor.getPresentedName(), curRequest.getItemRequested()));
+            requestTitle.setText(String.format(getString(R.string.public_request_title), neighbor.getPresentedName(), curRequest.getItemRequested()));
+            input.setText(this.getString(R.string.neighbor_offering_help_msg));
         }
 
         TextView originalMsg = findViewById(R.id.requestDetailsOriginalMessage);
@@ -192,7 +200,7 @@ public class RequestActivity extends AppCompatActivity {
         input = findViewById(R.id.editRequestMessage);
         privateChatTitle = findViewById(R.id.privateChatTitle);
         profilePicture = findViewById(R.id.profilePicture);
-        UserModelFacade neighbor = curBuilding.getUserById(otherUser);
+        neighbor = curBuilding.getUserById(otherUser);
         privateChatTitle.setText(String.format(this.getString(R.string.private_chat_title), neighbor.getPresentedName()));
         Glide.with(this).load(neighbor.getImageUriString()).into(profilePicture);
 
