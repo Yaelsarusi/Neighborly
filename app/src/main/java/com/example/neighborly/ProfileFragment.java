@@ -46,8 +46,9 @@ public class ProfileFragment extends Fragment {
         btnAddNewItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().startActivity(new Intent(getActivity(), AddItemActivity.class));
-
+                Intent newItemIntent = new Intent(getActivity(), AddItemActivity.class);
+                newItemIntent.putExtra("activityType", AddItemActivity.ADD_NEW_ITEM);
+                getActivity().startActivity(newItemIntent);
             }
         });
 
@@ -128,7 +129,7 @@ public class ProfileFragment extends Fragment {
     private void setUserSavedItemsCarousel() {
         ProfileFragment.this.itemCarouselCardAdapter = new ItemCardAdapter(curUser.getItemsList(), getContext(), false);
         itemCarouselViewPager = ProfileFragment.this.profileView.findViewById(R.id.userItemPager);
-        itemCarouselViewPager.setPadding(250, 0, 250, 0);
+        itemCarouselViewPager.setPadding(200, 0, 200, 0);
         itemCarouselViewPager.setAdapter(ProfileFragment.this.itemCarouselCardAdapter);
 
     }

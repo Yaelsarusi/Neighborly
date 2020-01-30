@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -120,6 +119,7 @@ public class FeedFragment extends Fragment {
         requestMessageEditor.setText(String.format(getString(R.string.neighborly_send_help_message), itemName));
         requestMessageEditor.setHint(String.format(getString(R.string.neighborly_send_help_message), itemName));
         TextView intro = popupRequestDialog.findViewById(R.id.intro);
+        requestMessageEditor.requestFocus();
         if(foundItems.size() == 0){
             intro.setText(String.format(notFoundIntroText, curUser.getPresentedName()));
             popupRequestDialog.findViewById(R.id.startChat).setVisibility(View.GONE);
@@ -176,8 +176,9 @@ public class FeedFragment extends Fragment {
         for (final RequestModel request : userOpenRequests) {
             if(request != null){
                 Button button = new Button(feedView.getContext());
-                button.setText(request.getItemRequested());
+                button.setText(request.getItemPresentedName());
                 button.setPadding(0, 20, 0, 20);
+                button.setAllCaps(false);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -195,15 +196,10 @@ public class FeedFragment extends Fragment {
     // -------------- Other's requests --------------
 
     private void addRequestsUnderBuildingInDB(RequestModel newRequest) {
-        DatabaseReference buildingsRef = database.getReference().child(Constants.DB_BUILDINGS);
-
         // update the building model
         BuildingModel currentBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
         currentBuilding.addRequestToList(newRequest);
-
-        Map<String, Object> buildings = new HashMap<>();
-        buildings.put(currentBuilding.getAddress(), currentBuilding);
-        buildingsRef.updateChildren(buildings);
+        BuildingModelDataHolder.getInstance().setCurrentBuilding(currentBuilding);
     }
 
     private void separateRequestsInBuilding() {

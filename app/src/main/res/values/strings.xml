@@ -56,4 +56,5 @@
     <string name="isResolvedTitle">Is Resolved?</string>
     <string name="request_resolved_message">Glad it worked out!
         Say thanks by sending out a badge</string>
+    <string name="neighbor_offering_help_msg">I can help you out :)</string>
 </resources>
