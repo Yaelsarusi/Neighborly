@@ -3,18 +3,18 @@
     android:layout_width="350dp"
     android:layout_height="400dp"
     android:layout_gravity="center"
-    android:background="@color/colorPrimary"
+    android:background="@color/fui_transparent"
     android:orientation="vertical"
     android:padding="5dp">
 
     <TextView
         android:id="@+id/txtClose"
+        style="@style/TextColor"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="end"
         android:gravity="center"
         android:text="X"
-        android:textColor="@color/white"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -29,12 +29,12 @@
             android:layout_marginTop="15dp" />
 
         <TextView
+            style="@style/TextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
             android:text="@string/emptyBuilding1Msg"
-            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <TextView
@@ -43,16 +43,16 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
             android:text="@string/emptyBuilding2Msg"
-            android:textColor="@color/white" />
+            android:textColor="@color/appBlue" />
     </LinearLayout>
 
     <Button
         android:id="@+id/buttonDone"
+        style="@style/TextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
-        android:text="Done"
-        android:textColor="@color/white" />
+        android:text="Done" />
 
 </LinearLayout>

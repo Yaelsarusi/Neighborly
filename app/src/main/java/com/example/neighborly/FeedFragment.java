@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -72,6 +74,8 @@ public class FeedFragment extends Fragment {
                     separateRequestsInBuilding();
                     addMyRequestsButtons((FlexboxLayout) feedView.findViewById(R.id.myRequests));
                     updateNeighborsScroll();
+                    ProgressBar progressBar = feedView.findViewById(R.id.progressBar);
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 
@@ -93,7 +97,7 @@ public class FeedFragment extends Fragment {
         List<ItemModel> buildingItems = building.getItemsList();
         if (buildingItems != null) {
             for (UserModelFacade neighbor : BuildingModelDataHolder.getInstance().getCurrentBuilding().getUsersList()) {
-                if(neighbor == null || neighbor.getId().equals(curUser.getId())){
+                if (neighbor == null || neighbor.getId().equals(curUser.getId())) {
                     continue;
                 }
                 for (ItemModel item : buildingItems) {
@@ -101,8 +105,7 @@ public class FeedFragment extends Fragment {
                         if (item.getName().equals(cleanedSearch)) {
                             foundItems.put(neighbor, item);
                             break;
-                        }
-                        else if (item.getName().contains(cleanedSearch)) {
+                        } else if (item.getName().contains(cleanedSearch)) {
                             foundItems.put(neighbor, item);
                         }
                     }
@@ -120,12 +123,20 @@ public class FeedFragment extends Fragment {
         requestMessageEditor.setText(String.format(getString(R.string.neighborly_send_help_message), itemName));
         requestMessageEditor.setHint(String.format(getString(R.string.neighborly_send_help_message), itemName));
         TextView intro = popupRequestDialog.findViewById(R.id.intro);
-        if(foundItems.size() == 0){
+        if (foundItems.size() == 0) {
+            popupRequestDialog.findViewById(R.id.newRequestButton).setVisibility(View.GONE);
             intro.setText(String.format(notFoundIntroText, curUser.getPresentedName()));
             popupRequestDialog.findViewById(R.id.startChat).setVisibility(View.GONE);
             popupRequestDialog.findViewById(R.id.foundNeighbors).setVisibility(View.GONE);
-        }
-        else {
+        } else {
+            popupRequestDialog.findViewById(R.id.createNewRequest).setVisibility(View.GONE);
+            popupRequestDialog.findViewById(R.id.newRequestButton).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    popupRequestDialog.findViewById(R.id.createNewRequest).setVisibility(View.VISIBLE);
+                }
+            });
+
             intro.setText(String.format(foundIntroText, curUser.getPresentedName()));
             ListView neighborsListView = popupRequestDialog.findViewById(R.id.foundNeighbors);
             neighborsListView.setAdapter(new SearchResultListAdapter(getActivity(), foundItems, getContext(), itemName, popupRequestDialog));
@@ -159,22 +170,30 @@ public class FeedFragment extends Fragment {
                 }
             }
         });
+
+        TextView textClose = popupRequestDialog.findViewById(R.id.txtClose);
+        textClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupRequestDialog.dismiss();
+            }
+        });
+
         popupRequestDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupRequestDialog.show();
     }
 
     // -------------- My requests --------------
 
-    private void addMyRequestsButtons(FlexboxLayout layoutRecepient)
-    {
+    private void addMyRequestsButtons(FlexboxLayout layoutRecepient) {
         layoutRecepient.removeAllViews();
-        if(userOpenRequests.size() > 4){
+        if (userOpenRequests.size() > 4) {
             ViewGroup.LayoutParams params = layoutRecepient.getLayoutParams();
             params.height = 360;
             layoutRecepient.setLayoutParams(params);
         }
         for (final RequestModel request : userOpenRequests) {
-            if(request != null){
+            if (request != null) {
                 Button button = new Button(feedView.getContext());
                 button.setText(request.getItemRequested());
                 button.setPadding(0, 20, 0, 20);
@@ -210,7 +229,7 @@ public class FeedFragment extends Fragment {
         userOpenRequests = new ArrayList<>();
         neighborsOpenRequests = new ArrayList<>();
         for (RequestModel request : curBuilding.getRequestList()) {
-            if(request == null || request.isResolved()) {
+            if (request == null || request.isResolved()) {
                 continue;
             }
             if (request.getRequestUserId().equals(curUser.getId())) {
