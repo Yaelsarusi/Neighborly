@@ -1,6 +1,8 @@
 package com.example.neighborly;
 
-public class ItemModel {
+import java.io.Serializable;
+
+public class ItemModel implements Serializable {
     private String name;
     private String ownerId;
     private String description;
@@ -51,4 +53,10 @@ public class ItemModel {
     public static String cleanItemName(String name) {
         return name.toLowerCase().replaceAll("\\s+","");
     }
+
+    public String getPresentedName() {
+        return name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+    }
+
+
 }

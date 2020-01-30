@@ -24,12 +24,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddItemActivity extends AppCompatActivity {
@@ -38,10 +36,15 @@ public class AddItemActivity extends AppCompatActivity {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final int PICK_IMAGE = 1;
     private static final int MY_CAMERA_PERMISSION_CODE = 2;
+    public static final int EDIT_EXISTING_ITEM = 3;
     private CircleImageView addItemImage;
+    private int activityType;
     Uri newImageUri;
     Button btnAdd;
     UserModel currentUser;
+    EditText name;
+    EditText description;
+    ItemModel item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,23 @@ public class AddItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_item);
 
         setToolbar();
+        currentUser = UserModelDataHolder.getInstance().getCurrentUser();
 
         addItemImage = (CircleImageView) findViewById(R.id.itemImage);
+        name = findViewById(R.id.editTextName);
+        description = findViewById(R.id.editTextDescription);
+        btnAdd = findViewById(R.id.buttonAdd);
+
+        Intent activityIntent = getIntent();
+
+        activityType = activityIntent.getIntExtra("activityType", 0);
+        if (activityType == AddItemActivity.EDIT_EXISTING_ITEM){
+            item = (ItemModel)activityIntent.getSerializableExtra("item");
+            Picasso.get().load(Uri.parse(item.getImageUriString())).into(addItemImage);
+            name.setText(item.getName());
+            description.setText(item.getDescription());
+        }
+
         addItemImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,26 +80,26 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
-        currentUser = UserModelDataHolder.getInstance().getCurrentUser();
-
-        btnAdd = findViewById(R.id.buttonAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText name = findViewById(R.id.editTextName);
-                EditText description = findViewById(R.id.editTextDescription);
-
+                String newImageUriString;
                 if (newImageUri == null) {
-                    newImageUri = Uri.parse("android.resource://com.example.neighborly/drawable/sticker");
+                    if (item != null) {
+                        newImageUriString = item.getImageUriString();
+                    } else {
+                        newImageUriString = Uri.parse("android.resource://com.example.neighborly/drawable/sticker").toString();
+                    }
+                } else {
+                    newImageUriString = newImageUri.toString();
                 }
 
-                ItemModel newItem = new ItemModel(newImageUri.toString(), name.getText().toString(),
+                ItemModel newItem = new ItemModel(newImageUriString, name.getText().toString(),
                         currentUser.getId(), description.getText().toString());
-
                 addImageToStorage(newItem);
                 UserModelDataHolder.getInstance().setCurrentUser(currentUser);
-
                 startActivity(new Intent(AddItemActivity.this, MainActivity.class));
+                finish();
             }
         });
     }
@@ -149,21 +167,13 @@ public class AddItemActivity extends AppCompatActivity {
         // update the building model
         BuildingModel currentBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
         currentBuilding.addItemToList(newItem);
-
-        Map<String, Object> buildings = new HashMap<>();
-        buildings.put(currentBuilding.getAddress(), currentBuilding);
-        buildingsRef.updateChildren(buildings);
+        BuildingModelDataHolder.getInstance().setCurrentBuilding(currentBuilding);
     }
 
     private void addItemToUserInDB(ItemModel newItem) {
-        DatabaseReference usersRef = database.getReference().child(Constants.DB_USERS);
-
         // update the user model
         currentUser.addToItemsList(newItem);
-
-        Map<String, Object> users = new HashMap<>();
-        users.put(currentUser.getId(), currentUser);
-        usersRef.updateChildren(users);
+        UserModelDataHolder.getInstance().setCurrentUser(currentUser);
     }
 
     @Override
