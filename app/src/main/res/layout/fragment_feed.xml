@@ -8,8 +8,6 @@
 
     <EditText
         android:id="@+id/SearchText"
-        android:textCursorDrawable="@drawable/cursor_color"
-        android:backgroundTint="@color/green"
         style="@style/Widget.AppCompat.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,10 +15,12 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="0dp"
+        android:backgroundTint="@color/green"
         android:hint="@string/SearchText"
         android:inputType="textShortMessage"
         android:selectAllOnFocus="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textCursorDrawable="@drawable/cursor_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
@@ -90,5 +90,12 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="-1dp"
         android:padding="8dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/appBlue" />
 
 </RelativeLayout>

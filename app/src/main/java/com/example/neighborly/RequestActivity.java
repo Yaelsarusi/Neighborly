@@ -11,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -123,6 +124,8 @@ public class RequestActivity extends AppCompatActivity {
         });
 
         recyclerView.setAdapter(adapter);
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         ImageButton btnSend = findViewById(R.id.buttonSend);
         btnSend.setOnClickListener(new View.OnClickListener() {
