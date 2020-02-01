@@ -12,7 +12,6 @@ public class UserModel {
             add(R.drawable.send);
             add(R.drawable.send);
             add(R.drawable.send);
-
         }
     };
 

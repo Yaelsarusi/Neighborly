@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="350dp"
     android:layout_height="475dp"
+    android:layout_gravity="center"
     android:background="@color/white"
-    android:padding="5dp"
-    android:layout_gravity="center">
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/title"
@@ -22,6 +22,18 @@
         android:layout_height="21dp" />
 
     <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/neighborOptions"
+        style="@style/TextColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:alignContent="flex_start"
+        app:alignItems="flex_start"
+        app:flexWrap="wrap"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/neighborBadgesOptions"
         style="@style/TextColor"
         android:layout_width="match_parent"
@@ -31,7 +43,7 @@
         app:alignContent="flex_start"
         app:alignItems="flex_start"
         app:flexWrap="wrap"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/neighborOptions" />
 
     <Space
         android:layout_width="match_parent"
