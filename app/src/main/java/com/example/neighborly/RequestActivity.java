@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.ArraySet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -32,8 +33,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -45,7 +45,7 @@ public class RequestActivity extends AppCompatActivity {
 
     private FirebaseRecyclerAdapter<MessageModel, MessageAdapter.MessageHolder> adapter;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private List<UserModel> commentedUsers = new ArrayList<>();
+    private Set<UserModel> commentedUsers = new ArraySet<>();
     private TextView privateChatTitle;
     private CircleImageView profilePicture;
     private Dialog popupRequestDialog;
