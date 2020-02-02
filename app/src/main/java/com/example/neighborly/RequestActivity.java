@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -15,7 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,9 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.database.SnapshotParser;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.database.SnapshotParser;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -165,7 +163,7 @@ public class RequestActivity extends AppCompatActivity {
     private void handleItemRequest(String requestId) {
         setContentView(R.layout.activity_request_public);
         input = findViewById(R.id.editRequestMessage);
-        msgPath = String.format("messages/%s", requestId);
+        msgPath = String.format("Messages/%s", requestId);
         final RequestModel curRequest = curBuilding.getRequestById(requestId);
         TextView requestTitle = findViewById(R.id.requestDetailsTitle);
         neighbor = BuildingModelDataHolder.getInstance().getCurrentBuilding().getUserById(curRequest.getRequestUserId());
