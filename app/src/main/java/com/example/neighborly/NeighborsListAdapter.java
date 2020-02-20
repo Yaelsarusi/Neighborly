@@ -85,7 +85,6 @@ public class NeighborsListAdapter extends BaseAdapter {
         for (final int badge : neighborBadges) {
             ImageView badgeImage = new ImageView(row.getContext());
             badgeImage.setImageResource(badge);
-            badgeImage.setPadding(0, 20, 0, 20);
             layoutRecepient.addView(badgeImage);
         }
     }

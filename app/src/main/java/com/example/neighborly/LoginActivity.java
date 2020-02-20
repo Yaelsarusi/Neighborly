@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         // if Login is successful or in debug mode
-        if (auth.getCurrentUser() != null && !debugFlag){
+        if (auth.getCurrentUser() != null && !debugFlag) {
             DatabaseReference users = FirebaseDatabase.getInstance().getReference().child(Constants.DB_USERS).child(auth.getUid());
 
             // This call will only happen if user was already logged in
@@ -61,18 +62,24 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
 
-        }
-        else {
+        } else {
             showSignInOptions();
         }
     }
 
     private void showSignInOptions() {
+        AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout
+                .Builder(R.layout.custom_login_layout)
+                .setGoogleButtonId(R.id.imageButtonGoogle)
+                .setFacebookButtonId(R.id.imageButtonFacebook)
+                .build();
+
         // Create and launch sign-in intent
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
+                        .setAuthMethodPickerLayout(customLayout)
                         .setTheme(R.style.LoginTheme)
                         .build(),
                 RC_SIGN_IN);
@@ -98,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(this, JoinBuildingActivity.class));
                     finish();
                 } else {
+
                     startActivity(new Intent(this, MainActivity.class));
                     finish();
                 }

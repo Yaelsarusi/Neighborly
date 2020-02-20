@@ -17,6 +17,7 @@
 
     <TextView
         android:id="@+id/textViewUserName"
+        style="@style/TextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -37,12 +38,13 @@
         android:maxWidth="210dp"
         android:padding="8dp"
         android:text="hello, hello!"
-        android:textColor="@color/appBlue"
+        android:textColor="@color/appBlack"
         app:layout_constraintRight_toLeftOf="@id/profileImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewTime"
+        style="@style/TextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"

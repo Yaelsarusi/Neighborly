@@ -17,6 +17,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
+import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,12 +38,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String CHANNEL_ID="Neighborly_channel";
-    private static final String CHANNEL_NAME="Neighborly app channel";
-    private static final String CHANNEL_DESC="Channel for Neighborly app";
-    private static final String NEW_REQ_TITLE="%1s asked for %2s"; //todo - rephrase
-    private static final String REQ_ANSWER_TITLE="Someone replied to your request! check it out"; //todo - rephrase
-    private static final String NEW_MSG_TITLE="%1s send you a message"; //todo - rephrase
+    private static final String CHANNEL_ID = "Neighborly_channel";
+    private static final String CHANNEL_NAME = "Neighborly app channel";
+    private static final String CHANNEL_DESC = "Channel for Neighborly app";
+    private static final String NEW_REQ_TITLE = "%1s asked for %2s"; //todo - rephrase
+    private static final String REQ_ANSWER_TITLE = "Someone replied to your request! check it out"; //todo - rephrase
+    private static final String NEW_MSG_TITLE = "%1s send you a message"; //todo - rephrase
     private static final int RC_SIGN_IN = 1;
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME,
                     NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription(CHANNEL_DESC);
@@ -81,18 +82,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 BuildingModel oldBuilding = null;
-                if (BuildingModelDataHolder.getInstance().getCurrentBuilding() != null){
+                if (BuildingModelDataHolder.getInstance().getCurrentBuilding() != null) {
                     oldBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
                 }
                 BuildingModel curBuilding = dataSnapshot.getValue(BuildingModel.class);
                 BuildingModelDataHolder.getInstance().setCurrentBuilding(curBuilding);
 
-                if(oldBuilding != null){
+                if (oldBuilding != null) {
                     RequestModel lastRequest = oldBuilding.getLastRequest();
                     RequestModel newRequest = curBuilding.getLastRequest();
 
-                    if(newRequest != null && !newRequest.getRequestUserId().equals(curUser.getId())){
-                        if(lastRequest != null && !lastRequest.getRequestId().equals(newRequest.getRequestId())) {
+                    if (newRequest != null && !newRequest.getRequestUserId().equals(curUser.getId())) {
+                        if (lastRequest != null && !lastRequest.getRequestId().equals(newRequest.getRequestId())) {
                             String userName = curBuilding.getUserById(newRequest.getRequestUserId()).getPresentedName();
                             String itemName = newRequest.getItemRequested();
                             String text = newRequest.getRequestMsg();
@@ -113,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setSignOutButton() {
         providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build(),
                 new AuthUI.IdpConfig.FacebookBuilder().build());
 
@@ -144,10 +144,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void showSignInOptions() {
         // Create and launch sign-in intent
+        AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout
+                .Builder(R.layout.custom_login_layout)
+                .setGoogleButtonId(R.id.imageButtonGoogle)
+                .setFacebookButtonId(R.id.imageButtonFacebook)
+                .build();
+
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
+                        .setAuthMethodPickerLayout(customLayout)
                         .setTheme(R.style.LoginTheme)
                         .build(),
                 RC_SIGN_IN);
@@ -155,32 +162,32 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView.OnNavigationItemSelectedListener listener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            Fragment selected = null;
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    Fragment selected = null;
 
-            switch (menuItem.getItemId()) {
-                case R.id.nev_feed:
-                    btnSignOut.setVisibility(View.INVISIBLE);
-                    selected = new FeedFragment();
-                    break;
-                case R.id.nev_profile:
-                    btnSignOut.setVisibility(View.VISIBLE);
-                    selected = new ProfileFragment();
-                    break;
-                case R.id.nev_neighbors:
-                    btnSignOut.setVisibility(View.INVISIBLE);
-                    selected = new NeighborsFragment();
-                    break;
-                default:
-                    selected = new FeedFragment();
-                    break;
-            }
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    selected).commit();
-            return true;
-        }
-    };
+                    switch (menuItem.getItemId()) {
+                        case R.id.nev_feed:
+                            btnSignOut.setVisibility(View.INVISIBLE);
+                            selected = new FeedFragment();
+                            break;
+                        case R.id.nev_profile:
+                            btnSignOut.setVisibility(View.VISIBLE);
+                            selected = new ProfileFragment();
+                            break;
+                        case R.id.nev_neighbors:
+                            btnSignOut.setVisibility(View.INVISIBLE);
+                            selected = new NeighborsFragment();
+                            break;
+                        default:
+                            selected = new FeedFragment();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            selected).commit();
+                    return true;
+                }
+            };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -202,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 if (isNewUser) {
                     startActivity(new Intent(this, JoinBuildingActivity.class));
                 } else {
+                    // todo bug in sign in flow
                     startActivity(new Intent(this, MainActivity.class));
                 }
             } else {
@@ -210,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void sendNotification(String title, String text){
+    private void sendNotification(String title, String text) {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.back_button)
                 .setContentTitle(title).setContentText(text).setPriority(NotificationCompat.PRIORITY_DEFAULT);
