@@ -14,7 +14,6 @@ public class UserModelDataHolder {
         return currentUser;
     }
 
-
     /**
      * This function changes the current hold user and updates it in the DB.
      * @param currentUser

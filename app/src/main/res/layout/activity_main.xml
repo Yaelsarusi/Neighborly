@@ -10,17 +10,29 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
+        android:layout_height="180dp"
+        android:background="@color/appBlue"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="@color/appBlue"
-            android:textSize="25sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:letterSpacing="0.07"
+                android:lineSpacingExtra="10.7sp"
+                android:text="@string/app_name"
+                style="@style/TextColor"
+                android:textColor="@color/appBlack"
+                android:textSize="48sp" />
+        </RelativeLayout>
+
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
@@ -30,6 +42,7 @@
         android:layout_above="@+id/bottom_navigation"
         android:layout_below="@+id/btnSignOut"
         android:layout_alignParentStart="true">
+
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -37,17 +50,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/appBlue"
+        app:itemIconSize="75dp"
+        app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_navigation" />
 
     <Button
         android:id="@+id/btnSignOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="9dp"
-        android:text="Sign out" />
+        android:background="@drawable/sign_out" />
 
 </RelativeLayout>
 

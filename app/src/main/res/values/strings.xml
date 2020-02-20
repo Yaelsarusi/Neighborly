@@ -35,9 +35,9 @@
     <string name="emptyBuilding1Msg">You are the first one!</string>
     <string name="emptyBuilding2Msg">Be neighborly and spread the word :)</string>
     <string name="SayHelloToYourNeighbors">Click on your neighbor and say hello :)</string>
-    <string name="welcome">Welcome</string>
-    <string name="sign_up">Sign up</string>
-    <string name="info">Info:</string>
+    <string name="welcome">New in The\n Neighborhood?</string>
+    <string name="sign_in">Sign in!</string>
+    <string name="info">About yourself:</string>
     <string name="item_example">ex. 5 steps ladder</string>
     <string name="messageHint">Type a message...</string>
     <string name="neighborly_help_message">I can help you out! :)</string>
@@ -47,14 +47,15 @@
     <string name="neighborly_send_help_message">Hi neighbors! I\'m looking for a %s...</string>
     <string name="start_private_chat_title">Press to start a private chat</string>
     <string name="share_a_new_request_title">share a new request</string>
-    <string name="create_a_profile">Create a profile</string>
+    <string name="create_a_profile">Create your profile</string>
     <string name="join_your_neighbors">Join your neighbors:</string>
     <string name="city">City:</string>
     <string name="address">Address:</string>
-    <string name="tell_about_yourself">Tell your neighbors about yourself:</string>
+    <string name="tell_about_yourself">Tell us about yourself:</string>
     <string name="we_found_neighbors">we found neighbors that have the item you were looking for</string>
     <string name="isResolvedTitle">Is Resolved?</string>
     <string name="request_resolved_message">Glad it worked out!
         Say thanks by sending out a badge</string>
     <string name="neighbor_offering_help_msg">I can help you out :)</string>
+    <string name="my_requests">My requests:</string>
 </resources>

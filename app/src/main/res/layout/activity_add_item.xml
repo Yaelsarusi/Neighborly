@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textColor="@color/appBlue"
+            android:textColor="@color/appBlack"
             android:textSize="25sp" />
     </androidx.appcompat.widget.Toolbar>
 

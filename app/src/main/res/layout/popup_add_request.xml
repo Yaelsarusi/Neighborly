@@ -20,7 +20,7 @@
             android:layout_marginBottom="-30dp"
             android:gravity="center"
             android:text="X"
-            android:textColor="@color/appBlue"
+            android:textColor="@color/appBlack"
             android:textStyle="bold" />
 
         <TextView

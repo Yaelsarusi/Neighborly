@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -196,8 +197,9 @@ public class FeedFragment extends Fragment {
             if (request != null) {
                 Button button = new Button(feedView.getContext());
                 button.setText(request.getItemPresentedName());
-                button.setPadding(0, 20, 0, 20);
+                button.setPadding(0, 20,0, 20);
                 button.setAllCaps(false);
+                button.setBackground(ContextCompat.getDrawable(feedView.getContext(), R.drawable.rectangle_magenta));
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
