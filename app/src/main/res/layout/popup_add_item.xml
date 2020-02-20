@@ -1,0 +1,100 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:excludeFromRecents="true" >
+
+    <TextView
+        android:id="@+id/txtClose"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_marginBottom="-30dp"
+        android:gravity="center"
+        android:text="X"
+        android:textColor="@color/appBlue"
+        android:textStyle="bold" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/itemImage"
+        android:layout_width="161dp"
+        android:layout_height="154dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:src="@android:drawable/ic_input_add" />
+
+    <RelativeLayout
+        android:id="@+id/layout_name"
+        style="@style/TextColor"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/textViewName"
+            style="@style/TextColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/item_name" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            style="@style/TextColor"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/green"
+            android:hint="@string/item_example"
+            android:inputType="textAutoComplete"
+            android:textCursorDrawable="@drawable/cursor_color" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_description"
+        style="@style/TextColor"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/textViewCity"
+            style="@style/TextColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description" />
+
+
+        <EditText
+            android:id="@+id/editTextDescription"
+            style="@style/TextColor"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:backgroundTint="@color/green"
+            android:gravity="center"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:scrollbars="vertical"
+            android:textCursorDrawable="@drawable/cursor_color" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/buttonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/send"
+        android:clickable="true"
+        android:gravity="center_horizontal" />
+
+</LinearLayout>
