@@ -1,21 +1,23 @@
 package com.example.neighborly;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,41 +30,45 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AddItemActivity extends AppCompatActivity {
+public class AddItemActivity extends Activity {
+
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public static final int ADD_NEW_ITEM = 0;
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final int PICK_IMAGE = 1;
     private static final int MY_CAMERA_PERMISSION_CODE = 2;
     public static final int EDIT_EXISTING_ITEM = 3;
+
     private CircleImageView addItemImage;
-    private int activityType;
-    Uri newImageUri;
-    Button btnAdd;
-    UserModel currentUser;
-    EditText name;
-    EditText description;
-    ItemModel item;
+    private Uri newImageUri;
+    private boolean imageChanged = false;
+    private UserModel currentUser;
+    private EditText name;
+    private EditText description;
+    private ItemModel item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_item);
+        setContentView(R.layout.popup_add_item);
 
-        setToolbar();
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        getWindow().setLayout((int) (metrics.widthPixels*0.8), (int) (metrics.heightPixels*0.5));
+
         currentUser = UserModelDataHolder.getInstance().getCurrentUser();
 
-        addItemImage = (CircleImageView) findViewById(R.id.itemImage);
+        addItemImage = findViewById(R.id.itemImage);
         name = findViewById(R.id.editTextName);
         description = findViewById(R.id.editTextDescription);
-        btnAdd = findViewById(R.id.buttonAdd);
+        Button addButton = findViewById(R.id.buttonAdd);
 
         Intent activityIntent = getIntent();
 
-        activityType = activityIntent.getIntExtra("activityType", 0);
-        if (activityType == AddItemActivity.EDIT_EXISTING_ITEM){
+        if (activityIntent.getIntExtra("activityType", 0) == AddItemActivity.EDIT_EXISTING_ITEM){
             item = (ItemModel)activityIntent.getSerializableExtra("item");
             Picasso.get().load(Uri.parse(item.getImageUriString())).into(addItemImage);
             name.setText(item.getName());
@@ -72,6 +78,7 @@ public class AddItemActivity extends AppCompatActivity {
         addItemImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                imageChanged = true;
                 Intent gallery = new Intent();
                 gallery.setType("image/*");
                 gallery.setAction(Intent.ACTION_GET_CONTENT);
@@ -80,7 +87,7 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String newImageUriString;
@@ -98,13 +105,24 @@ public class AddItemActivity extends AppCompatActivity {
                         currentUser.getId(), description.getText().toString());
                 addImageToStorage(newItem);
                 UserModelDataHolder.getInstance().setCurrentUser(currentUser);
-                startActivity(new Intent(AddItemActivity.this, MainActivity.class));
+                finish();
+            }
+        });
+
+        TextView textClose = findViewById(R.id.txtClose);
+        textClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
             }
         });
     }
 
     private void addImageToStorage(final ItemModel newItem) {
+        if(!imageChanged){
+            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.defualt_image);
+            addItemImage.setImageBitmap(bitmap);
+        }
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         // Create a storage reference from our app
@@ -147,18 +165,6 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void setToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.back_button);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
     }
 
     private void addItemsUnderBuildingInDB(ItemModel newItem) {
