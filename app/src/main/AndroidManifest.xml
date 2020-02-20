@@ -15,7 +15,11 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".JoinBuildingActivity" />
         <activity android:name=".RequestActivity"/>
-        <activity android:name=".AddItemActivity" />
+
+        <activity android:name=".AddItemActivity"
+            android:theme="@style/AppPopupTheme">
+        </activity>
+
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
