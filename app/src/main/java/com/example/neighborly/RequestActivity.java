@@ -340,8 +340,6 @@ public class RequestActivity extends AppCompatActivity {
             }
         });
 
-
-
         popupRequestDialog.show();
     }
 
