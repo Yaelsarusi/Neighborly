@@ -56,6 +56,7 @@ public class RequestActivity extends AppCompatActivity {
     private String msgPath;
     private String chosenNeighbor;
     private int chosenBadge = NON_SELECTED;
+    private RequestModel curRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +148,9 @@ public class RequestActivity extends AppCompatActivity {
                 input.setText("");
 
                 if (!neighbor.getId().equals(curUser.getId())) {
-                    // todo send popup of item request (As soon as it is a popup)
+                    if (curRequest != null){
+                        showAskIfAddNewItemPopup(curRequest.getItemPresentedName());
+                    }
                 }
             }
         });
@@ -171,7 +174,7 @@ public class RequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_request_public);
         input = findViewById(R.id.editRequestMessage);
         msgPath = String.format("Messages/%s", requestId);
-        final RequestModel curRequest = curBuilding.getRequestById(requestId);
+        curRequest = curBuilding.getRequestById(requestId);
         TextView requestTitle = findViewById(R.id.requestDetailsTitle);
         neighbor = BuildingModelDataHolder.getInstance().getCurrentBuilding().getUserById(curRequest.getRequestUserId());
         Switch isResolved = findViewById(R.id.isResolved);
@@ -320,7 +323,7 @@ public class RequestActivity extends AppCompatActivity {
         popupRequestDialog.setContentView(R.layout.popup_ask_if_add_new_item);
 
         Button closeButton = popupRequestDialog.findViewById(R.id.exit);
-        final Button sendButton = popupRequestDialog.findViewById(R.id.send);
+        final Button addItem = popupRequestDialog.findViewById(R.id.addItem);
 
 
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -330,11 +333,12 @@ public class RequestActivity extends AppCompatActivity {
             }
         });
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
+        addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent activityIntent = new Intent(RequestActivity.this, AddItemActivity.class);
-                activityIntent.putExtra("item name", requestedItem);
+                activityIntent.putExtra("activityType", AddItemActivity.EDIT_EXISTING_ITEM);
+                activityIntent.putExtra("item", new ItemModel(requestedItem, curUser.getId()));
                 startActivity(activityIntent);
                 popupRequestDialog.dismiss();
             }

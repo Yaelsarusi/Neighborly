@@ -45,13 +45,13 @@
         android:gravity="center"
         android:text="@string/create_a_profile"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@id/imageLayout"
+        app:layout_constraintBottom_toTopOf="@id/detailsLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/toolbar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/imageLayout"
+        android:id="@+id/detailsLayout"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
@@ -102,7 +102,7 @@
         app:layout_constraintBottom_toTopOf="@+id/userDescriptionLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageLayout">
+        app:layout_constraintTop_toBottomOf="@+id/detailsLayout">
 
         <TextView
             android:id="@+id/userAddressTitle"
