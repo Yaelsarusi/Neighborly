@@ -11,14 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -89,6 +88,7 @@ public class FeedFragment extends Fragment {
     }
 
     // -------------- Search and popup --------------
+
     private Map<UserModelFacade, ItemModel> searchForItem(String itemToSearch) {
         final String cleanedSearch = ItemModel.cleanItemName(itemToSearch);
         final Map<UserModelFacade, ItemModel> foundItems = new HashMap<>();
@@ -123,6 +123,7 @@ public class FeedFragment extends Fragment {
         requestMessageEditor.setText(String.format(getString(R.string.neighborly_send_help_message), itemName));
         requestMessageEditor.setHint(String.format(getString(R.string.neighborly_send_help_message), itemName));
         TextView intro = popupRequestDialog.findViewById(R.id.intro);
+        requestMessageEditor.requestFocus();
         if (foundItems.size() == 0) {
             popupRequestDialog.findViewById(R.id.newRequestButton).setVisibility(View.GONE);
             intro.setText(String.format(notFoundIntroText, curUser.getPresentedName()));
@@ -195,8 +196,10 @@ public class FeedFragment extends Fragment {
         for (final RequestModel request : userOpenRequests) {
             if (request != null) {
                 Button button = new Button(feedView.getContext());
-                button.setText(request.getItemRequested());
-                button.setPadding(0, 20, 0, 20);
+                button.setText(request.getItemPresentedName());
+                button.setPadding(0, 20,0, 20);
+                button.setAllCaps(false);
+                button.setBackground(ContextCompat.getDrawable(feedView.getContext(), R.drawable.rectangle_magenta));
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -214,15 +217,10 @@ public class FeedFragment extends Fragment {
     // -------------- Other's requests --------------
 
     private void addRequestsUnderBuildingInDB(RequestModel newRequest) {
-        DatabaseReference buildingsRef = database.getReference().child(Constants.DB_BUILDINGS);
-
         // update the building model
         BuildingModel currentBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
         currentBuilding.addRequestToList(newRequest);
-
-        Map<String, Object> buildings = new HashMap<>();
-        buildings.put(currentBuilding.getAddress(), currentBuilding);
-        buildingsRef.updateChildren(buildings);
+        BuildingModelDataHolder.getInstance().setCurrentBuilding(currentBuilding);
     }
 
     private void separateRequestsInBuilding() {

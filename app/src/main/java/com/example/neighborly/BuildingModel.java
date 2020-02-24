@@ -62,16 +62,25 @@ class BuildingModel {
         usersList.add(user);
     }
 
-    public void addRequestToList(RequestModel requestModel) {
-        requestList.add(requestModel);
-    }
-
     public List<RequestModel> getRequestList() {
         return requestList;
     }
 
     public void setRequestList(List<RequestModel> requestList) {
         this.requestList = requestList;
+    }
+
+    public void addRequestToList(RequestModel requestModel) {
+        requestList.add(requestModel);
+    }
+
+    public RequestModel getLastRequest(){
+        for(int i=requestList.size()-1; i>0; i-- ){
+            if(requestList.get(i) != null){
+                return requestList.get(i);
+            }
+        }
+        return null;
     }
 
     public UserModelFacade getUserById(String id){

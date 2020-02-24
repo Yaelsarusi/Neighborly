@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/frame_large"
     tools:context=".RequestActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/appBlue"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -31,23 +31,25 @@
 
             <TextView
                 android:id="@+id/appNameTextView"
+                style="@style/TextColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/app_name"
-                android:textColor="@color/appBlue"
+                android:textColor="@color/appBlack"
                 android:textSize="25sp"
                 app:layout_constraintLeft_toRightOf="@id/profilePicture"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/privateChatTitle"
+                style="@style/TextColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/fui_transparent"
                 android:text="@string/private_chat_title"
-                android:textColor="@color/appBlue"
+                android:textColor="@color/appBlack"
                 app:layout_constraintLeft_toLeftOf="@+id/appNameTextView"
                 app:layout_constraintTop_toBottomOf="@+id/appNameTextView" />
 
@@ -62,7 +64,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="70dp"
         android:layout_marginBottom="70dp"
-        android:background="@drawable/frame_large"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -76,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminateTint="@color/appBlue" />
+            android:indeterminateTint="@color/appBlack" />
 
     </LinearLayout>
 
@@ -85,7 +86,6 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/frame_large"
         android:padding="5dp">
 
         <ImageButton
@@ -101,6 +101,7 @@
 
         <EditText
             android:id="@+id/editRequestMessage"
+            style="@style/EditTextStyle"
             android:layout_width="352dp"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
@@ -108,10 +109,7 @@
             android:layout_marginBottom="5dp"
             android:layout_toStartOf="@+id/buttonSend"
             android:autofillHints="@string/messageHint"
-            android:background="@android:color/transparent"
-            android:backgroundTint="@color/green"
-            android:hint="@string/messageHint"
-            android:textCursorDrawable="@drawable/cursor_color" />
+            android:hint="@string/messageHint" />
 
     </RelativeLayout>
 

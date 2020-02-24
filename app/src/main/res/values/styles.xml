@@ -13,8 +13,23 @@
     </style>
 
     <style name="TextColor">
-        <item name="android:textColor">@color/appBlue</item>
+        <item name="android:textColor">@color/appBlack</item>
+        <item name="android:letterSpacing">0.07</item>
+        <item name="android:fontFamily">@font/comfortaa</item>
     </style>
 
+    <style name="EditTextStyle">
+        <item name="android:textColor">@color/appBlack</item>
+        <item name="android:letterSpacing">0.07</item>
+        <item name="android:fontFamily">@font/comfortaa</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_color</item>
+        <item name="android:backgroundTint">@color/appBlack</item>
+    </style>
+
+    <style name="AppPopupTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
 
 </resources>

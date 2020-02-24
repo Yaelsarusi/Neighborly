@@ -1,21 +1,23 @@
 package com.example.neighborly;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,36 +26,59 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AddItemActivity extends AppCompatActivity {
+public class AddItemActivity extends Activity {
+
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public static final int ADD_NEW_ITEM = 0;
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final int PICK_IMAGE = 1;
     private static final int MY_CAMERA_PERMISSION_CODE = 2;
+    public static final int EDIT_EXISTING_ITEM = 3;
+
     private CircleImageView addItemImage;
-    Uri newImageUri;
-    Button btnAdd;
-    UserModel currentUser;
+    private Uri newImageUri;
+    private boolean imageChanged = false;
+    private UserModel currentUser;
+    private EditText name;
+    private EditText description;
+    private ItemModel item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_item);
+        setContentView(R.layout.popup_add_item);
 
-        setToolbar();
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        getWindow().setLayout((int) (metrics.widthPixels*0.8), (int) (metrics.heightPixels*0.5));
 
-        addItemImage = (CircleImageView) findViewById(R.id.itemImage);
+        currentUser = UserModelDataHolder.getInstance().getCurrentUser();
+
+        addItemImage = findViewById(R.id.itemImage);
+        name = findViewById(R.id.editTextName);
+        description = findViewById(R.id.editTextDescription);
+        Button addButton = findViewById(R.id.buttonAdd);
+
+        Intent activityIntent = getIntent();
+
+        if (activityIntent.getIntExtra("activityType", 0) == AddItemActivity.EDIT_EXISTING_ITEM){
+            item = (ItemModel)activityIntent.getSerializableExtra("item");
+            Picasso.get().load(Uri.parse(item.getImageUriString())).into(addItemImage);
+            name.setText(item.getName());
+            description.setText(item.getDescription());
+        }
+
         addItemImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                imageChanged = true;
                 Intent gallery = new Intent();
                 gallery.setType("image/*");
                 gallery.setAction(Intent.ACTION_GET_CONTENT);
@@ -62,31 +87,42 @@ public class AddItemActivity extends AppCompatActivity {
             }
         });
 
-        currentUser = UserModelDataHolder.getInstance().getCurrentUser();
-
-        btnAdd = findViewById(R.id.buttonAdd);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText name = findViewById(R.id.editTextName);
-                EditText description = findViewById(R.id.editTextDescription);
-
+                String newImageUriString;
                 if (newImageUri == null) {
-                    newImageUri = Uri.parse("android.resource://com.example.neighborly/drawable/sticker");
+                    if (item != null) {
+                        newImageUriString = item.getImageUriString();
+                    } else {
+                        newImageUriString = Uri.parse("android.resource://com.example.neighborly/drawable/sticker").toString();
+                    }
+                } else {
+                    newImageUriString = newImageUri.toString();
                 }
 
-                ItemModel newItem = new ItemModel(newImageUri.toString(), name.getText().toString(),
+                ItemModel newItem = new ItemModel(newImageUriString, name.getText().toString(),
                         currentUser.getId(), description.getText().toString());
-
                 addImageToStorage(newItem);
                 UserModelDataHolder.getInstance().setCurrentUser(currentUser);
+                finish();
+            }
+        });
 
-                startActivity(new Intent(AddItemActivity.this, MainActivity.class));
+        TextView textClose = findViewById(R.id.txtClose);
+        textClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
 
     private void addImageToStorage(final ItemModel newItem) {
+        if(!imageChanged){
+            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.defualt_image);
+            addItemImage.setImageBitmap(bitmap);
+        }
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         // Create a storage reference from our app
@@ -131,39 +167,19 @@ public class AddItemActivity extends AppCompatActivity {
 
     }
 
-    private void setToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.back_button);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-    }
-
     private void addItemsUnderBuildingInDB(ItemModel newItem) {
         DatabaseReference buildingsRef = database.getReference().child(Constants.DB_BUILDINGS);
 
         // update the building model
         BuildingModel currentBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
         currentBuilding.addItemToList(newItem);
-
-        Map<String, Object> buildings = new HashMap<>();
-        buildings.put(currentBuilding.getAddress(), currentBuilding);
-        buildingsRef.updateChildren(buildings);
+        BuildingModelDataHolder.getInstance().setCurrentBuilding(currentBuilding);
     }
 
     private void addItemToUserInDB(ItemModel newItem) {
-        DatabaseReference usersRef = database.getReference().child(Constants.DB_USERS);
-
         // update the user model
         currentUser.addToItemsList(newItem);
-
-        Map<String, Object> users = new HashMap<>();
-        users.put(currentUser.getId(), currentUser);
-        usersRef.updateChildren(users);
+        UserModelDataHolder.getInstance().setCurrentUser(currentUser);
     }
 
     @Override

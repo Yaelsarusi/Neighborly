@@ -72,7 +72,7 @@ public class SearchResultListAdapter extends BaseAdapter {
 
         ItemModel curItem = neighborsItemsMap.get(curNeighbor);
         Map<Integer, String> itemMap = new HashMap<>();
-        itemMap.put(R.id.itemName, curItem.getName());
+        itemMap.put(R.id.itemName, curItem.getPresentedName());
         itemMap.put(R.id.itemDesc, curItem.getDescription());
         setValues(row,itemMap, R.id.itemPic, curItem.getImageUriString());
 

@@ -4,96 +4,115 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/frame_large">
+    android:background="@android:color/transparent">
 
     <TextView
         android:id="@+id/profileTitle"
         style="@style/TextColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_width="320dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/rounded_rectangle_yellow"
         android:gravity="center"
         android:text="@string/profileFragmentTitle"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@id/profilePicture"
+        app:layout_constraintBottom_toTopOf="@id/imageLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profilePicture"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/neighborPicture"
-        android:src="@drawable/fui_ic_facebook_white_22dp"
-        app:civ_border_color="@color/appBlue"
-        app:civ_border_width="1dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileTitle"
-        tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/userName"
-        style="@style/TextColor"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/userNamePlaceHolder"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="12sp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_rectangle"
+        app:layout_constraintBottom_toTopOf="@+id/address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profilePicture" />
+        app:layout_constraintTop_toBottomOf="@id/profileTitle">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profilePicture"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/neighborPicture"
+            android:src="@drawable/fui_ic_facebook_white_22dp"
+            app:civ_border_color="@color/appMagenta"
+            app:civ_border_width="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
 
-    <ImageView
-        android:id="@+id/appCompatImageView"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/userName"
+            style="@style/TextColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/userNamePlaceHolder"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profilePicture" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/addressLayout"
+        style="@style/TextColor"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/frame_narrow"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_rectangle_yellow"
+        app:layout_constraintBottom_toTopOf="@+id/userDescriptionLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
+        app:layout_constraintTop_toBottomOf="@+id/imageLayout">
 
-    <TextView
-        android:id="@+id/userAddressTitle"
-        style="@style/TextColor"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/userAddressTitle"
+            style="@style/TextColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@string/userAddressTitle"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/userAddress"
+            style="@style/TextColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/userAddressNamePlaceholder"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userAddressTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/userDescriptionLayout"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:text="@string/userAddressTitle"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.02"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
-
-    <TextView
-        android:id="@+id/userAddress"
-        style="@style/TextColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/userAddressNamePlaceholder"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/userAddressTitle"
-        app:layout_constraintTop_toBottomOf="@+id/userAddressTitle" />
-
-
-    <RelativeLayout
-        android:id="@+id/switcher"
-        style="@style/TextColor"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:orientation="vertical"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_rectangle"
         app:layout_constraintBottom_toTopOf="@+id/userItemTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userAddress">
+        app:layout_constraintTop_toBottomOf="@+id/addressLayout">
 
         <TextView
             android:id="@+id/userDescription"
@@ -102,72 +121,76 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="@string/info" />
+            android:layout_marginStart="15dp"
+            android:text="@string/info"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/userDescriptionEdit"
-            android:textCursorDrawable="@drawable/cursor_color"
+            style="@style/EditTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/green"
-            android:layout_width="300dp"
-            android:layout_height="70dp"
-            android:lines="3"
-            android:layout_centerInParent="true"
+            android:gravity="center"
             android:inputType="textAutoComplete"
-            android:textColor="@color/appBlue" />
+            android:lines="3"
+            android:textColor="@color/appBlack"
+            android:textCursorDrawable="@drawable/cursor_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userDescription" />
 
-    </RelativeLayout>
+        <Button
+            android:id="@+id/editToggleButton"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:background="@drawable/edit"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/editToggleButton"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:background="@drawable/edit"
-        app:layout_constraintLeft_toRightOf="@+id/switcher"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/frame_for_items"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switcher" />
 
     <TextView
         android:id="@+id/userItemTitle"
         style="@style/TextColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/appYellow"
+        android:gravity="center"
         android:text="@string/userItemsListTitle"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="15sp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switcher" />
-
+        app:layout_constraintTop_toBottomOf="@+id/userDescriptionLayout" />
 
     <Button
         android:id="@+id/buttonAddNewItem"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/addItem"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/add_item"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/userItemTitle"
-        app:layout_constraintTop_toBottomOf="@+id/switcher" />
+        app:layout_constraintTop_toBottomOf="@+id/userDescriptionLayout" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/userItemPager"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="15dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userItemTitle" />
 
