@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,8 +36,9 @@ import java.util.Map;
 
 public class FeedFragment extends Fragment {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private static final String foundIntroText = "Hi %1s, we found neighbors that have the item you were looking for!";
-    private static final String notFoundIntroText = "Hi %1s, we didn't find neighbors that have the item you were looking for. :(";
+    private static final String foundIntroText = "We believe that %1s can help you out!\n" +
+            "Send a private message to ask!";
+    private static final String notFoundIntroText = "We didn't find neighbors that have the item you were looking for. :(";
     private View feedView;
     private Dialog popupRequestDialog;
     private EditText searchText;
@@ -119,6 +121,8 @@ public class FeedFragment extends Fragment {
     private void showSearchPopup(View view, final String itemName, Map<UserModelFacade, ItemModel> foundItems) {
         ImageButton sendButton;
         popupRequestDialog.setContentView(R.layout.popup_add_request);
+        TextView hello = popupRequestDialog.findViewById(R.id.hello);
+        hello.setText(String.format("Hey %s!", (curUser.getPresentedName()+" ").split(" ")[0]));
         EditText requestMessageEditor = popupRequestDialog.findViewById(R.id.editRequestMessage);
         requestMessageEditor.setText(String.format(getString(R.string.neighborly_send_help_message), itemName));
         requestMessageEditor.setHint(String.format(getString(R.string.neighborly_send_help_message), itemName));
@@ -127,7 +131,6 @@ public class FeedFragment extends Fragment {
         if (foundItems.size() == 0) {
             popupRequestDialog.findViewById(R.id.newRequestButton).setVisibility(View.GONE);
             intro.setText(String.format(notFoundIntroText, curUser.getPresentedName()));
-            popupRequestDialog.findViewById(R.id.startChat).setVisibility(View.GONE);
             popupRequestDialog.findViewById(R.id.foundNeighbors).setVisibility(View.GONE);
         } else {
             popupRequestDialog.findViewById(R.id.createNewRequest).setVisibility(View.GONE);
@@ -190,16 +193,26 @@ public class FeedFragment extends Fragment {
         layoutRecepient.removeAllViews();
         if (userOpenRequests.size() > 4) {
             ViewGroup.LayoutParams params = layoutRecepient.getLayoutParams();
-            params.height = 360;
+            params.height = 240;
             layoutRecepient.setLayoutParams(params);
         }
-        for (final RequestModel request : userOpenRequests) {
+        for (int i = 0 ; i < userOpenRequests.size() ; i++) {
+            final RequestModel request = userOpenRequests.get(i);
             if (request != null) {
                 Button button = new Button(feedView.getContext());
                 button.setText(request.getItemPresentedName());
-                button.setPadding(0, 20,0, 20);
                 button.setAllCaps(false);
+                button.setTextSize(14);
+
+                int size_h = 15;
+                int size_w = 20;
+                button.setMinHeight(size_h);
+                button.setMinWidth(size_w);
+                button.setMinimumHeight(size_h);
+                button.setMinimumWidth(size_w);
+                button.setPadding(size_w,size_h,size_w,size_h);
                 button.setBackground(ContextCompat.getDrawable(feedView.getContext(), R.drawable.rectangle_magenta));
+
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -210,6 +223,15 @@ public class FeedFragment extends Fragment {
                     }
                 });
                 layoutRecepient.addView(button);
+                Space space = new Space(feedView.getContext());
+                space.setMinimumWidth(15);
+                layoutRecepient.addView(space);
+                if(i == 3){
+                    Space lineBrake = new Space(feedView.getContext());
+                    lineBrake.setMinimumWidth(layoutRecepient.getMinimumWidth());
+                    lineBrake.setMinimumHeight(85);
+                    layoutRecepient.addView(lineBrake);
+                }
             }
         }
     }

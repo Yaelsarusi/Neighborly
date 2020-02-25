@@ -52,7 +52,7 @@
     <string name="city">City:</string>
     <string name="address">Address:</string>
     <string name="tell_about_yourself">Tell us about yourself:</string>
-    <string name="we_found_neighbors">we found neighbors that have the item you were looking for</string>
+    <string name="we_found_neighbors">we found what looking for</string>
     <string name="isResolvedTitle">Is Resolved?</string>
     <string name="request_resolved_message">Glad it worked out!
         Say thanks by sending out a badge</string>
