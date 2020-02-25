@@ -17,6 +17,7 @@
 
     <TextView
         android:id="@+id/textViewUserName"
+        style="@style/TextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -28,6 +29,7 @@
 
     <TextView
         android:id="@+id/textViewMessage"
+        style="@style/TextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -36,12 +38,13 @@
         android:maxWidth="210dp"
         android:padding="8dp"
         android:text="hi man, how are you?"
-        android:textColor="@color/appBlue"
+        android:textColor="@color/appBlack"
         app:layout_constraintLeft_toRightOf="@+id/profileImage"
         app:layout_constraintTop_toBottomOf="@+id/textViewUserName" />
 
     <TextView
         android:id="@+id/textViewTime"
+        style="@style/TextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"

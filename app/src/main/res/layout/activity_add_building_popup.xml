@@ -43,7 +43,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
             android:text="@string/emptyBuilding2Msg"
-            android:textColor="@color/appBlue" />
+            android:textColor="@color/appBlack" />
     </LinearLayout>
 
     <Button

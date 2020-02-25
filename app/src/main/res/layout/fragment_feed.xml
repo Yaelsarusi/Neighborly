@@ -1,57 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/frame_large">
+    android:background="@android:color/transparent">
 
-    <EditText
-        android:id="@+id/SearchText"
-        style="@style/Widget.AppCompat.EditText"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/Search"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="0dp"
-        android:backgroundTint="@color/green"
-        android:hint="@string/SearchText"
-        android:inputType="textShortMessage"
-        android:selectAllOnFocus="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textCursorDrawable="@drawable/cursor_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/rounded_rectangle_yellow"
+        android:elevation="4dp">
 
-    <ImageButton
-        android:id="@+id/searchButton"
-        android:layout_width="75dp"
-        android:layout_height="66dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/SearchText"
-        android:background="@color/fui_transparent"
-        app:layout_constraintRight_toLeftOf="@+id/SearchText"
-        app:srcCompat="@drawable/send"
-        tools:layout_editor_absoluteX="-57dp"
-        tools:layout_editor_absoluteY="121dp" />
+        <TextView
+            android:id="@+id/SearchTitle"
+            style="@style/TextColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Missing something?"
+            android:textSize="27sp" />
+
+        <TextView
+            android:id="@+id/SearchSubtitle"
+            style="@style/TextColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/SearchTitle"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Lets see if your neighbors can help"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/SearchText"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/SearchSubtitle"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="@color/green"
+            android:hint="@string/SearchText"
+            android:inputType="textShortMessage"
+            android:selectAllOnFocus="true"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="27sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/SearchText"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/SearchText"
+            android:background="@android:color/transparent"
+            app:layout_constraintRight_toLeftOf="@+id/SearchText"
+            app:srcCompat="@drawable/search" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/personalRequests"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/SearchText"
+        android:layout_below="@+id/Search"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="0dp"
-        android:orientation="vertical">
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/rounded_rectangle"
+        android:orientation="vertical"
+        android:elevation="4dp">
 
         <TextView
             android:id="@+id/personalRequestsTitle"
@@ -59,7 +89,8 @@
             android:layout_width="246dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="My requests"
+            android:gravity="center"
+            android:text="@string/my_requests"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <com.google.android.flexbox.FlexboxLayout
@@ -76,19 +107,45 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/neighborRequests"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/personalRequests"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@color/appBlue"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/neighborRequestsTitle"
+            style="@style/TextColor"
+            android:layout_width="246dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:gravity="center"
+            android:text="Other requests:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/neighborsRequestList"
         android:layout_width="409dp"
-        android:layout_height="406dp"
-        android:layout_below="@id/personalRequests"
+        android:layout_height="306dp"
+        android:layout_below="@id/neighborRequests"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="-28dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="-1dp"
+        android:background="@android:color/transparent"
+        android:divider="@android:color/transparent"
         android:padding="8dp" />
 
     <ProgressBar
@@ -96,6 +153,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:indeterminateTint="@color/appBlue" />
+        android:indeterminateTint="@color/appBlack" />
 
 </RelativeLayout>

@@ -3,19 +3,36 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/frame_large"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
+    <TextView
+        android:id="@+id/profileTitle"
+        style="@style/TextColor"
+        android:layout_width="320dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/rectangle_magenta"
+        android:gravity="center"
+        android:text="My Neighbors"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
 
     <ListView
-        android:layout_gravity="center"
         android:id="@+id/neighborsDetailsList"
-        android:padding="8dp"
-        android:layout_width="370dp"
-        android:layout_height="wrap_content" />
+        android:layout_width="362dp"
+        android:layout_height="624dp"
+        android:layout_gravity="center"
+        android:divider="@android:color/transparent"
+        android:padding="8dp" />
+
+    <TextView
+        style="@style/TextColor"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_rectangle_yellow"
+        android:gravity="center"
+        android:text="click on your neighbor and say Hi"
+        android:textSize="13sp" />
 
 </LinearLayout>

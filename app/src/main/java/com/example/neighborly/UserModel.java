@@ -6,13 +6,11 @@ import java.util.List;
 
 public class UserModel {
     // todo - this is temporary until there are real badges
-    public static final List<Integer> BADGES = new ArrayList<Integer>(){
+    public static final List<Integer> BADGES = new ArrayList<Integer>() {
         {
-            add(R.drawable.send);
-            add(R.drawable.send);
-            add(R.drawable.send);
-            add(R.drawable.send);
-
+            add(R.drawable.badge_hart);
+            add(R.drawable.bagde_crown);
+            add(R.drawable.badge_star);
         }
     };
 
@@ -79,7 +77,7 @@ public class UserModel {
         this.itemsList = itemsList;
     }
 
-    public void addToItemsList(ItemModel item){
+    public void addToItemsList(ItemModel item) {
         this.itemsList.add(item);
     }
 
@@ -99,7 +97,7 @@ public class UserModel {
         this.badges = badges;
     }
 
-    public void addBadge(int badge){
+    public void addBadge(int badge) {
         this.badges.add(badge);
     }
 }

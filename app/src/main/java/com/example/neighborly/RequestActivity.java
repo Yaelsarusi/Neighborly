@@ -2,10 +2,12 @@ package com.example.neighborly;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.ArraySet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -15,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,13 +25,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.database.SnapshotParser;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.database.SnapshotParser;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -38,9 +41,11 @@ public class RequestActivity extends AppCompatActivity {
 
     static public final String REQUEST_PRIVATE_CHAT = "private chat";
     static public final String REQUEST_ITEM = "request item";
+    static private final int NON_SELECTED = -5;
 
     private FirebaseRecyclerAdapter<MessageModel, MessageAdapter.MessageHolder> adapter;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private Set<UserModel> commentedUsers = new ArraySet<>();
     private TextView privateChatTitle;
     private CircleImageView profilePicture;
     private Dialog popupRequestDialog;
@@ -49,9 +54,9 @@ public class RequestActivity extends AppCompatActivity {
     private BuildingModel curBuilding;
     private UserModelFacade neighbor;
     private String msgPath;
-    private String lastUserToAnswer;
-    private int chosenBadge;
-
+    private String chosenNeighbor;
+    private int chosenBadge = NON_SELECTED;
+    private RequestModel curRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +95,12 @@ public class RequestActivity extends AppCompatActivity {
                 if (message != null) {
                     message.setMessageId(dataSnapshot.getKey());
                 }
-                String senderId = message.getSender().getId();
-                if (senderId != null && (lastUserToAnswer == null || !senderId.equals(curUser.getId()))){
-                    lastUserToAnswer = senderId;
+
+                UserModel user = message.getSender();
+                if (user != null && !user.getId().equals(curUser.getId())) {
+                    commentedUsers.add(user);
                 }
+
                 return message;
             }
         };
@@ -140,9 +147,10 @@ public class RequestActivity extends AppCompatActivity {
                 messagesRef.push().setValue(new MessageModel(curUser, message));
                 input.setText("");
 
-
                 if (!neighbor.getId().equals(curUser.getId())) {
-                    // todo send popup of item request (As soon as it is a popup)
+                    if (curRequest != null){
+                        showAskIfAddNewItemPopup(curRequest.getItemPresentedName());
+                    }
                 }
             }
         });
@@ -165,8 +173,8 @@ public class RequestActivity extends AppCompatActivity {
     private void handleItemRequest(String requestId) {
         setContentView(R.layout.activity_request_public);
         input = findViewById(R.id.editRequestMessage);
-        msgPath = String.format("messages/%s", requestId);
-        final RequestModel curRequest = curBuilding.getRequestById(requestId);
+        msgPath = String.format("Messages/%s", requestId);
+        curRequest = curBuilding.getRequestById(requestId);
         TextView requestTitle = findViewById(R.id.requestDetailsTitle);
         neighbor = BuildingModelDataHolder.getInstance().getCurrentBuilding().getUserById(curRequest.getRequestUserId());
         Switch isResolved = findViewById(R.id.isResolved);
@@ -178,7 +186,7 @@ public class RequestActivity extends AppCompatActivity {
                     curBuilding.setIsResolvedByRequestId(curRequest.getRequestId(), isChecked);
                     BuildingModelDataHolder.getInstance().setCurrentBuilding(curBuilding);
 
-                    if (lastUserToAnswer != null && isChecked && !lastUserToAnswer.equals(curUser.getId())) {
+                    if (isChecked) {
                         showResolvedPopup();
                     }
                 }
@@ -254,29 +262,89 @@ public class RequestActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                curBuilding.addBadgeToUserById(chosenBadge, lastUserToAnswer);
+                curBuilding.addBadgeToUserById(chosenBadge, chosenNeighbor);
                 BuildingModelDataHolder.getInstance().setCurrentBuilding(curBuilding);
                 popupRequestDialog.dismiss();
             }
         });
 
-        FlexboxLayout badgesLayout = popupRequestDialog.findViewById(R.id.neighborBadgesOptions);
+        final FlexboxLayout neighborsLayout = popupRequestDialog.findViewById(R.id.neighborOptions);
+        final FlexboxLayout badgesLayout = popupRequestDialog.findViewById(R.id.neighborBadgesOptions);
+
+        for (final UserModel neighbor : commentedUsers) {
+            final ImageView neighborImage = new ImageView(this);
+            Glide.with(this).load(Uri.parse(neighbor.getImageUriString())).into(neighborImage);
+            neighborImage.setPadding(8, 20, 8, 20);
+            neighborsLayout.addView(neighborImage);
+            neighborImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // deselect the rest
+                    for (int i = 0; i < neighborsLayout.getFlexItemCount(); i++) {
+                        neighborsLayout.getFlexItemAt(i).setBackgroundColor(Color.WHITE);
+                    }
+
+                    neighborImage.setBackgroundColor(Color.BLUE);
+                    chosenNeighbor = neighbor.getId();
+                    if (chosenBadge != NON_SELECTED) {
+                        sendButton.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+        }
 
         for (final int badge : UserModel.BADGES) {
-            ImageView badgeImage = new ImageView(this);
+            final ImageView badgeImage = new ImageView(this);
             badgeImage.setImageResource(badge);
             badgeImage.setPadding(0, 20, 0, 20);
             badgesLayout.addView(badgeImage);
+
             badgeImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // deselect the rest
+                    for (int i = 0; i < badgesLayout.getFlexItemCount(); i++) {
+                        badgesLayout.getFlexItemAt(i).setBackgroundColor(Color.WHITE);
+                    }
+
+                    badgeImage.setBackgroundColor(Color.BLUE);
                     chosenBadge = badge;
-                    sendButton.setVisibility(View.VISIBLE);
+                    if (chosenNeighbor != null) {
+                        sendButton.setVisibility(View.VISIBLE);
+                    }
                 }
             });
         }
         popupRequestDialog.show();
     }
 
+    private void showAskIfAddNewItemPopup(final String requestedItem) {
+        popupRequestDialog = new Dialog(this);
+        popupRequestDialog.setContentView(R.layout.popup_ask_if_add_new_item);
+
+        Button closeButton = popupRequestDialog.findViewById(R.id.exit);
+        final Button addItem = popupRequestDialog.findViewById(R.id.addItem);
+
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupRequestDialog.dismiss();
+            }
+        });
+
+        addItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent activityIntent = new Intent(RequestActivity.this, AddItemActivity.class);
+                activityIntent.putExtra("activityType", AddItemActivity.EDIT_EXISTING_ITEM);
+                activityIntent.putExtra("item", new ItemModel(requestedItem, curUser.getId()));
+                startActivity(activityIntent);
+                popupRequestDialog.dismiss();
+            }
+        });
+
+        popupRequestDialog.show();
+    }
 
 }
