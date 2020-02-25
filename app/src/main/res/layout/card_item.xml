@@ -20,26 +20,7 @@
         android:layout_width="161dp"
         android:layout_height="100dp"
         android:scaleType="centerInside"
-        android:src="@drawable/frame" />
-
-    <TextView
-            android:id="@+id/itemName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/itemImage"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:textColor="#262626"
-            android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/itemDesc"
-        android:layout_width="318dp"
-        android:layout_height="84dp"
-        android:layout_below="@id/itemName"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:textColor="#262626"
-        android:textSize="16sp" />
+        android:src="@drawable/frame"
+        android:elevation="10dp"/>
 
 </LinearLayout>

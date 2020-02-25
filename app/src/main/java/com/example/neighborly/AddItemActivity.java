@@ -70,9 +70,12 @@ public class AddItemActivity extends Activity {
 
         if (activityIntent.getIntExtra("activityType", 0) == AddItemActivity.EDIT_EXISTING_ITEM){
             item = (ItemModel)activityIntent.getSerializableExtra("item");
-            Picasso.get().load(Uri.parse(item.getImageUriString())).into(addItemImage);
-            name.setText(item.getName());
+            if (!item.getImageUriString().isEmpty()){
+                Picasso.get().load(Uri.parse(item.getImageUriString())).into(addItemImage);
+            }
             description.setText(item.getDescription());
+            name.setText(item.getName());
+
         }
 
         addItemImage.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +85,6 @@ public class AddItemActivity extends Activity {
                 Intent gallery = new Intent();
                 gallery.setType("image/*");
                 gallery.setAction(Intent.ACTION_GET_CONTENT);
-
                 startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
             }
         });

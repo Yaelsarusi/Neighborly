@@ -65,9 +65,6 @@ public class ItemCardAdapter extends PagerAdapter {
         imageView = view.findViewById(R.id.image);
         Picasso.get().load(Uri.parse(models.get(new_position).getImageUriString())).into(imageView);
 
-        TextView title = view.findViewById(R.id.title);
-        title.setText(models.get(new_position).getPresentedName());
-
         container.addView(view, 0);
 
         final Button editButton =  view.findViewById(R.id.editButton);

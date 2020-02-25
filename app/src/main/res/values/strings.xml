@@ -58,4 +58,7 @@
         Say thanks by sending out a badge</string>
     <string name="neighbor_offering_help_msg">I can help you out :)</string>
     <string name="my_requests">My requests:</string>
+    <string name="askToAddNewItem">You are awsome for helping!</string>
+    <string name="add_item_to_the_inventory_to_help_others">Add item to the inventory to help others :)</string>
+    <string name="next_time">next time</string>
 </resources>

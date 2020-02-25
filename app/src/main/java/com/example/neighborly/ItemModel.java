@@ -18,6 +18,14 @@ public class ItemModel implements Serializable {
         this.imageUriString = imageUriString;
     }
 
+    public ItemModel(String name, String ownerId) {
+        this.name = cleanItemName(name);
+        this.ownerId = ownerId;
+        this.description = "";
+        this.imageUriString = "";
+    }
+
+
     public String getName() {
         return name;
     }

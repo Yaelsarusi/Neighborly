@@ -42,9 +42,6 @@ public class NeighborsFragment extends Fragment {
                     Toast.LENGTH_LONG).show();
         } else {
             updateNeighborsScroll();
-            Toast.makeText(getActivity(),
-                    getString(R.string.SayHelloToYourNeighbors),
-                    Toast.LENGTH_LONG).show();
         }
 
         return neighborsView;
