@@ -11,28 +11,28 @@
         style="@style/TextColor"
         android:layout_width="320dp"
         android:layout_height="70dp"
-        android:layout_marginTop="70dp"
         android:background="@drawable/rounded_rectangle_yellow"
+        android:elevation="10dp"
         android:gravity="center"
         android:text="@string/profileFragmentTitle"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@id/imageLayout"
+        app:layout_constraintBottom_toTopOf="@id/detailsLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/imageLayout"
+        android:id="@+id/detailsLayout"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/rounded_rectangle"
-        app:layout_constraintBottom_toTopOf="@+id/address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileTitle">
+        app:layout_constraintTop_toBottomOf="@id/profileTitle"
+        android:elevation="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilePicture"
@@ -61,96 +61,98 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profilePicture" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/addressLayout"
-        style="@style/TextColor"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded_rectangle_yellow"
-        app:layout_constraintBottom_toTopOf="@+id/userDescriptionLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageLayout">
-
-        <TextView
-            android:id="@+id/userAddressTitle"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/textDetailsLayout"
             style="@style/TextColor"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:text="@string/userAddressTitle"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.02"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/userAddress"
-            style="@style/TextColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="@string/userAddressNamePlaceholder"
-            android:textSize="15sp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/rounded_rectangle_yellow"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userAddressTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/userName">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/userAddressTitle"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:elevation="10dp"
+                android:text="@string/userAddressTitle"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/userDescriptionLayout"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded_rectangle"
-        app:layout_constraintBottom_toTopOf="@+id/userItemTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addressLayout">
+            <TextView
+                android:id="@+id/userAddress"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/userAddressNamePlaceholder"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userAddressTitle" />
 
-        <TextView
-            android:id="@+id/userDescription"
-            style="@style/TextColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="15dp"
-            android:text="@string/info"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.02"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/userDescriptionTitle"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/info"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userAddress" />
 
-        <EditText
-            android:id="@+id/userDescriptionEdit"
-            style="@style/EditTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/green"
-            android:gravity="center"
-            android:inputType="textAutoComplete"
-            android:lines="3"
-            android:textColor="@color/appBlack"
-            android:textCursorDrawable="@drawable/cursor_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userDescription" />
+            <TextView
+                android:id="@+id/userDescription"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:text="@string/info"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userDescriptionTitle" />
 
-        <Button
-            android:id="@+id/editToggleButton"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:background="@drawable/edit"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <EditText
+                android:id="@+id/userDescriptionEdit"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/black"
+                android:gravity="center"
+                android:inputType="textAutoComplete"
+                android:lines="3"
+                android:textColor="@color/appBlack"
+                android:textCursorDrawable="@drawable/cursor_color"
+                app:layout_constraintTop_toBottomOf="@+id/userDescriptionTitle" />
+
+            <Button
+                android:id="@+id/editToggleButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/edit"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userAddress" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -169,24 +171,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userDescriptionLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/detailsLayout" />
 
     <Button
         android:id="@+id/buttonAddNewItem"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/add_item"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/userItemTitle"
-        app:layout_constraintTop_toBottomOf="@+id/userDescriptionLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/detailsLayout" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/userItemPager"
         android:layout_width="wrap_content"
-        android:layout_height="120dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="130dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"

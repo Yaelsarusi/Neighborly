@@ -134,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "" + e.getMessage(),
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -198,7 +199,8 @@ public class MainActivity extends AppCompatActivity {
                 // Get UserModel
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 // Show Email on toast
-                Toast.makeText(this, "" + (user != null ? user.getEmail() : ""), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "" + (user != null ? user.getEmail() : ""),
+                        Toast.LENGTH_SHORT).show();
                 // Set Button signout
                 btnSignOut.setEnabled(true);
 
@@ -213,7 +215,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(this, MainActivity.class));
                 }
             } else {
-                Toast.makeText(this, "" + response.getError().getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "" + response.getError().getMessage(),
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }

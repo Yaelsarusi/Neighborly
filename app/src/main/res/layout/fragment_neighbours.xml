@@ -11,7 +11,7 @@
         style="@style/TextColor"
         android:layout_width="320dp"
         android:layout_height="70dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="0dp"
         android:background="@drawable/rectangle_magenta"
         android:gravity="center"
         android:text="My Neighbors"
@@ -20,8 +20,8 @@
 
     <ListView
         android:id="@+id/neighborsDetailsList"
-        android:layout_width="365dp"
-        android:layout_height="wrap_content"
+        android:layout_width="362dp"
+        android:layout_height="624dp"
         android:layout_gravity="center"
         android:divider="@android:color/transparent"
         android:padding="8dp" />

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Space;
@@ -46,7 +47,6 @@ public class FeedFragment extends Fragment {
     private UserModel curUser;
     private List<RequestModel> userOpenRequests;
     private List<RequestModel> neighborsOpenRequests;
-    private List<UserModel> privateChats;
 
     @Nullable
     @Override
@@ -200,6 +200,7 @@ public class FeedFragment extends Fragment {
             final RequestModel request = userOpenRequests.get(i);
             if (request != null) {
                 Button button = new Button(feedView.getContext());
+                button.setLayoutParams(new LinearLayout.LayoutParams(130, 70));
                 button.setText(request.getItemPresentedName());
                 button.setAllCaps(false);
                 button.setTextSize(14);

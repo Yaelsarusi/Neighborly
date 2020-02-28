@@ -10,8 +10,9 @@
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/rounded_rectangle_yellow">
+        android:layout_marginTop="0dp"
+        android:background="@drawable/rounded_rectangle_yellow"
+        android:elevation="4dp">
 
         <TextView
             android:id="@+id/SearchTitle"
@@ -33,7 +34,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="Lets see if your neighbors can help"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/SearchText"
@@ -79,7 +80,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/rounded_rectangle"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:elevation="4dp">
 
         <TextView
             android:id="@+id/personalRequestsTitle"
