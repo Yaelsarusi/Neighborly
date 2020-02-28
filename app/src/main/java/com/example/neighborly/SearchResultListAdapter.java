@@ -67,7 +67,7 @@ public class SearchResultListAdapter extends BaseAdapter {
 
         final UserModelFacade curNeighbor = neighborsList.get(position);
         Map<Integer, String> neighborMap = new HashMap<>();
-        neighborMap.put(R.id.neighborName, curNeighbor.getPresentedName());
+        neighborMap.put(R.id.neighborName, (curNeighbor.getPresentedName()+" ").split(" ")[0]);
         setValues(row, neighborMap , R.id.neighborPic, curNeighbor.getImageUriString());
 
         ItemModel curItem = neighborsItemsMap.get(curNeighbor);
