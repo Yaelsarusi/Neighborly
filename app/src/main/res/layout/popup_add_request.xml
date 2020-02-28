@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/we_found_neighbors"
+            android:text="@string/found_neighbors"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <ListView
