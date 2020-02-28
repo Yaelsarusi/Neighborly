@@ -1,9 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="350dp"
-    android:layout_height="475dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/white"
+    android:background="@android:color/transparent"
     android:orientation="vertical"
     android:padding="5dp">
 
@@ -13,45 +13,75 @@
         android:layout_width="288dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/request_resolved_message"
+        android:background="@drawable/rounded_rectangle_yellow"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:text="@string/request_resolved_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
-    <Space
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="21dp" />
+        android:layout_height="350dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="-15dp"
+        android:background="@drawable/rounded_rectangle"
+        android:orientation="vertical">
 
-    <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/neighborOptions"
-        style="@style/TextColor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp"
-        app:alignContent="flex_start"
-        app:alignItems="flex_start"
-        app:flexWrap="wrap"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        <TextView
+            android:id="@+id/subTitle"
+            style="@style/TextColor"
+            android:layout_width="288dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="@string/request_resolved_message"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/neighborBadgesOptions"
-        style="@style/TextColor"
-        android:layout_width="match_parent"
-        android:layout_height="87dp"
-        android:orientation="vertical"
-        android:padding="20dp"
-        app:alignContent="flex_start"
-        app:alignItems="flex_start"
-        app:flexWrap="wrap"
-        app:layout_constraintTop_toBottomOf="@+id/neighborOptions" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="21dp" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="22dp" />
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/neighborOptions"
+            style="@style/TextColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:alignContent="center"
+            app:alignItems="center"
+            app:flexWrap="wrap"
+            android:layout_gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/subTitle" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/neighborBadgesOptions"
+            style="@style/TextColor"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:alignContent="center"
+            app:alignItems="center"
+            app:flexWrap="wrap"
+            android:layout_gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/neighborOptions" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="22dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:layout_marginTop="-20dp"
         android:orientation="horizontal">
 
         <Space
@@ -60,10 +90,13 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/exit"
+            android:id="@+id/send"
+            style="@style/TextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="next time" />
+            android:background="@drawable/rounded_rectangle_yellow"
+            android:text="@string/send"
+            android:textAllCaps="false" />
 
         <Space
             android:layout_width="40dp"
@@ -71,10 +104,14 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/send"
+            android:id="@+id/exit"
+            style="@style/TextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="say thanks" />
+            android:background="@drawable/rounded_rectangle_yellow"
+            android:text="Next time"
+            android:textAllCaps="false"
+            android:textSize="11sp" />
 
         <Space
             android:layout_width="wrap_content"

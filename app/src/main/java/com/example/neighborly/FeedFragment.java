@@ -170,6 +170,7 @@ public class FeedFragment extends Fragment {
                     requestKeyRef.setValue(newRequest);
                     addRequestsUnderBuildingInDB(newRequest);
 
+                    searchText.setText("");
                     popupRequestDialog.dismiss();
                 }
             }

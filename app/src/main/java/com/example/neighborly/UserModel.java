@@ -5,12 +5,11 @@ import java.util.List;
 
 
 public class UserModel {
-    // todo - this is temporary until there are real badges
     public static final List<Integer> BADGES = new ArrayList<Integer>() {
         {
             add(R.drawable.badge_hart);
-            add(R.drawable.bagde_crown);
             add(R.drawable.badge_star);
+            add(R.drawable.badge_crown);
         }
     };
 
