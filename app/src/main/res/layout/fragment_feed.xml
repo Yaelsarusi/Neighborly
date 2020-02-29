@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/SearchSubtitle"
             android:layout_marginStart="20dp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/appBlack"
             android:hint="@string/SearchText"
             android:inputType="textShortMessage"
             android:selectAllOnFocus="true"

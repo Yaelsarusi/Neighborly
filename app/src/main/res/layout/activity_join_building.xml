@@ -117,7 +117,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textViewCity"
+            android:id="@+id/textViewDescription"
             style="@style/TextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -138,7 +138,7 @@
             android:ems="7"
             android:inputType="textPostalAddress"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
         <EditText
             android:id="@+id/editTextStreetAddress"
