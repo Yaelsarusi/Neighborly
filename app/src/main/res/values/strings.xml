@@ -67,4 +67,6 @@
     <string name="exit">X</string>
     <string name="add_item">Add item</string>
     <string name="go_back">Go back</string>
+    <string name="my_neighbors">My Neighbors</string>
+    <string name="click_on_your_neighbor_and_say_hi">click on your neighbor and say Hi</string>
 </resources>
