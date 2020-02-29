@@ -65,6 +65,6 @@
     <string name="send">Send!</string>
     <string name="request_resolved_title">You have such great neighbors!</string>
     <string name="description_hint">ex. 5 steps ladder</string>
-    <string name="exit">X</string>
+    <string name="exit">X         </string>
     <string name="add_item">Add item</string>
 </resources>
