@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
 import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -148,7 +150,7 @@ public class RequestActivity extends AppCompatActivity {
                 input.setText("");
 
                 if (!neighbor.getId().equals(curUser.getId())) {
-                    if (curRequest != null){
+                    if (curRequest != null) {
                         showAskIfAddNewItemPopup(curRequest.getItemPresentedName());
                     }
                 }
@@ -193,14 +195,12 @@ public class RequestActivity extends AppCompatActivity {
             });
         } else {
             isResolved.setVisibility(View.INVISIBLE);
-            requestTitle.setText(String.format(getString(R.string.public_request_title), neighbor.getPresentedName(), curRequest.getItemRequested()));
+            requestTitle.setText(String.format(getString(R.string.public_request_title), neighbor.getPresentedName()));
             input.setText(this.getString(R.string.neighbor_offering_help_msg));
         }
 
         TextView originalMsg = findViewById(R.id.requestDetailsOriginalMessage);
         originalMsg.setText(curRequest.getRequestMsg());
-
-
     }
 
     private void handlePrivateChat(String otherUser, String itemName) {
@@ -245,77 +245,84 @@ public class RequestActivity extends AppCompatActivity {
 
     private void showResolvedPopup() {
         popupRequestDialog = new Dialog(this);
-        popupRequestDialog.setContentView(R.layout.popup_resolved_request);
+        if (commentedUsers.size() > 0) {
+            popupRequestDialog.setContentView(R.layout.popup_resolved_request);
+            Objects.requireNonNull(popupRequestDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
-        Button closeButton = popupRequestDialog.findViewById(R.id.exit);
-        final Button sendButton = popupRequestDialog.findViewById(R.id.send);
+            Button closeButton = popupRequestDialog.findViewById(R.id.exit);
+            final Button sendButton = popupRequestDialog.findViewById(R.id.send);
 
-        sendButton.setVisibility(View.INVISIBLE);
+            sendButton.setVisibility(View.INVISIBLE);
 
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popupRequestDialog.dismiss();
-            }
-        });
-
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                curBuilding.addBadgeToUserById(chosenBadge, chosenNeighbor);
-                BuildingModelDataHolder.getInstance().setCurrentBuilding(curBuilding);
-                popupRequestDialog.dismiss();
-            }
-        });
-
-        final FlexboxLayout neighborsLayout = popupRequestDialog.findViewById(R.id.neighborOptions);
-        final FlexboxLayout badgesLayout = popupRequestDialog.findViewById(R.id.neighborBadgesOptions);
-
-        for (final UserModel neighbor : commentedUsers) {
-            final ImageView neighborImage = new ImageView(this);
-            Glide.with(this).load(Uri.parse(neighbor.getImageUriString())).into(neighborImage);
-            neighborImage.setPadding(8, 20, 8, 20);
-            neighborsLayout.addView(neighborImage);
-            neighborImage.setOnClickListener(new View.OnClickListener() {
+            closeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // deselect the rest
-                    for (int i = 0; i < neighborsLayout.getFlexItemCount(); i++) {
-                        neighborsLayout.getFlexItemAt(i).setBackgroundColor(Color.WHITE);
-                    }
-
-                    neighborImage.setBackgroundColor(Color.BLUE);
-                    chosenNeighbor = neighbor.getId();
-                    if (chosenBadge != NON_SELECTED) {
-                        sendButton.setVisibility(View.VISIBLE);
-                    }
+                    popupRequestDialog.dismiss();
                 }
             });
-        }
 
-        for (final int badge : UserModel.BADGES) {
-            final ImageView badgeImage = new ImageView(this);
-            badgeImage.setImageResource(badge);
-            badgeImage.setPadding(0, 20, 0, 20);
-            badgesLayout.addView(badgeImage);
-
-            badgeImage.setOnClickListener(new View.OnClickListener() {
+            sendButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // deselect the rest
-                    for (int i = 0; i < badgesLayout.getFlexItemCount(); i++) {
-                        badgesLayout.getFlexItemAt(i).setBackgroundColor(Color.WHITE);
-                    }
-
-                    badgeImage.setBackgroundColor(Color.BLUE);
-                    chosenBadge = badge;
-                    if (chosenNeighbor != null) {
-                        sendButton.setVisibility(View.VISIBLE);
-                    }
+                    curBuilding.addBadgeToUserById(chosenBadge, chosenNeighbor);
+                    BuildingModelDataHolder.getInstance().setCurrentBuilding(curBuilding);
+                    popupRequestDialog.dismiss();
                 }
             });
+
+            final FlexboxLayout neighborsLayout = popupRequestDialog.findViewById(R.id.neighborOptions);
+            final FlexboxLayout badgesLayout = popupRequestDialog.findViewById(R.id.neighborBadgesOptions);
+
+            for (final UserModel neighbor : commentedUsers) {
+                final CircleImageView neighborImage = new CircleImageView(this);
+                Glide.with(this).load(Uri.parse(neighbor.getImageUriString())).into(neighborImage);
+                neighborImage.setPadding(8, 20, 8, 20);
+                neighborImage.setBorderWidth(7);
+                neighborImage.setBorderColor((ContextCompat.getColor(RequestActivity.this, R.color.appBlue)));
+                neighborsLayout.addView(neighborImage);
+                neighborImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // deselect the rest
+                        for (int i = 0; i < neighborsLayout.getFlexItemCount(); i++) {
+                            ((CircleImageView) neighborsLayout.getFlexItemAt(i)).setBorderColor((ContextCompat.getColor(RequestActivity.this, R.color.appBlue)));
+                        }
+
+                        neighborImage.setBorderColor(ContextCompat.getColor(RequestActivity.this, (R.color.appMagenta)));
+                        chosenNeighbor = neighbor.getId();
+                        if (chosenBadge != NON_SELECTED) {
+                            sendButton.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+            }
+
+            for (final int badge : UserModel.BADGES) {
+                final ImageView badgeImage = new ImageView(this);
+                badgeImage.setImageResource(badge);
+                badgeImage.setPadding(8, 20, 8, 20);
+                badgesLayout.addView(badgeImage);
+
+                badgeImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // deselect the rest
+                        for (int i = 0; i < badgesLayout.getFlexItemCount(); i++) {
+                            badgesLayout.getFlexItemAt(i).setBackground(ContextCompat.getDrawable(RequestActivity.this, (R.drawable.rounded_rectangle)));
+                        }
+
+                        badgeImage.setBackground(ContextCompat.getDrawable(RequestActivity.this, (R.drawable.rectangle_magenta)));
+                        chosenBadge = badge;
+                        if (chosenNeighbor != null) {
+                            sendButton.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+            }
+            popupRequestDialog.show();
+        } else {
+            Toast.makeText(this, getString(R.string.done), Toast.LENGTH_LONG).show();
         }
-        popupRequestDialog.show();
     }
 
     private void showAskIfAddNewItemPopup(final String requestedItem) {
