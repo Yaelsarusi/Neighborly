@@ -38,7 +38,7 @@
     <string name="welcome">New in The\n Neighborhood?</string>
     <string name="sign_in">Sign in!</string>
     <string name="info">About yourself:</string>
-    <string name="item_example">ex. 5 steps ladder</string>
+    <string name="item_example">ex. ladder</string>
     <string name="messageHint">Type a message...</string>
     <string name="neighborly_help_message">I can help you out! :)</string>
     <string name="private_chat_title">%s</string>
@@ -64,5 +64,8 @@
     <string name="done">done!</string>
     <string name="send">Send!</string>
     <string name="request_resolved_title">You have such great neighbors!</string>
+    <string name="description_hint">ex. 5 steps ladder</string>
+    <string name="exit">X</string>
+    <string name="add_item">Add item</string>
     <string name="go_back">Go back</string>
 </resources>
