@@ -33,7 +33,7 @@
     <string name="editButtonText">Edit</string>
     <string name="saveButtonText">Save</string>
     <string name="emptyBuilding1Msg">You are the first one!</string>
-    <string name="emptyBuilding2Msg">Be neighborly and spread the word :)</string>
+    <string name="emptyBuilding2Msg">Be neighborly and spread the word!</string>
     <string name="SayHelloToYourNeighbors">Click on your neighbor and say hello :)</string>
     <string name="welcome">New in The\n Neighborhood?</string>
     <string name="sign_in">Sign in!</string>
@@ -58,8 +58,8 @@
     <string name="request_resolved_message">Say thanks by sending out a badge!</string>
     <string name="neighbor_offering_help_msg">I can help you out :)</string>
     <string name="my_requests">My requests:</string>
-    <string name="askToAddNewItem">You are awsome for helping!</string>
-    <string name="add_item_to_the_inventory_to_help_others">Add item to the inventory to help others :)</string>
+    <string name="askToAddNewItem">You are awesome for helping!</string>
+    <string name="add_item_to_the_inventory_to_help_others">Add item to the inventory to help others</string>
     <string name="next_time">next time</string>
     <string name="done">done!</string>
     <string name="send">Send!</string>
@@ -67,4 +67,5 @@
     <string name="description_hint">ex. 5 steps ladder</string>
     <string name="exit">X</string>
     <string name="add_item">Add item</string>
+    <string name="go_back">Go back</string>
 </resources>
