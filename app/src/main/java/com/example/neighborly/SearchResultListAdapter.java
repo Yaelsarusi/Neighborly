@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,17 +43,14 @@ public class SearchResultListAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        // TODO Auto-generated method stub
         return neighborsList.size();
     }
 
     public Object getItem(int arg0) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
@@ -66,15 +62,16 @@ public class SearchResultListAdapter extends BaseAdapter {
         row = inflater.inflate(R.layout.search_result_details, parent, false);
 
         final UserModelFacade curNeighbor = neighborsList.get(position);
-        Map<Integer, String> neighborMap = new HashMap<>();
-        neighborMap.put(R.id.neighborName, (curNeighbor.getPresentedName()+" ").split(" ")[0]);
-        setValues(row, neighborMap , R.id.neighborPic, curNeighbor.getImageUriString());
+        TextView neighborName = row.findViewById(R.id.neighborName);
+        neighborName.setText(curNeighbor.getPresentedName()+"'s ");
 
         ItemModel curItem = neighborsItemsMap.get(curNeighbor);
-        Map<Integer, String> itemMap = new HashMap<>();
-        itemMap.put(R.id.itemName, curItem.getPresentedName());
-        itemMap.put(R.id.itemDesc, curItem.getDescription());
-        setValues(row,itemMap, R.id.itemPic, curItem.getImageUriString());
+        TextView itemNameText = row.findViewById(R.id.itemName);
+        itemNameText.setText(curItem.getPresentedName());
+        TextView itemDesc = row.findViewById(R.id.itemDesc);
+        itemDesc.setText(curItem.getDescription());
+        ImageView picture = row.findViewById(R.id.itemPic);
+        Glide.with(context).load(curItem.getImageUriString()).into(picture);
 
         LinearLayout startConversation = row.findViewById(R.id.neighbor);
         startConversation.setOnClickListener(new View.OnClickListener() {
@@ -91,14 +88,5 @@ public class SearchResultListAdapter extends BaseAdapter {
             }
         });
         return (row);
-    }
-
-    private void setValues(View row, Map<Integer, String> map, int picKey, String picValue){
-        for(int key : map.keySet()){
-            TextView keyView = row.findViewById(key);
-            keyView.setText(map.get(key));
-        }
-        ImageView picture = row.findViewById(picKey);
-        Glide.with(context).load(picValue).into(picture);
     }
 }
