@@ -37,9 +37,8 @@ import java.util.Map;
 
 public class FeedFragment extends Fragment {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private static final String foundIntroText = "We believe that %1s can help you out!\n" +
-            "Send a private message to ask!";
-    private static final String notFoundIntroText = "We didn't find neighbors that have the item you were looking for. :(";
+    private static final String foundIntroText = "We found neighbors that can help out!";
+    private static final String notFoundIntroText = "We didn't find neighbors that have what you were looking for";
     private View feedView;
     private Dialog popupRequestDialog;
     private EditText searchText;
@@ -119,7 +118,6 @@ public class FeedFragment extends Fragment {
     }
 
     private void showSearchPopup(View view, final String itemName, Map<UserModelFacade, ItemModel> foundItems) {
-        ImageButton sendButton;
         popupRequestDialog.setContentView(R.layout.popup_add_request);
         TextView hello = popupRequestDialog.findViewById(R.id.hello);
         hello.setText(String.format("Hey %s!", (curUser.getPresentedName()+" ").split(" ")[0]));
@@ -129,8 +127,9 @@ public class FeedFragment extends Fragment {
         TextView intro = popupRequestDialog.findViewById(R.id.intro);
         requestMessageEditor.requestFocus();
         if (foundItems.size() == 0) {
-            popupRequestDialog.findViewById(R.id.newRequestButton).setVisibility(View.GONE);
-            intro.setText(String.format(notFoundIntroText, curUser.getPresentedName()));
+            Button btn = popupRequestDialog.findViewById(R.id.newRequestButton);
+            btn.setText("Ask everyone in a new request");
+            intro.setText(notFoundIntroText);
             popupRequestDialog.findViewById(R.id.foundNeighbors).setVisibility(View.GONE);
         } else {
             popupRequestDialog.findViewById(R.id.createNewRequest).setVisibility(View.GONE);
@@ -141,12 +140,12 @@ public class FeedFragment extends Fragment {
                 }
             });
 
-            intro.setText(String.format(foundIntroText, curUser.getPresentedName()));
+            intro.setText(foundIntroText);
             ListView neighborsListView = popupRequestDialog.findViewById(R.id.foundNeighbors);
             neighborsListView.setAdapter(new SearchResultListAdapter(getActivity(), foundItems, getContext(), itemName, popupRequestDialog));
         }
 
-        sendButton = popupRequestDialog.findViewById(R.id.send);
+        Button sendButton = popupRequestDialog.findViewById(R.id.share_request);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -201,33 +200,13 @@ public class FeedFragment extends Fragment {
             final RequestModel request = userOpenRequests.get(i);
             if (request != null) {
                 Button button = new Button(feedView.getContext());
-                button.setLayoutParams(new LinearLayout.LayoutParams(130, 70));
                 button.setText(request.getItemPresentedName());
-                button.setAllCaps(false);
-                button.setTextSize(14);
-
-                int size_h = 15;
-                int size_w = 20;
-                button.setMinHeight(size_h);
-                button.setMinWidth(size_w);
-                button.setMinimumHeight(size_h);
-                button.setMinimumWidth(size_w);
-                button.setPadding(size_w,size_h,size_w,size_h);
-                button.setBackground(ContextCompat.getDrawable(feedView.getContext(), R.drawable.rectangle_magenta));
-
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(FeedFragment.this.getActivity(), RequestActivity.class);
-                        intent.putExtra("requestType", RequestActivity.REQUEST_ITEM);
-                        intent.putExtra("requestId", request.getRequestId());
-                        FeedFragment.this.getActivity().startActivity(intent);
-                    }
-                });
-                layoutRecepient.addView(button);
                 Space space = new Space(feedView.getContext());
-                space.setMinimumWidth(15);
+
+                createButton(button,request, space);
+                layoutRecepient.addView(button);
                 layoutRecepient.addView(space);
+
                 if(i == 3){
                     Space lineBrake = new Space(feedView.getContext());
                     lineBrake.setMinimumWidth(layoutRecepient.getMinimumWidth());
@@ -236,6 +215,33 @@ public class FeedFragment extends Fragment {
                 }
             }
         }
+    }
+
+    private void createButton(Button button, final RequestModel request, Space space){
+        button.setLayoutParams(new LinearLayout.LayoutParams(130, 70));
+        button.setAllCaps(false);
+        button.setTextSize(14);
+
+        int size_h = 15;
+        int size_w = 20;
+        button.setMinHeight(size_h);
+        button.setMinWidth(size_w);
+        button.setMinimumHeight(size_h);
+        button.setMinimumWidth(size_w);
+        button.setPadding(size_w,size_h,size_w,size_h);
+        button.setBackground(ContextCompat.getDrawable(feedView.getContext(), R.drawable.rectangle_magenta));
+
+        space.setMinimumWidth(15);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FeedFragment.this.getActivity(), RequestActivity.class);
+                intent.putExtra("requestType", RequestActivity.REQUEST_ITEM);
+                intent.putExtra("requestId", request.getRequestId());
+                FeedFragment.this.getActivity().startActivity(intent);
+            }
+        });
     }
 
     // -------------- Other's requests --------------

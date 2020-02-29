@@ -136,7 +136,7 @@
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:backgroundTint="@android:color/black"
+                android:backgroundTint="@color/appBlack"
                 android:gravity="center"
                 android:inputType="textAutoComplete"
                 android:lines="3"
@@ -144,13 +144,16 @@
                 android:textCursorDrawable="@drawable/cursor_color"
                 app:layout_constraintTop_toBottomOf="@+id/userDescriptionTitle" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/editToggleButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@drawable/edit"
+                android:background="@android:color/transparent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/userAddress" />
+                app:layout_constraintTop_toBottomOf="@id/userAddress"
+                app:srcCompat="@drawable/edit"
+                tools:layout_editor_absoluteY="48dp" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
