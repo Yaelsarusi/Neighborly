@@ -1,5 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -31,7 +31,7 @@
             android:layout_marginBottom="-30dp"
             android:elevation="3dp"
             android:gravity="center"
-            android:text="X"
+            android:text="@string/exit"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/appMagenta"
             android:textStyle="bold" />
@@ -42,11 +42,11 @@
             android:orientation="horizontal">
 
             <Space
-                android:layout_width="40dp"
+                android:layout_width="20dp"
                 android:layout_height="22dp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:orientation="vertical">
@@ -66,7 +66,8 @@
                     android:backgroundTint="@color/green"
                     android:hint="@string/item_example"
                     android:inputType="textAutoComplete"
-                    android:textCursorDrawable="@drawable/cursor_color" />
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    tools:ignore="Autofill" />
 
                 <TextView
                     android:id="@+id/textViewDescription"
@@ -85,8 +86,14 @@
                     android:inputType="textMultiLine"
                     android:maxLines="10"
                     android:scrollbars="vertical"
-                    android:textCursorDrawable="@drawable/cursor_color" />
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    tools:ignore="Autofill" />
             </LinearLayout>
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="22dp" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -94,7 +101,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_marginTop="-20dp"
+        android:layout_marginTop="-25dp"
         android:orientation="horizontal">
 
         <Space
@@ -108,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_rectangle_yellow"
-            android:text="Add item"
+            android:text="@string/add_item"
             android:textAllCaps="false" />
 
         <Space
