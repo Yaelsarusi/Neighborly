@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -61,7 +62,7 @@ public class AddItemActivity extends Activity {
 
         currentUser = UserModelDataHolder.getInstance().getCurrentUser();
 
-        addItemImage = findViewById(R.id.itemImage);
+        addItemImage = findViewById(R.id.addItemImage);
         name = findViewById(R.id.editTextName);
         description = findViewById(R.id.editTextDescription);
         Button addButton = findViewById(R.id.buttonAdd);
