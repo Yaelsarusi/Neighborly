@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -54,6 +57,10 @@ public class AddItemActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_add_item);
+        Objects.requireNonNull(getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        WindowManager.LayoutParams windowManager = getWindow().getAttributes();
+        windowManager.dimAmount = 0.4f;
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -61,7 +68,7 @@ public class AddItemActivity extends Activity {
 
         currentUser = UserModelDataHolder.getInstance().getCurrentUser();
 
-        addItemImage = findViewById(R.id.itemImage);
+        addItemImage = findViewById(R.id.addItemImage);
         name = findViewById(R.id.editTextName);
         description = findViewById(R.id.editTextDescription);
         Button addButton = findViewById(R.id.buttonAdd);

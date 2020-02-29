@@ -2,9 +2,11 @@
     android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/white"
+    android:background="@color/appBlue"
     android:orientation="vertical"
     android:padding="5dp">
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,22 +26,21 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/intro"
-            style="@style/TextColor"
-            android:layout_width="288dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/we_found_neighbors"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/startChat"
+            android:id="@+id/hello"
             style="@style/TextColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5pt"
-            android:text="@string/start_private_chat_title" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/intro"
+            style="@style/TextColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/found_neighbors"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <ListView
             android:id="@+id/foundNeighbors"
@@ -62,6 +63,8 @@
             style="@style/TextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_rectangle_yellow"
+            android:layout_gravity="center_horizontal"
             android:text="@string/share_a_new_request_title" />
     </LinearLayout>
 
@@ -69,7 +72,6 @@
         android:id="@+id/createNewRequest"
         android:layout_width="match_parent"
         android:layout_height="77dp"
-        android:background="@drawable/frame_narrow"
         android:padding="5dp">
 
         <EditText

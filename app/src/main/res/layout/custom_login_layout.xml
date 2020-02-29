@@ -10,8 +10,8 @@
     <TextView
         android:id="@+id/textView4"
         style="@style/TextColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="362dp"
+        android:layout_height="167dp"
         android:gravity="center"
         android:padding="12dp"
         android:text="@string/welcome"
@@ -50,7 +50,6 @@
             android:id="@+id/imageButtonFacebook"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_toRightOf="@id/imageButtonGoogle"
             android:background="@drawable/facebook_icon"
             android:padding="15dp" />
 
@@ -59,6 +58,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@drawable/google_icon"
+            android:layout_toRightOf="@id/imageButtonFacebook"
             android:padding="15dp" />
 
     </RelativeLayout>
