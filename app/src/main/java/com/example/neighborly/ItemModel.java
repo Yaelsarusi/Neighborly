@@ -12,7 +12,7 @@ public class ItemModel implements Serializable {
     public ItemModel() { }
 
     public ItemModel(String imageUriString, String name, String ownerId, String description) {
-        this.name = cleanItemName(name);
+        this.name = name;
         this.ownerId = ownerId;
         this.description = description;
         this.imageUriString = imageUriString;
