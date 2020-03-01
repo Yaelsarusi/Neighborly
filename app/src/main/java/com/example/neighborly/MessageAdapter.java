@@ -68,7 +68,6 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, Messag
             mUsername.setVisibility(View.GONE);
             imgProfile.setVisibility(View.GONE);
         }
-        NotificationHelper.sendNotification(this.context, NotificationHelper.NEW_MSG_TITLE, mText.toString());
     }
 
     @NonNull

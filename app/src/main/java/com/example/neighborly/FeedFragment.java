@@ -228,7 +228,7 @@ public class FeedFragment extends Fragment {
         button.setMinWidth(size_w);
         button.setMinimumHeight(size_h);
         button.setMinimumWidth(size_w);
-        // button.setTextColor(getResources().getColor(R.color.white));
+        button.setTextColor(getResources().getColor(R.color.white));
         button.setPadding(size_w,size_h,size_w,size_h);
         button.setBackground(ContextCompat.getDrawable(feedView.getContext(), R.drawable.rectangle_magenta));
 
