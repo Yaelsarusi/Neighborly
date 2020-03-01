@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -222,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendNotification(String title, String text) {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.logo)
+                .setSmallIcon(R.drawable.back_button)
                 .setContentTitle(title).setContentText(text).setPriority(NotificationCompat.PRIORITY_DEFAULT);
         NotificationManagerCompat manager = NotificationManagerCompat.from(this);
         manager.notify(1, notificationBuilder.build());

@@ -37,8 +37,9 @@ import java.util.Map;
 
 public class FeedFragment extends Fragment {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private static final String foundIntroText = "We found neighbors that can help out!";
-    private static final String notFoundIntroText = "We didn't find neighbors that have what you were looking for";
+    private static final String foundIntroText = "We believe that %1s can help you out!\n" +
+            "Send a private message to ask!";
+    private static final String notFoundIntroText = "We didn't find neighbors that have the item you were looking for. :(";
     private View feedView;
     private Dialog popupRequestDialog;
     private EditText searchText;
@@ -62,9 +63,6 @@ public class FeedFragment extends Fragment {
             public void onClick(View v) {
                 searchText = feedView.findViewById(R.id.SearchText);
                 String itemName = searchText.getText().toString();
-                if (itemName.isEmpty()){
-                    return;
-                }
                 showSearchPopup(v, itemName, searchForItem(itemName));
             }
         });
@@ -121,6 +119,7 @@ public class FeedFragment extends Fragment {
     }
 
     private void showSearchPopup(View view, final String itemName, Map<UserModelFacade, ItemModel> foundItems) {
+        ImageButton sendButton;
         popupRequestDialog.setContentView(R.layout.popup_add_request);
         TextView hello = popupRequestDialog.findViewById(R.id.hello);
         hello.setText(String.format("Hey %s!", (curUser.getPresentedName()+" ").split(" ")[0]));
@@ -130,9 +129,8 @@ public class FeedFragment extends Fragment {
         TextView intro = popupRequestDialog.findViewById(R.id.intro);
         requestMessageEditor.requestFocus();
         if (foundItems.size() == 0) {
-            Button btn = popupRequestDialog.findViewById(R.id.newRequestButton);
-            btn.setText("Ask everyone in a new request");
-            intro.setText(notFoundIntroText);
+            popupRequestDialog.findViewById(R.id.newRequestButton).setVisibility(View.GONE);
+            intro.setText(String.format(notFoundIntroText, curUser.getPresentedName()));
             popupRequestDialog.findViewById(R.id.foundNeighbors).setVisibility(View.GONE);
         } else {
             popupRequestDialog.findViewById(R.id.createNewRequest).setVisibility(View.GONE);
@@ -143,18 +141,17 @@ public class FeedFragment extends Fragment {
                 }
             });
 
-            intro.setText(foundIntroText);
+            intro.setText(String.format(foundIntroText, curUser.getPresentedName()));
             ListView neighborsListView = popupRequestDialog.findViewById(R.id.foundNeighbors);
             neighborsListView.setAdapter(new SearchResultListAdapter(getActivity(), foundItems, getContext(), itemName, popupRequestDialog));
         }
 
-        Button sendButton = popupRequestDialog.findViewById(R.id.share_request);
+        sendButton = popupRequestDialog.findViewById(R.id.send);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText requestMessageEditor = popupRequestDialog.findViewById(R.id.editRequestMessage);
                 String newItemRequestContent = requestMessageEditor.getText().toString();
-
                 UserModel curUser = UserModelDataHolder.getInstance().getCurrentUser();
 
                 DatabaseReference requestsRef = database.getReference().child(Constants.REQUESTS);
@@ -197,56 +194,48 @@ public class FeedFragment extends Fragment {
         layoutRecepient.removeAllViews();
         if (userOpenRequests.size() > 4) {
             ViewGroup.LayoutParams params = layoutRecepient.getLayoutParams();
-            params.height = 160;
+            params.height = 240;
             layoutRecepient.setLayoutParams(params);
         }
         for (int i = 0 ; i < userOpenRequests.size() ; i++) {
             final RequestModel request = userOpenRequests.get(i);
             if (request != null) {
                 Button button = new Button(feedView.getContext());
+                button.setLayoutParams(new LinearLayout.LayoutParams(130, 70));
                 button.setText(request.getItemPresentedName());
-                Space space = new Space(feedView.getContext());
+                button.setAllCaps(false);
+                button.setTextSize(14);
 
-                createButton(button,request, space);
+                int size_h = 15;
+                int size_w = 20;
+                button.setMinHeight(size_h);
+                button.setMinWidth(size_w);
+                button.setMinimumHeight(size_h);
+                button.setMinimumWidth(size_w);
+                button.setPadding(size_w,size_h,size_w,size_h);
+                button.setBackground(ContextCompat.getDrawable(feedView.getContext(), R.drawable.rectangle_magenta));
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(FeedFragment.this.getActivity(), RequestActivity.class);
+                        intent.putExtra("requestType", RequestActivity.REQUEST_ITEM);
+                        intent.putExtra("requestId", request.getRequestId());
+                        FeedFragment.this.getActivity().startActivity(intent);
+                    }
+                });
                 layoutRecepient.addView(button);
+                Space space = new Space(feedView.getContext());
+                space.setMinimumWidth(15);
                 layoutRecepient.addView(space);
-
-                if(i == 4){
+                if(i == 3){
                     Space lineBrake = new Space(feedView.getContext());
                     lineBrake.setMinimumWidth(layoutRecepient.getMinimumWidth());
-                    lineBrake.setMinimumHeight(90);
+                    lineBrake.setMinimumHeight(85);
                     layoutRecepient.addView(lineBrake);
                 }
             }
         }
-    }
-
-    private void createButton(Button button, final RequestModel request, Space space){
-        button.setLayoutParams(new LinearLayout.LayoutParams(130, 60));
-        button.setAllCaps(false);
-        button.setTextSize(14);
-
-        int size_h = 13;
-        int size_w = 20;
-        button.setMinHeight(size_h);
-        button.setMinWidth(size_w);
-        button.setMinimumHeight(size_h);
-        button.setMinimumWidth(size_w);
-        button.setTextColor(getResources().getColor(R.color.white));
-        button.setPadding(size_w,size_h,size_w,size_h);
-        button.setBackground(ContextCompat.getDrawable(feedView.getContext(), R.drawable.rectangle_magenta));
-
-        space.setMinimumWidth(17);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FeedFragment.this.getActivity(), RequestActivity.class);
-                intent.putExtra("requestType", RequestActivity.REQUEST_ITEM);
-                intent.putExtra("requestId", request.getRequestId());
-                FeedFragment.this.getActivity().startActivity(intent);
-            }
-        });
     }
 
     // -------------- Other's requests --------------

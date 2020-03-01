@@ -2,6 +2,7 @@ package com.example.neighborly;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -249,7 +250,7 @@ public class RequestActivity extends AppCompatActivity {
             Objects.requireNonNull(popupRequestDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
             Button closeButton = popupRequestDialog.findViewById(R.id.exit);
-            final Button sendButton = popupRequestDialog.findViewById(R.id.sand_badge);
+            final Button sendButton = popupRequestDialog.findViewById(R.id.send);
 
             sendButton.setVisibility(View.INVISIBLE);
 
@@ -327,7 +328,6 @@ public class RequestActivity extends AppCompatActivity {
     private void showAskIfAddNewItemPopup(final String requestedItem) {
         popupRequestDialog = new Dialog(this);
         popupRequestDialog.setContentView(R.layout.popup_ask_if_add_new_item);
-        Objects.requireNonNull(popupRequestDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
         Button closeButton = popupRequestDialog.findViewById(R.id.exit);
         final Button addItem = popupRequestDialog.findViewById(R.id.addItem);
