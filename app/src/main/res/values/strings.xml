@@ -33,7 +33,7 @@
     <string name="editButtonText">Edit</string>
     <string name="saveButtonText">Save</string>
     <string name="emptyBuilding1Msg">You are the first one!</string>
-    <string name="emptyBuilding2Msg">Be neighborly and spread the word!</string>
+    <string name="emptyBuilding2Msg">Be neighborly and spread the word :)</string>
     <string name="SayHelloToYourNeighbors">Click on your neighbor and say hello :)</string>
     <string name="welcome">New in The\n Neighborhood?</string>
     <string name="sign_in">Sign in!</string>
@@ -44,21 +44,22 @@
     <string name="private_chat_title">%s</string>
     <string name="private_messages_db_path">Messages/%s_%s</string>
     <string name="request_item_from_neighbor_message">Hey %s! Can I please borrow your %s?</string>
-    <string name="neighborly_send_help_message">Hi I\'m looking for a %s. Care to help out?</string>
+    <string name="neighborly_send_help_message">Hi neighbors! I\'m looking for a %s...</string>
     <string name="start_private_chat_title">Press to start a private chat</string>
-    <string name="new_request">Dosen\'t help? Ask everyone else</string>
+    <string name="share_a_new_request_title">share a new request</string>
     <string name="create_a_profile">Create your profile</string>
     <string name="join_your_neighbors">Join your neighbors:</string>
     <string name="city">City:</string>
     <string name="address">Address:</string>
     <string name="tell_about_yourself">Tell us about yourself:</string>
-    <string name="we_found_neighbors">We found neighbors that can help out!</string>
+    <string name="found_neighbors">we believe that your neighbors can help you out</string>
+    <string name="we_found_neighbors">we found neighbors that have the item you were looking for</string>
     <string name="isResolvedTitle">Problem solved?</string>
     <string name="request_resolved_message">Say thanks by sending out a badge!</string>
     <string name="neighbor_offering_help_msg">I can help you out :)</string>
     <string name="my_requests">My requests:</string>
-    <string name="askToAddNewItem">You are awesome for helping!</string>
-    <string name="add_item_to_the_inventory_to_help_others">Add item to the inventory to help others</string>
+    <string name="askToAddNewItem">You are awsome for helping!</string>
+    <string name="add_item_to_the_inventory_to_help_others">Add item to the inventory to help others :)</string>
     <string name="next_time">next time</string>
     <string name="done">done!</string>
     <string name="send">Send!</string>
@@ -66,7 +67,4 @@
     <string name="description_hint">ex. 5 steps ladder</string>
     <string name="exit">X</string>
     <string name="add_item">Add item</string>
-    <string name="go_back">Go back</string>
-    <string name="my_neighbors">My Neighbors</string>
-    <string name="click_on_your_neighbor_and_say_hi">click on your neighbor and say Hi</string>
 </resources>

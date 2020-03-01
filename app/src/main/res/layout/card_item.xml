@@ -20,7 +20,7 @@
         android:layout_width="161dp"
         android:layout_height="100dp"
         android:scaleType="centerInside"
-        android:src="@drawable/logo"
+        android:src="@drawable/frame"
         android:elevation="10dp"/>
 
 </LinearLayout>

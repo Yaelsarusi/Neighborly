@@ -90,7 +90,7 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/sand_badge"
+            android:id="@+id/send"
             style="@style/TextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
