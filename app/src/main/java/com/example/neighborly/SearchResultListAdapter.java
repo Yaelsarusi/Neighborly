@@ -63,7 +63,7 @@ public class SearchResultListAdapter extends BaseAdapter {
 
         final UserModelFacade curNeighbor = neighborsList.get(position);
         TextView neighborName = row.findViewById(R.id.neighborName);
-        neighborName.setText(curNeighbor.getPresentedName()+"'s ");
+        neighborName.setText(curNeighbor.getPresentedName().split(" ", 2)[0] + "'s  ");
 
         ItemModel curItem = neighborsItemsMap.get(curNeighbor);
         TextView itemNameText = row.findViewById(R.id.itemName);

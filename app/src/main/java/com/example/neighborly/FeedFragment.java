@@ -62,6 +62,9 @@ public class FeedFragment extends Fragment {
             public void onClick(View v) {
                 searchText = feedView.findViewById(R.id.SearchText);
                 String itemName = searchText.getText().toString();
+                if (itemName.isEmpty()){
+                    return;
+                }
                 showSearchPopup(v, itemName, searchForItem(itemName));
             }
         });
@@ -151,6 +154,7 @@ public class FeedFragment extends Fragment {
             public void onClick(View view) {
                 EditText requestMessageEditor = popupRequestDialog.findViewById(R.id.editRequestMessage);
                 String newItemRequestContent = requestMessageEditor.getText().toString();
+
                 UserModel curUser = UserModelDataHolder.getInstance().getCurrentUser();
 
                 DatabaseReference requestsRef = database.getReference().child(Constants.REQUESTS);
