@@ -2,11 +2,9 @@
     android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/appBlue"
+    android:background="@drawable/rounded_rectangle"
     android:orientation="vertical"
     android:padding="5dp">
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,13 +14,15 @@
 
         <TextView
             android:id="@+id/txtClose"
+            style="@style/TextColor"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="end"
             android:layout_marginBottom="-30dp"
             android:gravity="center"
             android:text="X"
-            android:textColor="@color/appBlack"
+            android:textColor="@color/appMagenta"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -39,12 +39,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/found_neighbors"
+            android:text="@string/we_found_neighbors"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <ListView
             android:id="@+id/foundNeighbors"
-            android:layout_width="311dp"
+            android:layout_width="match_parent"
             android:layout_height="204dp"
             android:layout_gravity="center"
             android:layout_marginTop="5pt"
@@ -55,17 +55,19 @@
         android:id="@+id/newRequest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10pt"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/newRequestButton"
             style="@style/TextColor"
-            android:layout_width="wrap_content"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_rectangle_yellow"
             android:layout_gravity="center_horizontal"
-            android:text="@string/share_a_new_request_title" />
+            android:background="@drawable/rounded_rectangle_yellow"
+            android:text="@string/new_request"
+            android:textAllCaps="false"
+            android:textColor="@color/appMagenta" />
+
     </LinearLayout>
 
     <RelativeLayout
@@ -77,26 +79,30 @@
         <EditText
             android:id="@+id/editRequestMessage"
             style="@style/TextColor"
-            android:layout_width="291dp"
+            android:layout_width="280dp"
             android:layout_height="61dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="0dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentBottom="false"
             android:layout_marginBottom="6dp"
-            android:layout_toStartOf="@+id/send"
+            android:layout_toStartOf="@+id/share_request"
             android:background="@android:color/transparent"
-            android:backgroundTint="@color/green"
             android:hint="@string/neighborly_send_help_message"
-            android:textCursorDrawable="@drawable/cursor_color" />
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:focusable="true"/>
 
-        <ImageButton
-            android:id="@+id/send"
-            android:layout_width="40dp"
+        <Button
+            android:id="@+id/share_request"
+            style="@style/TextColor"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="17dp"
-            android:background="@color/fui_transparent"
-            android:src="@drawable/send" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="22dp"
+            android:background="@drawable/rounded_rectangle_yellow"
+            android:text="Share"
+            android:textAllCaps="false" />
 
     </RelativeLayout>
 

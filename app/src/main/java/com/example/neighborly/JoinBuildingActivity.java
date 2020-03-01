@@ -79,7 +79,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 address = ((EditText) findViewById(R.id.editTextStreetAddress)).getText().toString()
-                        + " " + ((EditText) findViewById(R.id.editTextCity)).getText().toString();
+                        + ", " + ((EditText) findViewById(R.id.editTextCity)).getText().toString();
 
                 description = ((EditText) findViewById(R.id.userDescriptionEdit)).getText().toString();
 

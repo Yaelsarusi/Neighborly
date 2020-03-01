@@ -60,10 +60,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center" />
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
         </LinearLayout>
 
     </LinearLayout>
@@ -71,15 +67,14 @@
     <LinearLayout
         android:id="@+id/chat"
         android:layout_width="340dp"
-        android:layout_height="536dp"
+        android:layout_height="506dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="150dp"
-        android:layout_marginBottom="60dp"
-        android:background="@drawable/rounded_rectangle"
-        android:orientation="vertical"
-        android:paddingBottom="15dp">
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/top_rounded_side"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/requestDetailsOriginalMessage"
@@ -93,12 +88,10 @@
 
         <LinearLayout
             android:layout_width="320dp"
-            android:layout_height="460dp"
+            android:layout_height="470dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="60dp"
-            android:background="@drawable/rounded_rectangle_yellow"
-            android:elevation="4dp"
+            android:background="@drawable/top_rounded_side_yellow"
             android:orientation="vertical"
             android:paddingBottom="20dp">
 
@@ -122,36 +115,50 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:background="@drawable/rounded_rectangle_yellow"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/createNewRequest"
         android:layout_width="340dp"
-        android:layout_height="60dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/chat"
         android:layout_centerHorizontal="true"
-        android:padding="8dp">
+        android:layout_marginTop="-73dp"
+        android:background="@drawable/bottom_rounded_side">
 
-        <EditText
-            android:id="@+id/editRequestMessage"
-            style="@style/EditTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+        <RelativeLayout
+            android:id="@+id/createNewRequest"
+            android:layout_width="320dp"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:layout_toStartOf="@+id/buttonSend"
-            android:autofillHints="@string/neighborly_help_message"
-            android:background="@android:color/transparent"
-            android:hint="@string/messageHint" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bottom_rounded_side_yellow"
+            android:padding="8dp">
 
-        <ImageButton
-            android:id="@+id/buttonSend"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="0dp"
-            android:background="@color/fui_transparent"
-            android:contentDescription="@string/com_facebook_send_button_text"
-            android:src="@drawable/send" />
+            <EditText
+                android:id="@+id/editRequestMessage"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:layout_toStartOf="@+id/buttonSend"
+                android:autofillHints="@string/neighborly_help_message"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:background="@android:color/transparent"
+                android:hint="@string/messageHint" />
+
+            <ImageButton
+                android:id="@+id/buttonSend"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="0dp"
+                android:background="@color/fui_transparent"
+                android:contentDescription="@string/com_facebook_send_button_text"
+                android:scaleType="fitCenter"
+                android:src="@drawable/send" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
