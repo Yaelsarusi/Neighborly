@@ -193,7 +193,7 @@ public class FeedFragment extends Fragment {
         layoutRecepient.removeAllViews();
         if (userOpenRequests.size() > 4) {
             ViewGroup.LayoutParams params = layoutRecepient.getLayoutParams();
-            params.height = 240;
+            params.height = 160;
             layoutRecepient.setLayoutParams(params);
         }
         for (int i = 0 ; i < userOpenRequests.size() ; i++) {
@@ -207,10 +207,10 @@ public class FeedFragment extends Fragment {
                 layoutRecepient.addView(button);
                 layoutRecepient.addView(space);
 
-                if(i == 3){
+                if(i == 4){
                     Space lineBrake = new Space(feedView.getContext());
                     lineBrake.setMinimumWidth(layoutRecepient.getMinimumWidth());
-                    lineBrake.setMinimumHeight(85);
+                    lineBrake.setMinimumHeight(90);
                     layoutRecepient.addView(lineBrake);
                 }
             }
@@ -218,20 +218,21 @@ public class FeedFragment extends Fragment {
     }
 
     private void createButton(Button button, final RequestModel request, Space space){
-        button.setLayoutParams(new LinearLayout.LayoutParams(130, 70));
+        button.setLayoutParams(new LinearLayout.LayoutParams(130, 60));
         button.setAllCaps(false);
         button.setTextSize(14);
 
-        int size_h = 15;
+        int size_h = 13;
         int size_w = 20;
         button.setMinHeight(size_h);
         button.setMinWidth(size_w);
         button.setMinimumHeight(size_h);
         button.setMinimumWidth(size_w);
+        button.setTextColor(getResources().getColor(R.color.white));
         button.setPadding(size_w,size_h,size_w,size_h);
         button.setBackground(ContextCompat.getDrawable(feedView.getContext(), R.drawable.rectangle_magenta));
 
-        space.setMinimumWidth(15);
+        space.setMinimumWidth(17);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

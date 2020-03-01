@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:orientation="vertical"
-            android:padding="20dp"
+            android:padding="10dp"
             app:alignContent="flex_start"
             app:alignItems="flex_start"
             app:flexWrap="wrap"

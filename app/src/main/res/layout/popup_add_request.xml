@@ -44,7 +44,7 @@
 
         <ListView
             android:id="@+id/foundNeighbors"
-            android:layout_width="311dp"
+            android:layout_width="match_parent"
             android:layout_height="204dp"
             android:layout_gravity="center"
             android:layout_marginTop="5pt"
@@ -87,7 +87,8 @@
             android:layout_toStartOf="@+id/share_request"
             android:background="@android:color/transparent"
             android:hint="@string/neighborly_send_help_message"
-            android:textCursorDrawable="@drawable/cursor_color" />
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:focusable="true"/>
 
         <Button
             android:id="@+id/share_request"
@@ -97,8 +98,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="22dp"
             android:background="@drawable/rounded_rectangle_yellow"
             android:text="Share"
             android:textAllCaps="false" />
