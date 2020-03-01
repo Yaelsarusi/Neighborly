@@ -40,7 +40,7 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, Messag
 
     @Override
     public int getItemViewType(int position) {
-        //if message userId matches current userid, set view type 1 else set view type 2
+        //if message userId matches current userId, set view type 1 else set view type 2
         if (getItem(position).getSenderUid().equals(userId)) {
             return MESSAGE_OUT_VIEW_TYPE;
         }
@@ -68,6 +68,7 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<MessageModel, Messag
             mUsername.setVisibility(View.GONE);
             imgProfile.setVisibility(View.GONE);
         }
+        NotificationHelper.sendNotification(this.context, NotificationHelper.NEW_MSG_TITLE, mText.toString());
     }
 
     @NonNull

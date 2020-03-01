@@ -85,28 +85,30 @@ public class JoinBuildingActivity extends AppCompatActivity {
 
                 DatabaseReference buildingRef = database.getReference().child(Constants.DB_BUILDINGS);
 
-                userLoggedIn = createUserModelForLoggedInUser();
-
                 // check for existing building
                 buildingRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        addUserToDatabase();
+                        BuildingModel currBuilding = null;
                         for (DataSnapshot building : dataSnapshot.getChildren()) {
-                            BuildingModel buildingModel = (BuildingModel) building.getValue(BuildingModel.class);
+                            BuildingModel buildingModel = building.getValue(BuildingModel.class);
                             if (buildingModel != null && buildingModel.getAddress() != null) {
                                 if (buildingModel.getAddress().equals(address)) {
                                     // building exists, add user to it
-                                    addUserToBuilding(buildingModel);
-                                    Toast.makeText(JoinBuildingActivity.this, "added to building", Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(JoinBuildingActivity.this, MainActivity.class));
-                                    return;
+                                    currBuilding = buildingModel;
                                 }
                             }
                         }
 
-                        // building does not exist, show new building popup
-                        ShowNewBuildingPopup();
+                        if(currBuilding == null){
+                            // building does not exist, show new building popup
+                            ShowNewBuildingPopup();
+                        }
+                        else{
+                            addUserToDatabase();
+                            addUserToBuilding(currBuilding);
+                        }
+
                     }
 
                     @Override
@@ -123,7 +125,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
 
         if (user == null) {
             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-            String photoUrl = "";
+            String photoUrl =  Uri.parse("R.drawable.default_profile").toString();
             if (profilePhotoUri != null) {
                 photoUrl = profilePhotoUri.toString();
             }
@@ -136,6 +138,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
     }
 
     private void addUserToDatabase() {
+        userLoggedIn = createUserModelForLoggedInUser();
         DatabaseReference usersRef = database.getReference().child(Constants.DB_USERS);
         Map<String, Object> users = new HashMap<>();
         users.put(userLoggedIn.getId(), userLoggedIn);
@@ -150,12 +153,14 @@ public class JoinBuildingActivity extends AppCompatActivity {
         buildingRef.updateChildren(buildings);
         BuildingModelDataHolder.getInstance().setCurrentBuilding(buildingModel);
 
+        Toast.makeText(JoinBuildingActivity.this, "added to building", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(JoinBuildingActivity.this, MainActivity.class));
     }
 
     public void ShowNewBuildingPopup() {
         dialog.setContentView(R.layout.activity_add_building_popup);
-        TextView textClose = (TextView) dialog.findViewById(R.id.txtClose);
-        Button btnDone = (Button) dialog.findViewById(R.id.buttonDone);
+        TextView textClose = dialog.findViewById(R.id.txtClose);
+        Button btnDone = dialog.findViewById(R.id.buttonDone);
         textClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,6 +173,7 @@ public class JoinBuildingActivity extends AppCompatActivity {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                addUserToDatabase();
                 addBuildingToDB();
                 startActivity(new Intent(JoinBuildingActivity.this, MainActivity.class));
             }

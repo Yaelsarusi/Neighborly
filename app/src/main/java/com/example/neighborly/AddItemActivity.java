@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -129,7 +128,7 @@ public class AddItemActivity extends Activity {
 
     private void addImageToStorage(final ItemModel newItem) {
         if(!imageChanged){
-            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.defualt_image);
+            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.default_image);
             addItemImage.setImageBitmap(bitmap);
         }
         FirebaseStorage storage = FirebaseStorage.getInstance();

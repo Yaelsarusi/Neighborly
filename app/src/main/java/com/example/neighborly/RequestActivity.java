@@ -249,7 +249,7 @@ public class RequestActivity extends AppCompatActivity {
             Objects.requireNonNull(popupRequestDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
             Button closeButton = popupRequestDialog.findViewById(R.id.exit);
-            final Button sendButton = popupRequestDialog.findViewById(R.id.sand_badge);
+            final Button sendButton = popupRequestDialog.findViewById(R.id.send_badge);
 
             sendButton.setVisibility(View.INVISIBLE);
 

@@ -25,7 +25,7 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 1;
-    List<AuthUI.IdpConfig> providers;
+    private List<AuthUI.IdpConfig> providers;
     private boolean isNewUser;
     // todo remove when not needed!
     private boolean debugFlag = false;

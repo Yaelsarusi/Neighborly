@@ -34,11 +34,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class FeedFragment extends Fragment {
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final String foundIntroText = "We found neighbors that can help out!";
-    private static final String notFoundIntroText = "We didn't find neighbors that have what you were looking for";
+    private static final String notFoundIntroText = "We didn't find neighbors that have what you were looking for\n";
+
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private View feedView;
     private Dialog popupRequestDialog;
     private EditText searchText;
@@ -189,13 +189,9 @@ public class FeedFragment extends Fragment {
 
     // -------------- My requests --------------
 
-    private void addMyRequestsButtons(FlexboxLayout layoutRecepient) {
-        layoutRecepient.removeAllViews();
-        if (userOpenRequests.size() > 4) {
-            ViewGroup.LayoutParams params = layoutRecepient.getLayoutParams();
-            params.height = 160;
-            layoutRecepient.setLayoutParams(params);
-        }
+    private void addMyRequestsButtons(FlexboxLayout layoutRecipient) {
+        layoutRecipient.removeAllViews();
+
         for (int i = 0 ; i < userOpenRequests.size() ; i++) {
             final RequestModel request = userOpenRequests.get(i);
             if (request != null) {
@@ -204,14 +200,14 @@ public class FeedFragment extends Fragment {
                 Space space = new Space(feedView.getContext());
 
                 createButton(button,request, space);
-                layoutRecepient.addView(button);
-                layoutRecepient.addView(space);
+                layoutRecipient.addView(button);
+                layoutRecipient.addView(space);
 
-                if(i == 4){
+                if(i == 3){
                     Space lineBrake = new Space(feedView.getContext());
-                    lineBrake.setMinimumWidth(layoutRecepient.getMinimumWidth());
-                    lineBrake.setMinimumHeight(90);
-                    layoutRecepient.addView(lineBrake);
+                    lineBrake.setMinimumWidth(layoutRecipient.getMinimumWidth());
+                    lineBrake.setMinimumHeight(100);
+                    layoutRecipient.addView(lineBrake);
                 }
             }
         }
@@ -228,7 +224,7 @@ public class FeedFragment extends Fragment {
         button.setMinWidth(size_w);
         button.setMinimumHeight(size_h);
         button.setMinimumWidth(size_w);
-        button.setTextColor(getResources().getColor(R.color.white));
+        // button.setTextColor(getResources().getColor(R.color.white));
         button.setPadding(size_w,size_h,size_w,size_h);
         button.setBackground(ContextCompat.getDrawable(feedView.getContext(), R.drawable.rectangle_magenta));
 
