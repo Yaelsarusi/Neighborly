@@ -67,7 +67,7 @@
     <LinearLayout
         android:id="@+id/chat"
         android:layout_width="340dp"
-        android:layout_height="536dp"
+        android:layout_height="506dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
@@ -116,7 +116,7 @@
 
     <RelativeLayout
         android:layout_width="340dp"
-        android:layout_height="60dp"
+        android:layout_height="100dp"
         android:layout_below="@+id/chat"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-73dp"
@@ -125,7 +125,7 @@
         <RelativeLayout
             android:id="@+id/createNewRequest"
             android:layout_width="320dp"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="8dp"
@@ -141,6 +141,8 @@
                 android:layout_marginBottom="10dp"
                 android:layout_toStartOf="@+id/buttonSend"
                 android:autofillHints="@string/neighborly_help_message"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:background="@android:color/transparent"
                 android:hint="@string/messageHint" />
 
@@ -153,6 +155,7 @@
                 android:layout_marginBottom="0dp"
                 android:background="@color/fui_transparent"
                 android:contentDescription="@string/com_facebook_send_button_text"
+                android:scaleType="fitCenter"
                 android:src="@drawable/send" />
 
         </RelativeLayout>

@@ -44,7 +44,7 @@
         android:layout_height="50dp"
         android:layout_below="@id/toolbar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-20dp"
+        android:layout_marginTop="-15dp"
         android:background="@drawable/rounded_rectangle_yellow"
         android:elevation="5dp"
         android:gravity="center"
@@ -72,6 +72,7 @@
         android:layout_below="@+id/privateChatTitle"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="-10dp"
         android:layout_marginBottom="70dp"
         android:background="@drawable/top_rounded_side"
         android:orientation="vertical">
@@ -107,7 +108,7 @@
 
     <RelativeLayout
         android:layout_width="340dp"
-        android:layout_height="70dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="-30dp"
@@ -116,7 +117,7 @@
         <RelativeLayout
             android:id="@+id/createNewRequest"
             android:layout_width="320dp"
-            android:layout_height="70dp"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="8dp"
             android:background="@drawable/bottom_rounded_side_yellow"
@@ -131,17 +132,20 @@
                 android:layout_marginBottom="0dp"
                 android:background="@color/fui_transparent"
                 android:contentDescription="@string/com_facebook_send_button_text"
+                android:scaleType="centerInside"
                 android:src="@drawable/send" />
 
             <EditText
                 android:id="@+id/editRequestMessage"
                 style="@style/EditTextStyle"
                 android:layout_width="352dp"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="5dp"
                 android:layout_toStartOf="@+id/buttonSend"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:autofillHints="@string/messageHint"
                 android:hint="@string/messageHint" />
 
