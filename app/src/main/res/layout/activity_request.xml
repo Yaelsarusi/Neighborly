@@ -146,8 +146,8 @@
                 android:layout_toStartOf="@+id/buttonSend"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:autofillHints="@string/messageHint"
-                android:hint="@string/messageHint" />
+                android:autofillHints="@string/message_hint"
+                android:hint="@string/message_hint" />
 
         </RelativeLayout>
     </RelativeLayout>

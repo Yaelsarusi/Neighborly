@@ -6,7 +6,6 @@ import java.util.List;
 class BuildingModel {
 
     private String address;
-
     private List<UserModelFacade> usersList;
     private List<ItemModel> itemsList;
     private List<RequestModel> requestList;
@@ -111,10 +110,10 @@ class BuildingModel {
         }
     }
 
-    public void setUserDescriptionById(String id, String newDesc) {
+    public void setUserDescriptionById(String userId, String newDesc) {
         for (int i = 0; i < usersList.size(); i++){
             UserModelFacade curNeighbor = usersList.get(i);
-            if (curNeighbor != null && curNeighbor.getId().equals(id)){
+            if (curNeighbor != null && curNeighbor.getId().equals(userId)){
                 curNeighbor.setDescription(newDesc);
                 usersList.set(i, curNeighbor);
             }
@@ -122,7 +121,7 @@ class BuildingModel {
 
     }
 
-    public void addBadgeToUserById(int chosenBadge, String userId) {
+    public void addBadgeToUserById(String userId, int chosenBadge) {
         for (int i = 0; i < usersList.size(); i++){
             UserModelFacade curNeighbor = usersList.get(i);
             if (curNeighbor != null && curNeighbor.getId().equals(userId)){

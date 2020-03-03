@@ -9,7 +9,7 @@
     <item
         android:id="@+id/nev_profile"
         android:icon="@drawable/profile"
-        android:title="@string/profile"/>
+        android:title="@string/profile_fragment"/>
 
     <item
         android:id="@+id/nev_neighbors"

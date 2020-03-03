@@ -8,8 +8,7 @@ public class MessageModel {
     private long sentTime;
     private String messageId;
 
-    public MessageModel() {
-    }
+    public MessageModel() { }
 
     public MessageModel(UserModel sender, String text) {
         this.sender = sender;

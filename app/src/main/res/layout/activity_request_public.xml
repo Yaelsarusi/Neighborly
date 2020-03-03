@@ -145,7 +145,7 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:background="@android:color/transparent"
-                android:hint="@string/messageHint" />
+                android:hint="@string/message_hint" />
 
             <ImageButton
                 android:id="@+id/buttonSend"

@@ -22,7 +22,6 @@ import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -37,13 +36,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddItemActivity extends Activity {
 
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-
     public static final int ADD_NEW_ITEM = 0;
     private static final int PICK_IMAGE = 1;
     private static final int MY_CAMERA_PERMISSION_CODE = 2;
     public static final int EDIT_EXISTING_ITEM = 3;
 
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private CircleImageView addItemImage;
     private Uri newImageUri;
     private boolean imageChanged = false;
@@ -75,13 +73,7 @@ public class AddItemActivity extends Activity {
         Intent activityIntent = getIntent();
 
         if (activityIntent.getIntExtra("activityType", 0) == AddItemActivity.EDIT_EXISTING_ITEM){
-            item = (ItemModel)activityIntent.getSerializableExtra("item");
-            if (!item.getImageUriString().isEmpty()){
-                Picasso.get().load(Uri.parse(item.getImageUriString())).into(addItemImage);
-            }
-            description.setText(item.getDescription());
-            name.setText(item.getName());
-
+            createEditView(activityIntent);
         }
 
         addItemImage.setOnClickListener(new View.OnClickListener() {
@@ -98,21 +90,7 @@ public class AddItemActivity extends Activity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newImageUriString;
-                if (newImageUri == null) {
-                    if (item != null) {
-                        newImageUriString = item.getImageUriString();
-                    } else {
-                        newImageUriString = Uri.parse("android.resource://com.example.neighborly/drawable/sticker").toString();
-                    }
-                } else {
-                    newImageUriString = newImageUri.toString();
-                }
-
-                ItemModel newItem = new ItemModel(newImageUriString, name.getText().toString(),
-                        currentUser.getId(), description.getText().toString());
-                addImageToStorage(newItem);
-                UserModelDataHolder.getInstance().setCurrentUser(currentUser);
+                addItem();
                 finish();
             }
         });
@@ -124,6 +102,33 @@ public class AddItemActivity extends Activity {
                 finish();
             }
         });
+    }
+
+    private void createEditView(Intent activityIntent) {
+        item = (ItemModel)activityIntent.getSerializableExtra("item");
+        if (!item.getImageUriString().isEmpty()){
+            Picasso.get().load(Uri.parse(item.getImageUriString())).into(addItemImage);
+        }
+        description.setText(item.getDescription());
+        name.setText(item.getName());
+    }
+
+    private void addItem(){
+        String newImageUriString;
+        if (newImageUri == null) {
+            if (item != null) {
+                newImageUriString = item.getImageUriString();
+            } else {
+                newImageUriString = Uri.parse("android.resource://com.example.neighborly/drawable/sticker").toString();
+            }
+        } else {
+            newImageUriString = newImageUri.toString();
+        }
+
+        ItemModel newItem = new ItemModel(newImageUriString, name.getText().toString(),
+                currentUser.getId(), description.getText().toString());
+        addImageToStorage(newItem);
+        UserModelDataHolder.getInstance().setCurrentUser(currentUser);
     }
 
     private void addImageToStorage(final ItemModel newItem) {
@@ -163,7 +168,7 @@ public class AddItemActivity extends Activity {
                     public void onSuccess(Uri uri) {
                         newItem.setImageUriString(uri.toString());
                         // upload to db with updated image uri
-                        addItemsUnderBuildingInDB(newItem);
+                        addItemsUnderBuilding(newItem);
                         addItemToUserInDB(newItem);
 
                         //Do what you need to do with url
@@ -175,9 +180,7 @@ public class AddItemActivity extends Activity {
 
     }
 
-    private void addItemsUnderBuildingInDB(ItemModel newItem) {
-        DatabaseReference buildingsRef = database.getReference().child(Constants.DB_BUILDINGS);
-
+    private void addItemsUnderBuilding(ItemModel newItem) {
         // update the building model
         BuildingModel currentBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
         currentBuilding.addItemToList(newItem);

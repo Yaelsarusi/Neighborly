@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BuildingModelDataHolder {
+
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private BuildingModel currentBuilding;
+    private static final BuildingModelDataHolder holder = new BuildingModelDataHolder();
 
     public BuildingModel getCurrentBuilding() {
         return currentBuilding;
@@ -16,7 +18,7 @@ public class BuildingModelDataHolder {
 
     /**
      * This function changes the current hold building and updates it in the DB.
-     * @param currentBuilding
+     * @param currentBuilding - the current building to update
      */
     public void setCurrentBuilding(BuildingModel currentBuilding) {
         this.currentBuilding = currentBuilding;
@@ -26,8 +28,6 @@ public class BuildingModelDataHolder {
         buildings.put(currentBuilding.getAddress(), currentBuilding);
         buildingsRef.updateChildren(buildings);
     }
-
-    private static final BuildingModelDataHolder holder = new BuildingModelDataHolder();
 
     public static BuildingModelDataHolder getInstance() {
         return holder;

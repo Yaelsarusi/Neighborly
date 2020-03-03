@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NeighborsFragment extends Fragment {
+    private static final String EMPTY_BUILDING_MSG = "You are the first one! Be neighborly and spread the word!";
+
     private View neighborsView;
     private UserModel curUser;
     private BuildingModel curBuilding;
@@ -37,9 +39,7 @@ public class NeighborsFragment extends Fragment {
         }
 
         if (neighborsList.isEmpty()) {
-            Toast.makeText(getActivity(),
-                    getString(R.string.emptyBuilding1Msg) + " " + getString(R.string.emptyBuilding2Msg),
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), EMPTY_BUILDING_MSG, Toast.LENGTH_LONG).show();
         } else {
             updateNeighborsScroll();
         }

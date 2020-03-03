@@ -66,7 +66,6 @@ public class RequestModel implements Serializable {
         this.itemRequested = itemRequested;
     }
 
-    // Todo: implement this
     int getImage() {
         return 0;
     }
