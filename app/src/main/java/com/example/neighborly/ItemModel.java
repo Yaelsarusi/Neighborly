@@ -3,10 +3,11 @@ package com.example.neighborly;
 import java.io.Serializable;
 
 public class ItemModel implements Serializable {
+
     private String name;
     private String ownerId;
     private String description;
-    // firebase does not handle uri, we hold a string instead
+    // firebase does not handle uri, we represent the image as a string instead
     private String imageUriString;
 
     public ItemModel() { }

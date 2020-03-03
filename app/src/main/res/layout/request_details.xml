@@ -19,7 +19,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_gravity="start"
-            android:contentDescription="@string/neighborPicture"
+            android:contentDescription="@string/neighbor_picture"
             android:src="@drawable/profile"
             tools:srcCompat="@tools:sample/avatars" />
 

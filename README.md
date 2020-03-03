@@ -13,9 +13,6 @@ Main features:
 * See all neighbors in the building
 * Chats with neighbors
 
-TODO - add screenshots to all
-
-
 Written in Java (Android studio), database in realtime Firebase
 
 Credits:

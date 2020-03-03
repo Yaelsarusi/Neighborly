@@ -11,8 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 public class ItemModelAdapter extends PagerAdapter {
@@ -32,7 +30,9 @@ public class ItemModelAdapter extends PagerAdapter {
         return models.size() * LOOPS_COUNT;
     }
 
-    // This is called when notifyDataSetChanged() is called
+    /**
+     * This function is called when notifyDataSetChanged() is called
+     */
     @Override
     public int getItemPosition(Object object) {
         // refresh all fragments when data set changed

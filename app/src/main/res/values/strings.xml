@@ -1,72 +1,53 @@
 <resources>
     <string name="app_name">Neighborly</string>
-
-    <string name="facebook_application_id" translatable="false">1439707639526875</string>
-    <string name="facebook_login_protocol_scheme" translatable="false">fb1439707639526875</string>
-    <string name="privateChatsTitle">Private Chats</string>
-    <string name="UserNeedsTitle">Things you need</string>
-    <string name="SearchText">What do you need?</string>
-    <string name="Search">Search</string>
-    <string name="NeighbourRequestsTitle">Help out your neighbours</string>
-    <string name="profile">Profile</string>
+    <string name="profile_fragment">My profile</string>
     <string name="neighbors">Neighbors</string>
     <string name="item">Item</string>
     <string name="feed">Feed</string>
-    <string name="title_activity_bottom_navigation">BottomNavigation</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="where_do_i_belong">Where Do I Belong?</string>
+    <string name="exit">X</string>
+    <string name="add_item">Add item</string>
+    <string name="go_back">Go back</string>
+    <string name="user_name">User name</string>
+    <string name="user_address">User address</string>
+
+    <string name="facebook_application_id" translatable="false">1439707639526875</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb1439707639526875</string>
+    <string name="ItemImagesStorageUrl">gs://neighborly-a250f.appspot.com/ItemImages</string>
+
+    <string name="city">City*:</string>
+    <string name="address">Address*:</string>
+    <string name="search_text">What do you need?</string>
     <string name="description">Description</string>
     <string name="item_name">Item Name*</string>
     <string name="public_request_title">%s\'s request</string>
-    <string name="add">Add</string>
-    <string name="ItemImagesStorageUrl">gs://neighborly-a250f.appspot.com/ItemImages</string>
-    <string name="neighborPicture">Your neighbors profile picture</string>
-    <string name="editButton">Edit</string>
-    <string name="addItem">Add item</string>
-    <string name="profileFragmentTitle">My profile</string>
-    <string name="userNamePlaceHolder">user name</string>
-    <string name="userItemsListTitle">My Items:</string>
-    <string name="userAddressTitle">My building:</string>
-    <string name="userAddressNamePlaceholder">user address</string>
-    <string name="editButtonText">Edit</string>
-    <string name="saveButtonText">Save</string>
-    <string name="emptyBuilding1Msg">You are the first one!</string>
-    <string name="emptyBuilding2Msg">Be neighborly and spread the word!</string>
-    <string name="SayHelloToYourNeighbors">Click on your neighbor and say hello :)</string>
+    <string name="neighbor_picture">Your neighbors profile picture</string>
+    <string name="user_items_list">My Items:</string>
+    <string name="user_address_title">My building:</string>
+    <string name="empty_building_msg_1">You are the first one!</string>
+    <string name="empty_building_msg_2">Be neighborly and spread the word!</string>
     <string name="welcome">New in The\n Neighborhood?</string>
     <string name="sign_in">Sign in!</string>
     <string name="info">About yourself:</string>
     <string name="item_example">ex. ladder</string>
-    <string name="messageHint">Type a message...</string>
+    <string name="message_hint">Type a message...</string>
     <string name="neighborly_help_message">I can help you out! :)</string>
     <string name="private_chat_title">%s</string>
-    <string name="private_messages_db_path">Messages/%s_%s</string>
     <string name="request_item_from_neighbor_message">Hey %s! Can I please borrow your %s?</string>
     <string name="neighborly_send_help_message">Hi I\'m looking for a %s. Care to help out?</string>
-    <string name="start_private_chat_title">Press to start a private chat</string>
     <string name="new_request">Dosen\'t help? Ask everyone else</string>
     <string name="create_a_profile">Create your profile</string>
     <string name="join_your_neighbors">Join your neighbors:</string>
-    <string name="city">City*:</string>
-    <string name="address">Address*:</string>
     <string name="tell_about_yourself">Tell us about yourself:</string>
     <string name="we_found_neighbors">We found neighbors that can help out!</string>
-    <string name="isResolvedTitle">Problem solved?</string>
     <string name="request_resolved_message">Say thanks by sending out a badge!</string>
     <string name="neighbor_offering_help_msg">I can help you out :)</string>
     <string name="my_requests">My requests:</string>
-    <string name="askToAddNewItem">You are awesome for helping!</string>
-    <string name="add_item_to_the_inventory_to_help_others">Add item to the inventory to help others</string>
+    <string name="ask_to_add_new_item">You are awesome for helping!</string>
+    <string name="add_item_to_the_inventory">Add item to the inventory to help others</string>
     <string name="next_time">next time</string>
-    <string name="done">done!</string>
     <string name="send">Send!</string>
     <string name="request_resolved_title">You have such great neighbors!</string>
     <string name="description_hint">ex. 5 steps ladder</string>
-    <string name="exit">X</string>
-    <string name="add_item">Add item</string>
-    <string name="go_back">Go back</string>
     <string name="my_neighbors">My Neighbors</string>
-    <string name="click_on_your_neighbor_and_say_hi">click on your neighbor and say Hi</string>
+    <string name="say_hi">Click on your neighbor and say Hi</string>
 </resources>

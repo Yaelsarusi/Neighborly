@@ -40,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String CHANNEL_ID = "Neighborly_channel";
     private static final String CHANNEL_NAME = "Neighborly app channel";
     private static final String CHANNEL_DESC = "Channel for Neighborly app";
-    private static final String NEW_REQ_TITLE = "%1s asked for %2s"; //todo - rephrase
-    private static final String REQ_ANSWER_TITLE = "Someone replied to your request! check it out"; //todo - rephrase
-    private static final String NEW_MSG_TITLE = "%1s send you a message"; //todo - rephrase
+    private static final String NEW_REQ_TITLE = "%s asked for %s";
     private static final int RC_SIGN_IN = 1;
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -76,39 +74,40 @@ public class MainActivity extends AppCompatActivity {
         curUser = UserModelDataHolder.getInstance().getCurrentUser();
         DatabaseReference buildingRef = database.getReference().child(Constants.DB_BUILDINGS).child(curUser.getAddress());
 
-        // update current building when changed in DB
         buildingRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                BuildingModel oldBuilding = null;
-                if (BuildingModelDataHolder.getInstance().getCurrentBuilding() != null) {
-                    oldBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
-                }
-                BuildingModel curBuilding = dataSnapshot.getValue(BuildingModel.class);
-                BuildingModelDataHolder.getInstance().setCurrentBuilding(curBuilding);
-
-                if (oldBuilding != null) {
-                    RequestModel lastRequest = oldBuilding.getLastRequest();
-                    RequestModel newRequest = curBuilding.getLastRequest();
-
-                    if (newRequest != null && !newRequest.getRequestUserId().equals(curUser.getId())) {
-                        if (lastRequest != null && !lastRequest.getRequestId().equals(newRequest.getRequestId())) {
-                            String userName = curBuilding.getUserById(newRequest.getRequestUserId()).getPresentedName();
-                            String itemName = newRequest.getItemRequested();
-                            String text = newRequest.getRequestMsg();
-                            sendNotification(String.format(NEW_REQ_TITLE, userName, itemName), text);
-                        }
-                    }
-                }
+                updateBuilding(dataSnapshot);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // ...
-            }
+            public void onCancelled(DatabaseError databaseError) { }
         });
 
         setSignOutButton();
+    }
+
+    private void updateBuilding(DataSnapshot dataSnapshot){
+        BuildingModel oldBuilding = null;
+        if (BuildingModelDataHolder.getInstance().getCurrentBuilding() != null) {
+            oldBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
+        }
+        BuildingModel curBuilding = dataSnapshot.getValue(BuildingModel.class);
+        BuildingModelDataHolder.getInstance().setCurrentBuilding(curBuilding);
+
+        if (oldBuilding != null) {
+            RequestModel lastRequest = oldBuilding.getLastRequest();
+            RequestModel newRequest = curBuilding.getLastRequest();
+
+            if (newRequest != null && !newRequest.getRequestUserId().equals(curUser.getId())) {
+                if (lastRequest != null && !lastRequest.getRequestId().equals(newRequest.getRequestId())) {
+                    String userName = curBuilding.getUserById(newRequest.getRequestUserId()).getPresentedName();
+                    String itemName = newRequest.getItemRequested();
+                    String text = newRequest.getRequestMsg();
+                    sendNotification(String.format(NEW_REQ_TITLE, userName, itemName), text);
+                }
+            }
+        }
     }
 
     private void setSignOutButton() {
@@ -160,11 +159,14 @@ public class MainActivity extends AppCompatActivity {
                 RC_SIGN_IN);
     }
 
+    /**
+     * Set the selected fragment
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener listener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    Fragment selected = null;
+                    Fragment selected;
 
                     switch (menuItem.getItemId()) {
                         case R.id.nev_feed:
@@ -200,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 // Show Email on toast
                 Toast.makeText(this, "" + (user != null ? user.getEmail() : ""),
                         Toast.LENGTH_SHORT).show();
-                // Set Button signout
+                // Set sign out button
                 btnSignOut.setEnabled(true);
 
                 if (response != null) {
@@ -210,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
                 if (isNewUser) {
                     startActivity(new Intent(this, JoinBuildingActivity.class));
                 } else {
-                    // todo bug in sign in flow
                     startActivity(new Intent(this, MainActivity.class));
                 }
             } else {

@@ -44,7 +44,7 @@
             android:layout_below="@+id/SearchSubtitle"
             android:layout_marginStart="20dp"
             android:backgroundTint="@color/appBlack"
-            android:hint="@string/SearchText"
+            android:hint="@string/search_text"
             android:inputType="textShortMessage"
             android:selectAllOnFocus="true"
             android:textCursorDrawable="@drawable/cursor_color"

@@ -42,11 +42,14 @@ public class RequestActivity extends AppCompatActivity {
 
     static public final String REQUEST_PRIVATE_CHAT = "private chat";
     static public final String REQUEST_ITEM = "request item";
+    static public final String isResolvedTitle = "Problem solved?";
+
     static private final int NON_SELECTED = -5;
 
     private FirebaseRecyclerAdapter<MessageModel, MessageAdapter.MessageHolder> adapter;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private Set<UserModel> commentedUsers = new ArraySet<>();
+    private String requestType;
     private TextView privateChatTitle;
     private CircleImageView profilePicture;
     private Dialog popupRequestDialog;
@@ -63,27 +66,7 @@ public class RequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        curUser = UserModelDataHolder.getInstance().getCurrentUser();
-        curBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
-
-        Intent intent = getIntent();
-        String requestType = intent.getStringExtra("requestType");
-
-        if (requestType.equals(RequestActivity.REQUEST_PRIVATE_CHAT)) {
-            String otherUser = intent.getStringExtra("neighbor");
-            String itemName = intent.getStringExtra("itemName");
-            handlePrivateChat(otherUser, itemName);
-        }
-        if (requestType.equals(RequestActivity.REQUEST_ITEM)) {
-            String requestId = intent.getStringExtra("requestId");
-            handleItemRequest(requestId);
-        }
-        input.requestFocus();
-
-        final RecyclerView recyclerView = findViewById(R.id.recycleView);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        setParameters();
 
         final DatabaseReference messagesRef = database.getReference(msgPath);
 
@@ -105,6 +88,40 @@ public class RequestActivity extends AppCompatActivity {
                 return message;
             }
         };
+
+        setMessageView(parser, messagesRef);
+
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+
+        setToolbar();
+    }
+
+    private void setParameters() {
+
+        curUser = UserModelDataHolder.getInstance().getCurrentUser();
+        curBuilding = BuildingModelDataHolder.getInstance().getCurrentBuilding();
+
+        Intent intent = getIntent();
+        requestType = intent.getStringExtra("requestType");
+
+        if (requestType.equals(RequestActivity.REQUEST_PRIVATE_CHAT)) {
+            String otherUser = intent.getStringExtra("neighbor");
+            String itemName = intent.getStringExtra("itemName");
+            handlePrivateChat(otherUser, itemName);
+        }
+        if (requestType.equals(RequestActivity.REQUEST_ITEM)) {
+            String requestId = intent.getStringExtra("requestId");
+            handleItemRequest(requestId);
+        }
+        input.requestFocus();
+    }
+
+    private void setMessageView(SnapshotParser<MessageModel> parser, final DatabaseReference messagesRef){
+        final RecyclerView recyclerView = findViewById(R.id.recycleView);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         FirebaseRecyclerOptions<MessageModel> options =
                 new FirebaseRecyclerOptions.Builder<MessageModel>()
@@ -132,8 +149,6 @@ public class RequestActivity extends AppCompatActivity {
         });
 
         recyclerView.setAdapter(adapter);
-        ProgressBar progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
 
         ImageButton btnSend = findViewById(R.id.buttonSend);
         btnSend.setOnClickListener(new View.OnClickListener() {
@@ -155,8 +170,6 @@ public class RequestActivity extends AppCompatActivity {
                 }
             }
         });
-
-        setToolbar();
     }
 
     private void setToolbar() {
@@ -174,13 +187,13 @@ public class RequestActivity extends AppCompatActivity {
     private void handleItemRequest(String requestId) {
         setContentView(R.layout.activity_request_public);
         input = findViewById(R.id.editRequestMessage);
-        msgPath = String.format("Messages/%s", requestId);
+        msgPath = Constants.DB_MESSAGES + "/" +requestId;
         curRequest = curBuilding.getRequestById(requestId);
         TextView requestTitle = findViewById(R.id.requestDetailsTitle);
         neighbor = BuildingModelDataHolder.getInstance().getCurrentBuilding().getUserById(curRequest.getRequestUserId());
         Switch isResolved = findViewById(R.id.isResolved);
         if (neighbor.getId().equals(curUser.getId())) {
-            requestTitle.setText(getString(R.string.isResolvedTitle));
+            requestTitle.setText(isResolvedTitle);
             isResolved.setVisibility(View.VISIBLE);
             isResolved.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -216,9 +229,9 @@ public class RequestActivity extends AppCompatActivity {
         }
 
         if (otherUser.compareTo(curUser.getId()) > 0) {
-            msgPath = String.format(this.getString(R.string.private_messages_db_path), otherUser, curUser.getId());
+            msgPath = String.format(Constants.PRIVATE_MESSAGES_DB, otherUser, curUser.getId());
         } else {
-            msgPath = String.format(this.getString(R.string.private_messages_db_path), curUser.getId(), otherUser);
+            msgPath = String.format(Constants.PRIVATE_MESSAGES_DB, curUser.getId(), otherUser);
         }
 
     }
@@ -237,7 +250,6 @@ public class RequestActivity extends AppCompatActivity {
             adapter.stopListening();
     }
 
-    // Todo: implement this
     int getImage() {
         return 0;
     }
@@ -263,7 +275,7 @@ public class RequestActivity extends AppCompatActivity {
             sendButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    curBuilding.addBadgeToUserById(chosenBadge, chosenNeighbor);
+                    curBuilding.addBadgeToUserById(chosenNeighbor, chosenBadge);
                     BuildingModelDataHolder.getInstance().setCurrentBuilding(curBuilding);
                     popupRequestDialog.dismiss();
                 }
@@ -320,7 +332,7 @@ public class RequestActivity extends AppCompatActivity {
             }
             popupRequestDialog.show();
         } else {
-            Toast.makeText(this, getString(R.string.done), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Done!", Toast.LENGTH_LONG).show();
         }
     }
 

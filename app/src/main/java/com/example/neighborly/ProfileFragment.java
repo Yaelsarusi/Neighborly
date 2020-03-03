@@ -64,9 +64,7 @@ public class ProfileFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // ...
-            }
+            public void onCancelled(DatabaseError databaseError) { }
         });
 
         setUserSavedItemsCarousel();
@@ -114,22 +112,19 @@ public class ProfileFragment extends Fragment {
     }
 
     private void loadProfileDetails() {
-        if (curUser == null){
-            return;
+        if (curUser != null) {
+            TextView userName = profileView.findViewById(R.id.userName);
+            TextView userDescription = profileView.findViewById(R.id.userDescription);
+            TextView userAddress = profileView.findViewById(R.id.userAddress);
+            CircleImageView userImage = profileView.findViewById(R.id.profilePicture);
+
+            userName.setText(curUser.getPresentedName());
+            userDescription.setText(curUser.getDescription());
+
+            Glide.with(getContext()).load(curUser.getImageUriString()).into(userImage);
+
+            userAddress.setText(curUser.getAddress());
         }
-
-        TextView userName = profileView.findViewById(R.id.userName);
-        TextView userDescription = profileView.findViewById(R.id.userDescription);
-        TextView userAddress = profileView.findViewById(R.id.userAddress);
-        CircleImageView userImage = profileView.findViewById(R.id.profilePicture);
-
-        userName.setText(curUser.getPresentedName());
-        userDescription.setText(curUser.getDescription());
-
-        Glide.with(getContext()).load(curUser.getImageUriString()).into(userImage);
-
-        userAddress.setText(curUser.getAddress());
-
     }
 
     private void setUserSavedItemsCarousel() {
